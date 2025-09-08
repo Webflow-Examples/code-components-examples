@@ -1,0 +1,19 @@
+{
+  "library": {
+    "name": "Webflow Code Import Examples - Quote Calculator",
+    "displayName": "Life Insurance Premium Quote Widget",
+    "description": "An example life insurance premium quote widget with customizable defaults and CTA options",
+    "path": "./src/QuoteCalculator.webflow.jsx",
+    "components": [
+      "**/*.webflow.@(js|jsx|mjs|ts|tsx)"
+    ],
+    "id": "webflow-code-import-examples---quote-calculator"
+  },
+  "telemetry": {
+    "global": {
+      "allowTelemetry": true,
+      "lastPrompted": 1757368712207,
+      "version": "1.8.40"
+    }
+  }
+}
