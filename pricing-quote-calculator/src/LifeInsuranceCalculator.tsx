@@ -1,6 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { generateHeightOptions, calculatePremium } from './utils/insuranceCalculations';
 import { formatCurrency, formatCoverage } from './utils/formatters';
+import { initializeFormData, parseQuoteParams } from './utils/urlParams';
+import { 
+  FormData, 
+  Results, 
+  validateFormData, 
+  createInputChangeHandler, 
+  createCoverageChangeHandler 
+} from './utils/formUtils';
 
 interface LifeInsuranceCalculatorProps {
   defaultHeight?: number;
@@ -16,25 +24,13 @@ interface LifeInsuranceCalculatorProps {
   ctaLink?: string;
 }
 
-interface FormData {
-  height: number;
-  weight: number;
-  age: number;
-  sex: string;
-  coverage: number;
-}
-
-interface Results {
-  monthly: number;
-  annual: number;
-}
 
 const LifeInsuranceCalculator: React.FC<LifeInsuranceCalculatorProps> = ({
-  defaultHeight = 68, // 5'8" default
-  defaultWeight = 170,
-  defaultAge = 35,
-  defaultSex = 'male',
-  defaultCoverage = 250000,
+  defaultHeight,
+  defaultWeight,
+  defaultAge,
+  defaultSex,
+  defaultCoverage,
   title = 'Life Insurance Quote Calculator',
   showTitle = true,
   buttonText = 'Calculate Premium',
@@ -42,52 +38,46 @@ const LifeInsuranceCalculator: React.FC<LifeInsuranceCalculatorProps> = ({
   ctaButtonText = 'Get Started',
   ctaLink = '#'
 }) => {
-  const [formData, setFormData] = useState<FormData>({
-    height: defaultHeight,
-    weight: defaultWeight,
-    age: defaultAge,
-    sex: defaultSex,
-    coverage: defaultCoverage
-  });
+  // Initialize form data using utility function
+  const [formData, setFormData] = useState<FormData>(() => 
+    initializeFormData({
+      defaultHeight,
+      defaultWeight,
+      defaultAge,
+      defaultSex,
+      defaultCoverage
+    })
+  );
   
   const [results, setResults] = useState<Results | null>(null);
   const [showResults, setShowResults] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
 
+  // Update form data when query parameters change (optional - for dynamic URL updates)
+  useEffect(() => {
+    const newFormData = parseQuoteParams();
+    
+    // Update form data if we have new values from query params
+    if (Object.keys(newFormData).length > 0) {
+      setFormData(prev => ({ ...prev, ...newFormData }));
+    }
+  }, [defaultHeight, defaultWeight, defaultAge, defaultSex, defaultCoverage]);
+
   const heightOptions = generateHeightOptions();
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    // Clear error message when user starts typing
-    if (errorMessage) {
-      setErrorMessage('');
-    }
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleCoverageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(e.target.value);
-    // Clear error message when user interacts with form
-    if (errorMessage) {
-      setErrorMessage('');
-    }
-    setFormData(prev => ({
-      ...prev,
-      coverage: value
-    }));
-  };
+  // Create form handlers using utility functions
+  const handleInputChange = createInputChangeHandler(setFormData, setErrorMessage);
+  const handleCoverageChange = createCoverageChangeHandler(setFormData, setErrorMessage);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
     const { height, weight, age, sex, coverage } = formData;
     
-    // Validate all fields are filled
-    if (!height || !weight || !age || !sex || !coverage) {
-      setErrorMessage('Please fill in all fields to calculate your premium.');
+    // Validate form data
+    const validationError = validateFormData(formData);
+    if (validationError) {
+      setErrorMessage(validationError);
       return;
     }
     
@@ -118,7 +108,7 @@ const LifeInsuranceCalculator: React.FC<LifeInsuranceCalculatorProps> = ({
 
   return (
     <div className="w-full max-w-lg mx-auto">
-      <div className="bg-white rounded-xl shadow-lg overflow-hidden min-h-[600px]">
+      <div className="bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden min-h-[600px]">
         {!showResults ? (
           // Form View
           <div className="p-8">
@@ -129,7 +119,6 @@ const LifeInsuranceCalculator: React.FC<LifeInsuranceCalculatorProps> = ({
             )}
             
             <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Height Input */}
               <div className="form-control">
                 <label htmlFor="height-input" className="label">
                   <span className="label-text font-semibold">Height</span>
@@ -151,7 +140,6 @@ const LifeInsuranceCalculator: React.FC<LifeInsuranceCalculatorProps> = ({
                 </select>
               </div>
 
-              {/* Weight Input */}
               <div className="form-control">
                 <label htmlFor="weight-input" className="label">
                   <span className="label-text font-semibold">Weight (lbs)</span>
@@ -171,7 +159,6 @@ const LifeInsuranceCalculator: React.FC<LifeInsuranceCalculatorProps> = ({
                 />
               </div>
 
-              {/* Age Input */}
               <div className="form-control">
                 <label htmlFor="age-input" className="label">
                   <span className="label-text font-semibold">Age</span>
@@ -191,7 +178,6 @@ const LifeInsuranceCalculator: React.FC<LifeInsuranceCalculatorProps> = ({
                 />
               </div>
 
-              {/* Sex Input */}
               <div className="form-control">
                 <label htmlFor="sex-input" className="label">
                   <span className="label-text font-semibold">Sex assigned at birth</span>
@@ -210,7 +196,6 @@ const LifeInsuranceCalculator: React.FC<LifeInsuranceCalculatorProps> = ({
                 </select>
               </div>
 
-              {/* Coverage Amount */}
               <div className="form-control">
                 <label htmlFor="coverage-input" className="label">
                   <span className="label-text font-semibold">Coverage Amount</span>
@@ -249,7 +234,6 @@ const LifeInsuranceCalculator: React.FC<LifeInsuranceCalculatorProps> = ({
                 </div>
               )}
 
-              {/* Calculate Button */}
               <div className="form-control mt-8">
                 <button 
                   type="submit" 
@@ -264,7 +248,6 @@ const LifeInsuranceCalculator: React.FC<LifeInsuranceCalculatorProps> = ({
         ) : (
           // Results View
           <div className="p-8 h-full flex flex-col justify-between">
-            {/* Back Button */}
             <div className="flex items-center mb-8">
               <button 
                 onClick={handleBackToForm}
@@ -277,7 +260,6 @@ const LifeInsuranceCalculator: React.FC<LifeInsuranceCalculatorProps> = ({
               </button>
             </div>
 
-            {/* Results */}
             <div className="flex-1 flex flex-col justify-center text-center">
               <h3 className="text-2xl font-bold mb-8 text-gray-800">Your Estimated Premium</h3>
               
@@ -294,7 +276,6 @@ const LifeInsuranceCalculator: React.FC<LifeInsuranceCalculatorProps> = ({
               </div>
             </div>
 
-            {/* CTA Button */}
             <div className="mt-auto">
               <a 
                 href={ctaLink}
@@ -303,7 +284,7 @@ const LifeInsuranceCalculator: React.FC<LifeInsuranceCalculatorProps> = ({
               >
                 {ctaButtonText}
               </a>
-              <small><b>Note: </b> This is only an example calculation for the purposes of a demo code component and the rate/premium shown here is not a real quote or representation of a legitimate premium estimate.</small>
+              <small><b>Disclaimer: </b> This is only an example calculation for the purposes of a demo code component and the rate/premium shown here is not a real quote or representation of a legitimate premium estimate.</small>
             </div>
           </div>
         )}

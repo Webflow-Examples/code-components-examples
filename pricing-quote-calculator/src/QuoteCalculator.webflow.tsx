@@ -14,29 +14,25 @@ export default declareComponent(LifeInsuranceCalculator, {
     // Default form values
     defaultHeight: props.Number({ 
       name: "Default Height",
-      defaultValue: 68,
       min: 48,
       max: 84
     }),
     defaultWeight: props.Number({ 
       name: "Default Weight",
-      defaultValue: 170,
       min: 50,
       max: 500
     }),
     defaultAge: props.Number({ 
       name: "Default Age",
-      defaultValue: 35,
       min: 18,
       max: 120
     }),
-    defaultSex: props.Text({
+    defaultSex: props.Variant({
       name: "Default Sex Assigned at Birth",
-      defaultValue: "male"
+      options: ["male", "female"]
     }),
     defaultCoverage: props.Number({ 
       name: "Default Coverage",
-      defaultValue: 250000,
       min: 100000,
       max: 1000000
     }),
@@ -53,10 +49,6 @@ export default declareComponent(LifeInsuranceCalculator, {
       name: "Button Text",
       defaultValue: "Calculate Premium"
     }),
-    primaryColor: props.Text({
-      name: "Primary Color",
-      defaultValue: "#2563eb"
-    }),
     ctaButtonText: props.Text({
       name: "CTA Button Text",
       defaultValue: "Get Started"
@@ -65,9 +57,5 @@ export default declareComponent(LifeInsuranceCalculator, {
       name: "CTA Link",
       defaultValue: "#"
     })
-  },
-  // Component configuration
-  options: {
-    applyTagSelectors: true,
   },
 });

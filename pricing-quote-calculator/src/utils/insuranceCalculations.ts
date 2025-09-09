@@ -91,7 +91,10 @@ export const getBMIMultiplier = (bmi: number): number => {
 };
 
 /**
- * Calculate monthly premium for life insurance
+ * Calculate dummy monthly premium for life insurance based on loose equation here:
+ * https://thagency.com/how-to-calculate-life-insurance-premium-formula-steps/
+ * Note: This is not a real premium calculation and is only for demonstration purposes.
+ * 
  * @param coverageAmount - Coverage amount in dollars
  * @param age - Age of the person
  * @param gender - Gender ('male' or 'female')
