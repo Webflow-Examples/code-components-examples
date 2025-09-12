@@ -1,0 +1,13 @@
+{
+  "name": "time-machine-app",
+  "private": true,
+  "version": "1.0.0",
+  "description": "A Webflow App for finding Time Machine locations.",
+  "scripts": {
+    "components": "npm run dev --workspace=@time-machine/webflow-components",
+    "backend": "npm run dev --workspace=@time-machine/astro-backend"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}

@@ -1,0 +1,14 @@
+.custom-marker {
+  width: 20px;
+  height: 20px;
+  background-color: #ffd700; /* Vibrant yellow */
+  border: 2px solid black;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.custom-marker.selected {
+  transform: scale(1.5);
+  background-color: #ff4500; /* Orange-red for selection */
+}

@@ -1,0 +1,28 @@
+{
+  "name": "@time-machine/astro-backend",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "db:generate": "drizzle-kit generate",
+    "db:apply:local": "wrangler d1 migrations apply DB --local",
+    "db:push": "drizzle-kit push"
+  },
+  "dependencies": {
+    "@astrojs/cloudflare": "^12.6.8",
+    "astro": "^5.7.0",
+    "drizzle-orm": "^0.44.5"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250912.0",
+    "better-sqlite3": "^12.2.0",
+    "dotenv": "^17.2.2",
+    "drizzle-kit": "^0.31.4",
+    "tsx": "^4.20.5",
+    "wrangler": "^4.36.0"
+  }
+}

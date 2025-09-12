@@ -1,0 +1,29 @@
+---
+---
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Authentication Success</title>
+</head>
+<body>
+  <p>Authentication successful! You can now close this window.</p>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const targetOrigin = params.get('origin');
+    const siteId = params.get('site_id');
+
+    if (window.opener && targetOrigin && siteId) {
+      window.opener.postMessage(
+        {
+          type: "webflow_auth_success",
+          siteId: siteId,
+        },
+        targetOrigin
+      );
+      window.close();
+    } else {
+      document.body.innerHTML = '<h1>Error</h1><p>Could not complete authentication. Please try again.</p>';
+    }
+  </script>
+</body>
+</html>
