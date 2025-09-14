@@ -1,0 +1,10 @@
+import { defineMiddleware } from "astro:middleware";
+import { createAuth } from "./lib/auth";
+
+export const onRequest = defineMiddleware(async (ctx, next) => {
+  const auth = createAuth(ctx.locals);
+  const session = await auth.api.getSession({ headers: ctx.request.headers });
+  ctx.locals.user = session ? session.user : null;
+  ctx.locals.session = session ? session.session : null;
+  return next();
+});

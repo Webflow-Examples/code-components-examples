@@ -1,0 +1,21 @@
+---
+import { getAuthClient } from "../lib/auth-client";
+
+---
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Authentication Success</title>
+</head>
+<body>
+  <p>Welcome!</p>
+  <p>You can now close this window and return to the application.</p>
+  <script>
+    // Notify the opener window that authentication was successful
+    if (window.opener) {
+      window.opener.postMessage({ type: "auth-success" }, "*");
+      window.close();
+    }
+  </script>
+</body>
+</html>

@@ -1,1 +1,0 @@
-ALTER TABLE `sites` ADD `mapbox_key` text;

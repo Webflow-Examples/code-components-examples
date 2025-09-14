@@ -1,0 +1,19 @@
+{
+  "cloud": {
+    "framework": "astro"
+  },
+  "library": {
+    "name": "Store Locator",
+    "components": ["./src/**/*.webflow.@(js|jsx|mjs|ts|tsx)"],
+    "id": "store-locator",
+    "description": "",
+    "webpackConfig": "./webpack.webflow.cjs"
+  },
+  "telemetry": {
+    "global": {
+      "allowTelemetry": true,
+      "lastPrompted": 1757849292083,
+      "version": "1.8.41"
+    }
+  }
+}
