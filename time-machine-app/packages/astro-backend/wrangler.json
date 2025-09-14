@@ -2,10 +2,6 @@
   "name": "time-machine-backend",
   "main": "./dist/server/entry.mjs",
   "compatibility_date": "2024-04-05",
-  "vars": {
-    "WEBFLOW_CLIENT_ID": "1e81c073d4a4a1c1e52cd4bc415e878b7393e7f412eb3562e398f81db71d6fc2",
-    "WEBFLOW_CLIENT_SECRET": "81e861d15fe4d602dc6d6e728109e89f954066e8f66294eb93831c177668ad88"
-  },
   "d1_databases": [
     {
       "binding": "DB",
