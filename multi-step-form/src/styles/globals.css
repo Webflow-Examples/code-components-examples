@@ -1,8 +1,8 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
 @import "tailwindcss";
 @plugin "daisyui" {
-  themes: light --default, dark --prefersdark;
+  themes: light --default, dark --prefersdark, cupcake;
 }
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
 
 :root,
 :host {
@@ -201,15 +201,6 @@
   *:focus-visible {
     @apply outline-none ring-2 ring-blue-500 ring-offset-2;
   }
-}
-
-/* Theme component styles */
-[data-theme="dark"] {
-  @apply dark;
-}
-
-[data-theme="light"] {
-  @apply light;
 }
 
 /* Smooth transitions for theme changes */

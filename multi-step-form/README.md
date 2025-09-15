@@ -1,4 +1,6 @@
-# Webflow Store Locator: Code Component & Cloud API Example
+# Webflow Store Locator
+
+### Code Component & Cloud API Example
 
 This project is a complete, deployable example of a Webflow Code Component powered by a backend API hosted on Webflow Cloud. It provides a full-featured "Store Locator" that can be dropped into any Webflow site, configured visually, and powered by your Webflow CMS data.
 
