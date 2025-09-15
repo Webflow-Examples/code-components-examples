@@ -4,6 +4,7 @@ import "leaflet/dist/leaflet.css";
 import icon from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
 import iconRetina from "leaflet/dist/images/marker-icon-2x.png";
+import { jwtDecode } from "jwt-decode";
 
 interface Store {
   id: string;
@@ -41,6 +42,11 @@ interface StoreLocatorViewProps {
   authToken?: string;
 }
 
+interface DecodedToken {
+  mapboxToken?: string;
+  // Add other properties from your JWT payload here if needed
+}
+
 const StoreLocatorView: React.FC<StoreLocatorViewProps> = ({
   distanceUnit = "mi", // Default to miles
   mapStyle,
@@ -58,6 +64,20 @@ const StoreLocatorView: React.FC<StoreLocatorViewProps> = ({
   const [selectedStore, setSelectedStore] = useState<Store | null>(null);
   const [L, setL] = useState<typeof LType | null>(null); // State for Leaflet module
   const [orangeIcon, setOrangeIcon] = useState<LType.DivIcon | null>(null);
+  const [mapboxToken, setMapboxToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (authToken) {
+      try {
+        const decoded = jwtDecode<DecodedToken>(authToken);
+        if (decoded.mapboxToken) {
+          setMapboxToken(decoded.mapboxToken);
+        }
+      } catch (error) {
+        console.error("Failed to decode JWT:", error);
+      }
+    }
+  }, [authToken]);
 
   // Dynamically import Leaflet only on the client-side
   useEffect(() => {
@@ -198,16 +218,13 @@ const StoreLocatorView: React.FC<StoreLocatorViewProps> = ({
   }, [apiBaseUrl, authToken]);
 
   useEffect(() => {
-    if (L && mapContainer && !mapRef.current && authToken) {
+    if (L && mapContainer && !mapRef.current && authToken && mapboxToken) {
       mapRef.current = L.map(mapContainer, {
         zoomControl: false, // Disable default zoom control
       }).setView([40.7128, -74.006], 12); // Centered on NYC
       L.tileLayer(
-        `${
-          apiBaseUrl || ""
-        }/api/maps/tiles/{z}/{x}/{y}.png?style=${mapStyle}&token=${authToken}`,
+        `https://api.mapbox.com/styles/v1/${mapStyle}/tiles/512/{z}/{x}/{y}@2x?access_token=${mapboxToken}`,
         {
-          // We can't send auth headers for tile requests, so the token is in the URL.
           attribution:
             '&copy; <a href="https://www.mapbox.com/about/maps/">Mapbox</a> &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
           tileSize: 512,
@@ -216,13 +233,27 @@ const StoreLocatorView: React.FC<StoreLocatorViewProps> = ({
       ).addTo(mapRef.current);
       L.control.zoom({ position: "bottomright" }).addTo(mapRef.current);
     }
-  }, [mapContainer, mapStyle, L, apiBaseUrl, authToken]); // Add L to dependency array
+  }, [L, mapContainer, mapStyle, authToken, mapboxToken]); // Add L to dependency array
 
   useEffect(() => {
     if (mapRef.current) {
       mapRef.current.invalidateSize();
     }
   }, [loading]);
+
+  useEffect(() => {
+    if (!mapContainer || !mapRef.current) return;
+
+    const resizeObserver = new ResizeObserver(() => {
+      mapRef.current?.invalidateSize();
+    });
+
+    resizeObserver.observe(mapContainer);
+
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, [mapContainer]);
 
   useEffect(() => {
     if (L && orangeIcon && mapRef.current) {

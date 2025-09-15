@@ -29,6 +29,7 @@ const StoreLocatorSetup: React.FC<StoreLocatorSetupProps> = ({
   const handleLogin = () => {
     // Use the client's built-in signIn method. It will handle the redirect
     // and automatically return the user to this page.
+    //@ts-expect-error - signIn is not typed
     authClient.signIn.social({
       provider: "webflow",
       callbackURL: `${import.meta.env.BASE_URL}/setup`,

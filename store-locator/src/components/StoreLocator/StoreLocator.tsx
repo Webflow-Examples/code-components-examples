@@ -47,12 +47,14 @@ const StoreLocator: React.FC<StoreLocatorProps> = ({
   const selectedDistanceUnit = distanceUnitMapping[distanceUnit] || "mi";
 
   return (
-    <StoreLocatorView
-      mapStyle={fullMapStyle}
-      distanceUnit={selectedDistanceUnit}
-      apiBaseUrl={apiBaseUrl}
-      authToken={authToken}
-    />
+    <div className="store-locator-container">
+      <StoreLocatorView
+        mapStyle={fullMapStyle}
+        distanceUnit={selectedDistanceUnit}
+        apiBaseUrl={apiBaseUrl}
+        authToken={authToken}
+      />
+    </div>
   );
 };
 

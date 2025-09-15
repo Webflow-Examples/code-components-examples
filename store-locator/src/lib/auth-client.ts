@@ -42,6 +42,7 @@ export function getAuthClient(apiBaseUrl?: string): AuthClient {
   // If not, create a new client and cache it for future use.
   const newClient = createAuthClient({
     baseURL: `${apiBaseUrl}/api/auth`,
+    //@ts-expect-error - genericOAuthClient is not typed
     plugins: [genericOAuthClient()],
     fetch: (url: string, options: RequestInit) => {
       // Ensure credentials (cookies) are included in every request

@@ -48,6 +48,7 @@ export function createAuth(locals: APIContext["locals"]) {
       },
     },
     plugins: [
+      // @ts-ignore
       genericOAuth({
         config: [
           {

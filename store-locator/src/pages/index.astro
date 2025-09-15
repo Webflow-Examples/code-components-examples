@@ -2,7 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import StoreLocator from "../components/StoreLocator/StoreLocator.tsx";
 
-const authToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaXRlSWQiOiI2OGI3MDJiMjA3N2E2MzdlNTc4MzdlMzYiLCJjb2xsZWN0aW9uSWQiOiI2OGM0NjY4ZTMxMTkzYjJkZmM4MTczZTEiLCJpYXQiOjE3NTc4NjQxOTMsImV4cCI6MTc4OTQyMTc5M30.bzdVPOn8CLqkQEQSYfGFL-oWj6-aR5zhgJ0KvQnkexU"
+const authToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaXRlSWQiOiI2OGI3MDJiMjA3N2E2MzdlNTc4MzdlMzYiLCJjb2xsZWN0aW9uSWQiOiI2OGM0NjY4ZTMxMTkzYjJkZmM4MTczZTEiLCJtYXBib3hUb2tlbiI6InBrLmV5SjFJam9pYW1WbGJubDFjMnBoYm1VaUxDSmhJam9pWTIxbWFEVnBOVzUzTURkeGRUSnNjSGxuZFRsamRXZDZZeUo5LkZsSnRjaTdZSG1pNXktNXBXeGFNUGciLCJpYXQiOjE3NTc5NDYxNDEsImV4cCI6MTc4OTUwMzc0MX0.PEY4-TpHd_Up9Hkl4fY0KARulrZti14t690r2CS-9Ak"
 
 const apiBaseUrl = import.meta.env.PUBLIC_BETTER_AUTH_URL + import.meta.env.BASE_URL;
 
@@ -10,6 +10,8 @@ const apiBaseUrl = import.meta.env.PUBLIC_BETTER_AUTH_URL + import.meta.env.BASE
 
 <Layout title="Store Locator">
   <main>
-    <StoreLocator client:only="react" authToken={authToken} apiBaseUrl={apiBaseUrl} />
+    <div style="height: 85vh; max-height: 900px; width: 60%;">
+      <StoreLocator client:only="react" authToken={authToken} apiBaseUrl={apiBaseUrl} />
+    </div>
   </main>
 </Layout>
