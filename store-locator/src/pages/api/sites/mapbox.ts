@@ -16,7 +16,10 @@ export const POST = async (context: APIContext) => {
     return new Response("Unauthorized", { status: 401 });
   }
 
-  const { siteId, mapboxKey } = await request.json();
+  const { siteId, mapboxKey } = (await request.json()) as {
+    siteId: string;
+    mapboxKey: string;
+  };
 
   if (!siteId) {
     return new Response("Site ID is required", { status: 400 });

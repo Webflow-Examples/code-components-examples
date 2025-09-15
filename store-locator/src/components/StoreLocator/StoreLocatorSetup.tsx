@@ -6,6 +6,7 @@ import { Toaster, toast } from "react-hot-toast";
 interface SiteWithPrefs extends Webflow.Site {
   selectedCollectionId?: string | null;
   mapboxKey?: string | null;
+  mapboxStyle?: string | null;
 }
 
 interface StoreLocatorSetupProps {
