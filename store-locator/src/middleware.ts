@@ -13,6 +13,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
     "https://webflow.com",
     "https://*.webflow.com",
     "https://*.design.webflow.com",
+    "https://*.webflow.io",
   ];
 
   const isAllowedOrigin =
