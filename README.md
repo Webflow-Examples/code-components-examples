@@ -18,18 +18,32 @@ Here are some reasons why you may want to import your custom React components in
 You can navigate into individual projects in this repo to copy, make tweaks, and import pre-made example components into Webflow.
 
 ### 🧮 [Pricing Quote Calculator](./pricing-quote-calculator/)
+
 A pricing calculator to output an insurance premium featuring:
+
 - **Multi-input form logic** with validation
-- **URL parameter support** for pre-filling form inputs with defualt state
+- **URL parameter support** for pre-filling form inputs with default state
 - **Responsive design and Tailwind styling** with [DaisyUI](https://daisyui.com/)
 
 ### 📝 [Multi-Step Form](./multistep-form/)
+
 A dynamic form generator demonstrating:
+
 - **Step-by-step navigation** with progress tracking
 - **Dynamic field generation** based on configuration
 - **Form validation and submission** and error handling
 - **Conditional logic** for showing/hiding fields
 - **Data persistence** across steps
+
+### 🗺️ [Store Locator](./store-locator/)
+
+A map component and backend API that plots locations demonstrating:
+
+- **Webflow Cloud** Setup a secure backend to call protected API endpoints from your component
+- **JWT Auth** Add a JWT as a prop in your component to access protected content
+- **Webflow CMS API** get locations already listed in the Webflow CMS
+- **Mapbox Integration** geo-locate a users input and get map tiles
+- **Leaflet.js** A lightweight, open-source mapping library
 
 ## 🚀 Getting Started
 

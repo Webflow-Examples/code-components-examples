@@ -6,13 +6,13 @@ This code component example is a flexible pricing calculator widget for calculat
 
 ## Features
 
-- User input fields exposed as props to allow setting defaults from Webflow or URL query params
-  - Prefill values based on personalization
-  - Perform A/B testing on text such as the title or CTA button with dynamic-bound values at runtime
+- User input fields are exposed as component props. Enabling Webflow users to set defaults in the Webflow designer
+- Additionally, defaults can be set via URL query parameters enabling:
+  - Prefilled values based on personalization
+  - A/B testing on text such as the title or CTA button with dynamic-bound values at runtime
 - Client-side calculations for monthly premium estimation
 - [TailwindCSS](https://tailwindcss.com/) with [DaisyUI](https://daisyui.com/) as a Tailwind plugin
 - Vite project setup
-
 
 ## Getting started
 
