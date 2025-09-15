@@ -1,0 +1,10 @@
+---
+import Layout from '../layouts/Layout.astro';
+import FormEditor from '../components/FormEditor.tsx';
+---
+
+<Layout title="Dynamic Form Generator">
+	<main>
+		<FormEditor client:load />
+	</main>
+</Layout>

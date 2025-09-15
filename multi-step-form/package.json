@@ -1,0 +1,35 @@
+{
+  "name": "astro",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro build && wrangler dev",
+    "deploy": "webflow cloud deploy",
+    "astro": "astro",
+    "cf-typegen": "wrangler types"
+  },
+  "dependencies": {
+    "@astrojs/cloudflare": "^12.6.6",
+    "@astrojs/react": "^4.2.5",
+    "@types/react": "^18.2.79",
+    "@types/react-dom": "^18.2.25",
+    "astro": "^5.7.0",
+    "daisyui": "^5.1.12",
+    "marked": "^16.3.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240405.0",
+    "@tailwindcss/vite": "^4.1.13",
+    "@webflow/data-types": "^1.0.1",
+    "@webflow/react": "^1.0.1",
+    "@webflow/webflow-cli": "^1.0.1",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^4.1.13",
+    "wrangler": "^3.48.0"
+  }
+}
