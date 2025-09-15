@@ -5,6 +5,11 @@ import { createDb } from "../../lib/db";
 import { site as siteSchema } from "../../lib/db/schema";
 import { and, eq } from "drizzle-orm";
 
+/**
+ * GET /api/collections?site_id=...
+ * Returns Webflow CMS collections for the authenticated user's site.
+ * Requires a BetterAuth session (used only during setup, not embed usage).
+ */
 export const GET: APIRoute = async ({ request, locals }) => {
   const { CACHE, DB } = locals.runtime.env;
   const db = createDb(DB);

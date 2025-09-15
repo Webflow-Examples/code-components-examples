@@ -4,6 +4,7 @@ import "leaflet/dist/leaflet.css";
 import icon from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
 import iconRetina from "leaflet/dist/images/marker-icon-2x.png";
+import { getDistanceKm, kilometersToMiles } from "../../lib/geo";
 
 interface Store {
   id: string;
@@ -41,10 +42,7 @@ interface StoreLocatorViewProps {
   authToken?: string;
 }
 
-interface DecodedToken {
-  mapboxToken?: string;
-  // Add other properties from your JWT payload here if needed
-}
+// Note: We don't decode the JWT client-side; the server validates it.
 
 const StoreLocatorView: React.FC<StoreLocatorViewProps> = ({
   distanceUnit = "mi", // Default to miles
@@ -107,20 +105,7 @@ const StoreLocatorView: React.FC<StoreLocatorViewProps> = ({
     }
   }, []); // Run once on client mount
 
-  // Haversine distance calculation (remains outside component for now)
-  function getDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
-    const R = 6371; // Radius of the Earth in km
-    const dLat = (lat2 - lat1) * (Math.PI / 180);
-    const dLon = (lon2 - lon1) * (Math.PI / 180);
-    const a =
-      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(lat1 * (Math.PI / 180)) *
-        Math.cos(lat2 * (Math.PI / 180)) *
-        Math.sin(dLon / 2) *
-        Math.sin(dLon / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    return R * c; // Distance in km
-  }
+  // Distance utilities imported from lib/geo
 
   // Guard clause to ensure config is loaded
   if (!authToken) {
@@ -303,7 +288,7 @@ const StoreLocatorView: React.FC<StoreLocatorViewProps> = ({
         const dist =
           typeof store.fieldData.latitude === "number" &&
           typeof store.fieldData.longitude === "number"
-            ? getDistance(
+            ? getDistanceKm(
                 latitude,
                 longitude,
                 store.fieldData.latitude,
@@ -450,7 +435,7 @@ const StoreLocatorView: React.FC<StoreLocatorViewProps> = ({
               {isFinite(store.distance) && (
                 <p className="store-distance">
                   {distanceUnit === "mi"
-                    ? (store.distance * 0.621371).toFixed(1)
+                    ? kilometersToMiles(store.distance).toFixed(1)
                     : store.distance.toFixed(1)}{" "}
                   {distanceUnit} away
                 </p>

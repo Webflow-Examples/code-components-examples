@@ -13,10 +13,20 @@ export default function Navbar({ apiBaseUrl, title }: NavbarProps) {
 
   const { data: session, isPending } = authClient.useSession();
 
+  const handleLogin = () => {
+    // Use the client's built-in signIn method. It will handle the redirect
+    // and automatically return the user to this page.
+    //@ts-expect-error - signIn is not typed
+    authClient.signIn.social({
+      provider: "webflow",
+      callbackURL: `${import.meta.env.BASE_URL}/setup`,
+    });
+  };
+
   return (
     <header className="navbar-header">
       <nav className="navbar-nav">
-        <a href="/" className="navbar-brand">
+        <a href={apiBaseUrl} className="navbar-brand">
           {title}
         </a>
         <div className="navbar-links">
@@ -24,11 +34,14 @@ export default function Navbar({ apiBaseUrl, title }: NavbarProps) {
             <div>Loading...</div>
           ) : (
             <>
-              <a href="/" className="navbar-link">
+              <a href={apiBaseUrl} className="navbar-link">
                 Home
               </a>
-              <a href="/setup" className="navbar-link">
+              <a href={apiBaseUrl + "/setup"} className="navbar-link">
                 Setup
+              </a>
+              <a href={apiBaseUrl + "/docs"} className="navbar-link">
+                Docs
               </a>
               {session ? (
                 <button
@@ -38,10 +51,7 @@ export default function Navbar({ apiBaseUrl, title }: NavbarProps) {
                   Logout
                 </button>
               ) : (
-                <button
-                  onClick={() => (authClient as any).signIn.oauth2("webflow")}
-                  className="navbar-button"
-                >
+                <button onClick={handleLogin} className="navbar-button">
                   Login with Webflow
                 </button>
               )}

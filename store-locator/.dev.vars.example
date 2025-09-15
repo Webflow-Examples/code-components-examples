@@ -7,7 +7,3 @@ WEBFLOW_CLIENT_SECRET=your_webflow_client_secret_here
 # Generate a secure random string for production
 BETTER_AUTH_SECRET=your_better_auth_secret_here
 PUBLIC_BETTER_AUTH_URL=http://localhost:8787
-
-# Mapbox Configuration (optional)
-# Get this from your Mapbox account: https://account.mapbox.com/
-MAPBOX_ACCESS_TOKEN=your_mapbox_token_here

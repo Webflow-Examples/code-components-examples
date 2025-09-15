@@ -2,7 +2,14 @@ import type { APIRoute } from "astro";
 import { createDb } from "../../../../../../lib/db";
 import { site as siteSchema } from "../../../../../../lib/db/schema";
 import { eq } from "drizzle-orm";
+import { parseMapboxStyle } from "../../../../../../lib/mapbox";
 
+/**
+ * GET /api/maps/tiles/{z}/{x}/{y}.png?style=...
+ *
+ * Proxies Mapbox raster style tiles using the site-specific token from D1.
+ * Requires a JWT (accepted via Authorization header or token query param).
+ */
 export const GET: APIRoute = async ({ params, locals, url }) => {
   const { x, y, z } = params;
   const authToken = locals.authToken;
@@ -42,42 +49,17 @@ export const GET: APIRoute = async ({ params, locals, url }) => {
     }
 
     // --- Start of new parsing logic ---
-    let mapboxUser, mapboxStyleId;
-    const style = (url.searchParams.get("style") || "streets-v11").trim();
+    const styleQuery = (url.searchParams.get("style") || "streets-v11").trim();
+    const parsed = parseMapboxStyle(styleQuery);
 
-    console.log("Parsing Mapbox style URL:", style);
-
-    // Regex to capture username and style_id from various Mapbox URL formats
-    const patterns = [
-      /^mapbox:\/\/styles\/([^/]+)\/([^/]+)$/, // mapbox://styles/user/style
-      /styles\/v1\/([^/]+)\/([^/]+)/, // full URL e.g. api.mapbox.com/styles/v1/user/style
-      /^([^/]+)\/([^/]+)$/, // user/style
-    ];
-
-    let matched = false;
-    for (const pattern of patterns) {
-      const match = style.match(pattern);
-      if (match && match[1] && match[2]) {
-        mapboxUser = match[1];
-        mapboxStyleId = match[2];
-        matched = true;
-        break;
-      }
-    }
-
-    // If no patterns matched, assume it's a Mapbox-owned style ID like "streets-v11"
-    if (!matched && !style.includes("/")) {
-      mapboxUser = "mapbox";
-      mapboxStyleId = style;
-    }
-
-    if (!mapboxUser || !mapboxStyleId) {
-      console.error("Failed to parse Mapbox style URL:", style);
+    if (!parsed) {
+      console.error("Failed to parse Mapbox style URL:", styleQuery);
       return new Response(
         "Invalid Mapbox style URL format. Please use 'username/style_id' or a full Mapbox style URL.",
         { status: 400 }
       );
     }
+    const { user: mapboxUser, styleId: mapboxStyleId } = parsed;
     // --- End of new parsing logic ---
 
     const tileUrl = `https://api.mapbox.com/styles/v1/${mapboxUser}/${mapboxStyleId}/tiles/512/${z}/${x}/${y}@2x?access_token=${site.mapboxKey}`;

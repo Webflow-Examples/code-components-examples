@@ -1,12 +1,9 @@
 import { WebflowClient } from "webflow-api";
 
 /**
- * Creates a new Webflow API client initialized with a user-specific access token.
- * @param {string} token - The user's Webflow access token.
- * @returns A new WebflowClient instance.
+ * Returns a Webflow API client initialized with a user/site access token.
+ * This client is used server-side to fetch Sites, Collections and Items.
  */
 export function createClient(token: string) {
-  return new WebflowClient({
-    accessToken: token,
-  });
+  return new WebflowClient({ accessToken: token });
 }

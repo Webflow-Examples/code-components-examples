@@ -14,6 +14,11 @@ interface WebflowIntrospection {
   };
 }
 
+/**
+ * Initializes BetterAuth for Astro endpoints.
+ * - Uses Drizzle adapter with the D1 database bindings from locals.runtime.env
+ * - Configures a generic OAuth provider for Webflow
+ */
 export function createAuth(locals: APIContext["locals"]) {
   const { env } = locals.runtime;
   return betterAuth({

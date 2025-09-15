@@ -2,9 +2,15 @@ import type { APIRoute } from "astro";
 import { createDb } from "../../lib/db";
 import { site as siteSchema } from "../../lib/db/schema";
 import { and, eq } from "drizzle-orm";
-import { createAuth } from "../../lib/auth";
 import { createClient } from "../../lib/webflow";
 
+/**
+ * GET /api/locations
+ *
+ * Returns items from the configured Webflow CMS collection. Requires a
+ * Bearer JWT created by /api/auth/generate-token. The middleware validates
+ * the token and places its payload at locals.authToken.
+ */
 export const GET: APIRoute = async ({ request, locals }) => {
   const { DB, CACHE } = locals.runtime.env;
   const db = createDb(DB);
@@ -24,20 +30,27 @@ export const GET: APIRoute = async ({ request, locals }) => {
     });
   }
 
-  // Old session-based auth is no longer needed here
-  // const session = await createAuth(locals).api.getSession({
-  //   headers: request.headers,
-  // });
-  // if (!session) {
-  //   return new Response("Unauthorized", { status: 401 });
-  // }
+  // Session-based auth is not required; the JWT is the source of truth
 
   const cacheKey = `locations:${collectionId}`;
-  const cached = await CACHE.get(cacheKey, "json");
+  const cached = (await CACHE.get(cacheKey, "json")) as unknown;
   if (cached) {
-    return new Response(JSON.stringify(cached), {
-      headers: { "Content-Type": "application/json" },
-    });
+    // Backward compatible: handle previous cache shape where full object was stored
+    let items: any[] | undefined;
+    if (Array.isArray(cached)) {
+      items = cached as any[];
+    } else if (
+      cached &&
+      typeof cached === "object" &&
+      Array.isArray((cached as any).items)
+    ) {
+      items = (cached as any).items as any[];
+    }
+    if (items) {
+      return new Response(JSON.stringify(items), {
+        headers: { "Content-Type": "application/json" },
+      });
+    }
   }
 
   // 1. Fetch site configuration from D1 to get the access token
@@ -67,12 +80,13 @@ export const GET: APIRoute = async ({ request, locals }) => {
   try {
     const webflow = createClient(webflowAccessToken);
     const list = await webflow.collections.items.listItems(collectionId);
-    // Cache the response
-    await CACHE.put(cacheKey, JSON.stringify(list?.items), {
+    const items = list?.items ?? [];
+    // Cache just the items array for client consumption
+    await CACHE.put(cacheKey, JSON.stringify(items), {
       expirationTtl: 3600,
     });
 
-    return new Response(JSON.stringify(list), {
+    return new Response(JSON.stringify(items), {
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {

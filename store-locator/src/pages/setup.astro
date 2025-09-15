@@ -8,6 +8,24 @@ const apiBaseUrl = Astro.locals.runtime.env.PUBLIC_BETTER_AUTH_URL + import.meta
 
 <Layout title="Store Locator Setup">
   <main>
+    <div class="prose">
+      <h1>Store Locator Setup</h1>
+      <p>
+        Use this page to configure the backend for your Store Locator component. After authenticating with Webflow, you can link a Webflow Site, a CMS Collection, and your Mapbox API key.
+      </p>
+      <p>
+        Once configured, generate a secure JWT and copy it into the component's props in the Webflow Designer.
+      </p>
+    </div>
     <StoreLocatorSetup client:load apiBaseUrl={apiBaseUrl} />
   </main>
 </Layout>
+
+<style>
+	.prose {
+		max-width: 65ch;
+		margin: 0 auto 2rem auto;
+    padding: 0 2rem;
+		text-align: center;
+	}
+</style>

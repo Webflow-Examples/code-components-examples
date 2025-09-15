@@ -1,0 +1,71 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { marked } from 'marked';
+import readmeContent from '../../README.md?raw';
+
+const htmlContent = marked.parse(readmeContent, { gfm: true, breaks: true });
+---
+
+<Layout title="Documentation">
+  <main>
+    <div class="prose" set:html={htmlContent}>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .prose {
+    max-width: 80ch;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  /* Basic prose styling for readability */
+  .prose :global(h1),
+  .prose :global(h2),
+  .prose :global(h3) {
+    margin-bottom: 1em;
+    margin-top: 1.5em;
+  }
+  .prose :global(p),
+  .prose :global(ul),
+  .prose :global(ol) {
+    margin-bottom: 1em;
+  }
+  .prose :global(a) {
+    color: #3245ff;
+    text-decoration: none;
+  }
+  .prose :global(a:hover) {
+    text-decoration: underline;
+  }
+  .prose :global(code) {
+    background-color: #f3f4f6;
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    font-size: 85%;
+  }
+  .prose :global(pre) {
+    background-color: #f3f4f6;
+    padding: 1em;
+    border-radius: 6px;
+    overflow-x: auto;
+  }
+  .prose :global(pre code) {
+    background-color: transparent;
+    padding: 0;
+  }
+  .prose :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1em;
+  }
+  .prose :global(th),
+  .prose :global(td) {
+    border: 1px solid #d1d5db;
+    padding: 0.5em 1em;
+  }
+  .prose :global(th) {
+    font-weight: bold;
+    background-color: #f9fafb;
+  }
+</style>

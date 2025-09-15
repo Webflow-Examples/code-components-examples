@@ -6,7 +6,6 @@ import { Toaster, toast } from "react-hot-toast";
 interface SiteWithPrefs extends Webflow.Site {
   selectedCollectionId?: string | null;
   mapboxKey?: string | null;
-  mapboxStyle?: string | null;
 }
 
 interface StoreLocatorSetupProps {
@@ -21,7 +20,6 @@ const StoreLocatorSetup: React.FC<StoreLocatorSetupProps> = ({
   const authClient = useMemo(() => getAuthClient(apiBaseUrl), [apiBaseUrl]);
   const { data: session, isPending, refetch } = authClient.useSession();
   const [mapboxKey, setMapboxKey] = useState("");
-  const [mapboxStyle, setMapboxStyle] = useState("");
   const [sites, setSites] = useState<SiteWithPrefs[]>([]);
   const [selectedSite, setSelectedSite] = useState("");
   const [collections, setCollections] = useState<Webflow.Collection[]>([]);
@@ -76,7 +74,6 @@ const StoreLocatorSetup: React.FC<StoreLocatorSetupProps> = ({
       body: JSON.stringify({
         siteId: selectedSite,
         mapboxKey,
-        mapboxStyle,
       }),
     });
 
@@ -112,7 +109,7 @@ const StoreLocatorSetup: React.FC<StoreLocatorSetupProps> = ({
           if (preferredSite) {
             setSelectedSite(preferredSite.id);
             setMapboxKey(preferredSite.mapboxKey || "");
-            setMapboxStyle(preferredSite.mapboxStyle || "");
+            // mapboxStyle is set via component props, not persisted
             // The collections useEffect will handle setting the selected collection
           } else if (data.length > 0) {
             setSelectedSite(data[0].id);

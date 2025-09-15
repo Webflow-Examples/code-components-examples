@@ -18,6 +18,10 @@ const mockAuthClient = {
   },
 };
 
+/**
+ * Returns a browser-side BetterAuth client pointing at our API base URL.
+ * In Node/SSR builds (e.g. Webflow CLI), returns a safe mock to avoid crashes.
+ */
 export function getAuthClient(apiBaseUrl?: string): AuthClient {
   if (typeof window === "undefined") {
     // In a Node.js environment (like the Webflow CLI build), we must

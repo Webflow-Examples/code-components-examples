@@ -17,7 +17,6 @@ export const site = sqliteTable("site", {
     .references(() => user.id, { onDelete: "cascade" }),
   webflowAccessToken: text("webflow_access_token").notNull(),
   mapboxKey: text("mapbox_key"),
-  mapboxStyle: text("mapbox_style"),
   selectedCollectionId: text("selected_collection_id"),
 });
 

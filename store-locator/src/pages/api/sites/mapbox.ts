@@ -4,6 +4,10 @@ import { site as siteSchema } from "../../../lib/db/schema";
 import { eq } from "drizzle-orm";
 import { createAuth } from "../../../lib/auth";
 
+/**
+ * POST /api/sites/mapbox
+ * Stores a Mapbox access token against a site for the authenticated user.
+ */
 export const POST = async (context: APIContext) => {
   const { locals, request } = context;
   const db = createDb(locals.runtime.env.DB);

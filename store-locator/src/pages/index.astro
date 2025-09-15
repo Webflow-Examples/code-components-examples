@@ -2,14 +2,25 @@
 import Layout from "../layouts/Layout.astro";
 import StoreLocator from "../components/StoreLocator/StoreLocator.tsx";
 
+// NOTE: This is a placeholder token for local development.
+// For production, you must generate a token from the /setup page after deploying your backend.
 const authToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaXRlSWQiOiI2OGI3MDJiMjA3N2E2MzdlNTc4MzdlMzYiLCJjb2xsZWN0aW9uSWQiOiI2OGM0NjY4ZTMxMTkzYjJkZmM4MTczZTEiLCJtYXBib3hUb2tlbiI6InBrLmV5SjFJam9pYW1WbGJubDFjMnBoYm1VaUxDSmhJam9pWTIxbWFEVnBOVzUzTURkeGRUSnNjSGxuZFRsamRXZDZZeUo5LkZsSnRjaTdZSG1pNXktNXBXeGFNUGciLCJpYXQiOjE3NTc5NTczMDEsImV4cCI6MTc4OTUxNDkwMX0.qAstSwexlDQOM4l1y-QqFahVrDlRvy7BAyOcWpYidc4"
 
 const apiBaseUrl = Astro.locals.runtime.env.PUBLIC_BETTER_AUTH_URL + import.meta.env.BASE_URL;
 
 ---
 
-<Layout title="Store Locator">
+<Layout title="Store Locator Demo">
   <main>
+    <div class="prose">
+      <h1>Store Locator Component Demo</h1>
+      <p>
+        This page provides a live preview of the <code>StoreLocator</code> React component. It's configured to run against your local development server.
+      </p>
+      <p>
+        The component is initialized with a hardcoded JWT for demonstration purposes. To use this in a production Webflow site, you must first deploy this backend to Webflow Cloud, complete the configuration at <a href="/map/setup">/setup</a>, and use the generated token in the component's props in the Webflow Designer.
+      </p>
+    </div>
     <div class="store-locator-wrapper">
       <StoreLocator client:only="react" authToken={authToken} apiBaseUrl={apiBaseUrl} />
     </div>
@@ -17,6 +28,19 @@ const apiBaseUrl = Astro.locals.runtime.env.PUBLIC_BETTER_AUTH_URL + import.meta
 </Layout>
 
 <style>
+  .prose {
+    max-width: 65ch;
+    margin: 0 auto 2rem auto;
+    padding: 0 2rem;
+    text-align: center;
+  }
+  .prose a {
+    color: #3245ff;
+    text-decoration: none;
+  }
+  .prose a:hover {
+    text-decoration: underline;
+  }
   .store-locator-wrapper {
     width: 100%;
     height: 80vh;

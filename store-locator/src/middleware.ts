@@ -1,11 +1,14 @@
 import { defineMiddleware } from "astro:middleware";
 import jwt from "jsonwebtoken";
 
+/**
+ * Global middleware
+ * - Adds permissive CORS for local dev and Webflow domains
+ * - Validates JWT for protected API routes and attaches decoded payload to locals
+ */
 export const onRequest = defineMiddleware(async (context, next) => {
-  console.log(`[MIDDLEWARE] Processing request to: ${context.url.pathname}`);
   const AUTH_SECRET = context.locals.runtime.env.BETTER_AUTH_SECRET;
   const origin = context.request.headers.get("Origin");
-  console.log(`[MIDDLEWARE] Origin: ${origin}`);
 
   // Allow Webflow domains and localhost for development
   const allowedOrigins = [
@@ -15,7 +18,6 @@ export const onRequest = defineMiddleware(async (context, next) => {
     "https://*.webflow.com",
     "https://*.design.webflow.com",
     "https://*.webflow.io",
-    "https://my-astro-app.victoria-l-plummer.workers.dev",
     "null",
   ];
 
@@ -28,8 +30,6 @@ export const onRequest = defineMiddleware(async (context, next) => {
     ) ||
       (origin.startsWith("https://webflow-") &&
         origin.includes(".design.webflow.com")));
-
-  console.log(`[MIDDLEWARE] isAllowedOrigin: ${isAllowedOrigin}`);
 
   const corsHeaders = {
     "Access-Control-Allow-Origin": isAllowedOrigin ? origin || "null" : "*",
@@ -49,13 +49,10 @@ export const onRequest = defineMiddleware(async (context, next) => {
   }
 
   // Define which routes are protected
-  // Note: The base path is /map, so API routes are at /map/api/...
+  // Note: When deployed under a base path (e.g. /map), API routes include it.
   const protectedRoutes = /^\/map\/api\/(locations|geocode|maps)/;
 
   if (protectedRoutes.test(context.url.pathname)) {
-    console.log(
-      `[MIDDLEWARE] Protected route detected: ${context.url.pathname}`
-    );
     const authHeader = context.request.headers.get("Authorization");
     let token = authHeader?.split(" ")[1];
 
@@ -65,27 +62,11 @@ export const onRequest = defineMiddleware(async (context, next) => {
     }
 
     if (!token) {
-      console.log(
-        `[MIDDLEWARE] No token found for protected route: ${context.url.pathname}`
-      );
       return new Response("Unauthorized: Missing token", { status: 401 });
     }
 
     try {
-      // Use the hardcoded secret for now
       const authSecret = AUTH_SECRET;
-
-      // --- Start Temporary Debug Logging ---
-      console.log(
-        `[AUTH DEBUG] Using secret: ${authSecret.substring(0, 10)}...`
-      );
-      console.log(
-        `[AUTH DEBUG] Validating token starting with: ${token.substring(
-          0,
-          10
-        )}...`
-      );
-      // --- End Temporary Debug Logging ---
 
       const decoded = jwt.verify(token, authSecret) as {
         siteId: string;
@@ -95,11 +76,8 @@ export const onRequest = defineMiddleware(async (context, next) => {
       };
       // Attach the decoded payload to the context for use in API routes
       context.locals.authToken = decoded;
-      console.log(
-        `[MIDDLEWARE] JWT verification successful for: ${context.url.pathname}`
-      );
     } catch (error) {
-      console.error("[AUTH DEBUG] JWT verification failed:", error);
+      console.error("JWT verification failed:", error);
       // This will catch invalid or expired tokens
       return new Response("Unauthorized: Invalid token", { status: 401 });
     }

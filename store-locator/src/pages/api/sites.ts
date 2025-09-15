@@ -8,6 +8,11 @@ import {
 import { createClient } from "../../lib/webflow";
 import { eq } from "drizzle-orm";
 
+/**
+ * GET /api/sites
+ * Lists Webflow sites for the authenticated user and stores them in D1 if
+ * not already present. Used during initial setup and configuration.
+ */
 export const GET = async (context: APIContext) => {
   const { locals } = context;
   const db = createDb(locals.runtime.env.DB);
@@ -75,7 +80,6 @@ export const GET = async (context: APIContext) => {
         ...site,
         selectedCollectionId: dbSite ? dbSite.selectedCollectionId : null,
         mapboxKey: dbSite ? dbSite.mapboxKey : null,
-        mapboxStyle: dbSite ? dbSite.mapboxStyle : null,
       };
     });
 

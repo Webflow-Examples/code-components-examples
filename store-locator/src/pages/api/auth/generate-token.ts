@@ -4,9 +4,20 @@ import { createDb } from "../../../lib/db";
 import { site as siteTable } from "../../../lib/db/schema";
 import { eq } from "drizzle-orm";
 
-// This would normally come from environment variables
-const AUTH_SECRET = import.meta.env.BETTER_AUTH_SECRET || "a-secure-secret-key";
-
+/**
+ * POST /api/auth/generate-token
+ *
+ * Issues a short, self-contained JWT used by the Store Locator to call
+ * protected endpoints without a user session. The token payload intentionally
+ * contains only the data required by the backend:
+ * - siteId: which Webflow site configuration to use
+ * - collectionId: which CMS collection to read items from
+ * - mapboxToken: the site-specific Mapbox access token (not exposed to clients)
+ *
+ * Security notes:
+ * - The secret must come from BETTER_AUTH_SECRET. We fail fast if missing.
+ * - Token lifetime is set to 1 year for demo simplicity. Reduce for production.
+ */
 export const POST: APIRoute = async ({ request, locals }) => {
   try {
     const { siteId, collectionId } = (await request.json()) as {
@@ -32,11 +43,12 @@ export const POST: APIRoute = async ({ request, locals }) => {
     }
 
     // Get the auth secret from environment variables
-    const authSecret = locals.runtime.env.BETTER_AUTH_SECRET || AUTH_SECRET;
-
-    console.log(
-      `[TOKEN DEBUG] Using secret: ${authSecret.substring(0, 10)}...`
-    );
+    const authSecret = locals.runtime.env.BETTER_AUTH_SECRET;
+    if (!authSecret) {
+      return new Response("Server misconfigured: missing auth secret", {
+        status: 500,
+      });
+    }
 
     // The token contains the necessary info and expires in 1 year
     const token = jwt.sign(

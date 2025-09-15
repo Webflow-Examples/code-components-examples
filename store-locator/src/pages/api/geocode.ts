@@ -39,6 +39,12 @@ interface MapboxGeocodeResponse {
   attribution: string;
 }
 
+/**
+ * POST /api/geocode
+ * Batch geocodes a list of addresses for a site using Mapbox. Requires a valid JWT; the
+ * middleware injects siteId via locals.authToken so we can look up the
+ * site-specific Mapbox token from D1.
+ */
 export const POST: APIRoute = async ({ request, locals }) => {
   const { locations } = (await request.json()) as {
     locations: GeocodeRequestItem[];
@@ -103,6 +109,10 @@ export const POST: APIRoute = async ({ request, locals }) => {
   });
 };
 
+/**
+ * GET /api/geocode?address=...
+ * Geocodes a single address using the configured Mapbox key for the site.
+ */
 export const GET: APIRoute = async ({ request, locals }) => {
   const url = new URL(request.url);
   const address = url.searchParams.get("address");
