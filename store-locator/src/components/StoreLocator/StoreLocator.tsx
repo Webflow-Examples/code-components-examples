@@ -223,7 +223,9 @@ const StoreLocator: React.FC<StoreLocatorProps> = ({
 
       // Use the local tile endpoint, passing the JWT and style
       L.tileLayer(
-        `/api/maps/tiles/{z}/{x}/{y}.png?token=${authToken}&style=${mapStyle}`,
+        `${
+          apiBaseUrl || ""
+        }/api/maps/tiles/{z}/{x}/{y}.png?token=${authToken}&style=${mapStyle}`,
         {
           attribution:
             '&copy; <a href="https://www.mapbox.com/about/maps/">Mapbox</a> &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
