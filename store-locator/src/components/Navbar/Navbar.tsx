@@ -1,6 +1,14 @@
+import { title } from "process";
 import { getAuthClient } from "../../lib/auth-client";
 
-export default function Navbar({ apiBaseUrl }: { apiBaseUrl: string }) {
+// Props
+interface NavbarProps {
+  apiBaseUrl: string;
+  title: string;
+}
+
+// Component
+export default function Navbar({ apiBaseUrl, title }: NavbarProps) {
   const authClient = getAuthClient(apiBaseUrl);
 
   const { data: session, isPending } = authClient.useSession();
@@ -9,7 +17,7 @@ export default function Navbar({ apiBaseUrl }: { apiBaseUrl: string }) {
     <header className="navbar-header">
       <nav className="navbar-nav">
         <a href="/" className="navbar-brand">
-          Store Locator
+          {title}
         </a>
         <div className="navbar-links">
           {isPending ? (

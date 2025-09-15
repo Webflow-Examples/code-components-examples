@@ -10,6 +10,10 @@ const component = declareComponent(Navbar, {
       name: "API Base URL",
       defaultValue: "https://your-production-domain.com/base_path",
     }),
+    title: props.Text({
+      name: "Title",
+      defaultValue: "Store Locator",
+    }),
   },
 });
 

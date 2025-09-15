@@ -1,6 +1,5 @@
 import React from "react";
 import StoreLocatorView from "./StoreLocatorView";
-import "./styles.css";
 
 interface StoreLocatorProps {
   distanceUnit?: "Miles" | "Kilometers";

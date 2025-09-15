@@ -4,7 +4,6 @@ import "leaflet/dist/leaflet.css";
 import icon from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
 import iconRetina from "leaflet/dist/images/marker-icon-2x.png";
-import { jwtDecode } from "jwt-decode";
 
 interface Store {
   id: string;
@@ -64,6 +63,17 @@ const StoreLocatorView: React.FC<StoreLocatorViewProps> = ({
   const [selectedStore, setSelectedStore] = useState<Store | null>(null);
   const [L, setL] = useState<typeof LType | null>(null); // State for Leaflet module
   const [orangeIcon, setOrangeIcon] = useState<LType.DivIcon | null>(null);
+  const [geoLoading, setGeoLoading] = useState(false);
+
+  const requestGeoPermission = async () => {
+    try {
+      const result = await navigator.permissions.query({ name: "geolocation" });
+      return result.state; // 'granted', 'prompt', or 'denied'
+    } catch (error) {
+      console.error("Error querying geolocation permission:", error);
+      return "prompt"; // Assume prompt if the query fails
+    }
+  };
 
   // Dynamically import Leaflet only on the client-side
   useEffect(() => {
@@ -320,18 +330,45 @@ const StoreLocatorView: React.FC<StoreLocatorViewProps> = ({
     }
   };
 
-  const handleCurrentLocation = () => {
+  const handleCurrentLocation = async () => {
+    if (window.isSecureContext === false) {
+      alert(
+        "Geolocation is not available on insecure connections. Please use HTTPS or localhost."
+      );
+      return;
+    }
+    const permissionState = await requestGeoPermission();
+
+    if (permissionState === "denied") {
+      alert(
+        "You have blocked location services. To use this feature, please enable location permissions in your browser settings."
+      );
+      return;
+    }
+
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        const { latitude, longitude } = position.coords;
-        if (mapRef.current) {
-          mapRef.current.setView(
-            [position.coords.latitude, position.coords.longitude],
-            13
+      setGeoLoading(true);
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          if (mapRef.current) {
+            mapRef.current.setView(
+              [position.coords.latitude, position.coords.longitude],
+              13
+            );
+          }
+          sortStoresByDistance(latitude, longitude);
+          setGeoLoading(false);
+        },
+        (error) => {
+          // Handle errors, e.g., user denied permission
+          console.error("Geolocation error:", error);
+          alert(
+            "Could not get your location. Please ensure you've granted permission."
           );
+          setGeoLoading(false);
         }
-        sortStoresByDistance(latitude, longitude);
-      });
+      );
     } else {
       // Fallback for when geolocation is not supported
       alert("Geolocation is not supported by your browser.");
@@ -382,13 +419,15 @@ const StoreLocatorView: React.FC<StoreLocatorViewProps> = ({
               onChange={(e) => setSearchTerm(e.target.value)}
               className="search-input"
             />
-            <button onClick={handleSearch} className="search-button">
-              Search
-            </button>
           </div>
+          <button onClick={handleSearch} className="search-button">
+            Search
+          </button>
           <button
             onClick={handleCurrentLocation}
-            className="current-location-button"
+            className={`current-location-button ${
+              geoLoading ? "geo-loading" : ""
+            }`}
           >
             Use current location
           </button>
@@ -408,12 +447,14 @@ const StoreLocatorView: React.FC<StoreLocatorViewProps> = ({
               <h3>{store.fieldData.name}</h3>
               <p>{store.fieldData.address}</p>
               <p>{store.fieldData.phone}</p>
-              <p className="store-distance">
-                {distanceUnit === "mi"
-                  ? (store.distance * 0.621371).toFixed(1)
-                  : store.distance.toFixed(1)}{" "}
-                {distanceUnit} away
-              </p>
+              {isFinite(store.distance) && (
+                <p className="store-distance">
+                  {distanceUnit === "mi"
+                    ? (store.distance * 0.621371).toFixed(1)
+                    : store.distance.toFixed(1)}{" "}
+                  {distanceUnit} away
+                </p>
+              )}
             </div>
           ))}
         </div>
