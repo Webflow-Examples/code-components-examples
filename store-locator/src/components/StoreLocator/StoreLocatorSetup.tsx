@@ -20,6 +20,7 @@ const StoreLocatorSetup: React.FC<StoreLocatorSetupProps> = ({
   const authClient = useMemo(() => getAuthClient(apiBaseUrl), [apiBaseUrl]);
   const { data: session, isPending, refetch } = authClient.useSession();
   const [mapboxKey, setMapboxKey] = useState("");
+  const [mapboxStyle, setMapboxStyle] = useState("");
   const [sites, setSites] = useState<SiteWithPrefs[]>([]);
   const [selectedSite, setSelectedSite] = useState("");
   const [collections, setCollections] = useState<Webflow.Collection[]>([]);
@@ -71,7 +72,11 @@ const StoreLocatorSetup: React.FC<StoreLocatorSetupProps> = ({
     await fetch(`${apiBaseUrl || ""}/api/sites/mapbox`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ siteId: selectedSite, mapboxKey }),
+      body: JSON.stringify({
+        siteId: selectedSite,
+        mapboxKey,
+        mapboxStyle,
+      }),
     });
 
     // API call to save selected collection
@@ -106,6 +111,7 @@ const StoreLocatorSetup: React.FC<StoreLocatorSetupProps> = ({
           if (preferredSite) {
             setSelectedSite(preferredSite.id);
             setMapboxKey(preferredSite.mapboxKey || "");
+            setMapboxStyle(preferredSite.mapboxStyle || "");
             // The collections useEffect will handle setting the selected collection
           } else if (data.length > 0) {
             setSelectedSite(data[0].id);

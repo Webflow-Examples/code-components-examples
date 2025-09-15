@@ -75,6 +75,7 @@ export const GET = async (context: APIContext) => {
         ...site,
         selectedCollectionId: dbSite ? dbSite.selectedCollectionId : null,
         mapboxKey: dbSite ? dbSite.mapboxKey : null,
+        mapboxStyle: dbSite ? dbSite.mapboxStyle : null,
       };
     });
 

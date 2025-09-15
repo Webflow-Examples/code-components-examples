@@ -383,3 +383,67 @@ body {
   min-width: auto !important;
   background: var(--secondary-accent) !important;
 }
+
+/* Navbar styles */
+.navbar-header {
+  background-color: var(--background-color);
+  border-bottom: 3px solid var(--border-color);
+  padding: 1rem 2rem;
+}
+
+.navbar-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.navbar-brand {
+  font-size: 1.75rem;
+  font-weight: 800;
+  text-decoration: none;
+  color: var(--text-color);
+  text-transform: uppercase;
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.navbar-link {
+  font-size: 1rem;
+  font-weight: bold;
+  text-decoration: none;
+  color: var(--text-color);
+  transition: color 0.2s ease;
+}
+
+.navbar-link:hover {
+  color: var(--accent-color);
+}
+
+.navbar-button {
+  padding: 0.75rem 1.5rem;
+  background-color: var(--button-primary-bg);
+  color: var(--button-primary-text);
+  border: 3px solid var(--border-color);
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 4px 4px 0px var(--shadow-color);
+  transition: all 0.1s ease-in-out;
+  text-transform: uppercase;
+}
+
+.navbar-button:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px var(--shadow-color);
+}
+
+.navbar-button.logout {
+  background-color: var(--accent-color);
+  color: var(--text-color);
+}

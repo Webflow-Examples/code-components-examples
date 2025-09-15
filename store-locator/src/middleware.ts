@@ -5,6 +5,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
   console.log(`[MIDDLEWARE] Processing request to: ${context.url.pathname}`);
   const AUTH_SECRET = context.locals.runtime.env.BETTER_AUTH_SECRET;
   const origin = context.request.headers.get("Origin");
+  console.log(`[MIDDLEWARE] Origin: ${origin}`);
 
   // Allow Webflow domains and localhost for development
   const allowedOrigins = [
@@ -14,6 +15,8 @@ export const onRequest = defineMiddleware(async (context, next) => {
     "https://*.webflow.com",
     "https://*.design.webflow.com",
     "https://*.webflow.io",
+    "https://my-astro-app.victoria-l-plummer.workers.dev",
+    "null",
   ];
 
   const isAllowedOrigin =
@@ -26,8 +29,10 @@ export const onRequest = defineMiddleware(async (context, next) => {
       (origin.startsWith("https://webflow-") &&
         origin.includes(".design.webflow.com")));
 
+  console.log(`[MIDDLEWARE] isAllowedOrigin: ${isAllowedOrigin}`);
+
   const corsHeaders = {
-    "Access-Control-Allow-Origin": isAllowedOrigin ? origin : "*",
+    "Access-Control-Allow-Origin": isAllowedOrigin ? origin || "null" : "*",
     "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
     "Access-Control-Allow-Headers":
       "Content-Type, Authorization, X-Requested-With, Accept, Origin",

@@ -64,20 +64,6 @@ const StoreLocatorView: React.FC<StoreLocatorViewProps> = ({
   const [selectedStore, setSelectedStore] = useState<Store | null>(null);
   const [L, setL] = useState<typeof LType | null>(null); // State for Leaflet module
   const [orangeIcon, setOrangeIcon] = useState<LType.DivIcon | null>(null);
-  const [mapboxToken, setMapboxToken] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (authToken) {
-      try {
-        const decoded = jwtDecode<DecodedToken>(authToken);
-        if (decoded.mapboxToken) {
-          setMapboxToken(decoded.mapboxToken);
-        }
-      } catch (error) {
-        console.error("Failed to decode JWT:", error);
-      }
-    }
-  }, [authToken]);
 
   // Dynamically import Leaflet only on the client-side
   useEffect(() => {
@@ -218,12 +204,14 @@ const StoreLocatorView: React.FC<StoreLocatorViewProps> = ({
   }, [apiBaseUrl, authToken]);
 
   useEffect(() => {
-    if (L && mapContainer && !mapRef.current && authToken && mapboxToken) {
+    if (L && mapContainer && !mapRef.current && authToken && mapStyle) {
       mapRef.current = L.map(mapContainer, {
         zoomControl: false, // Disable default zoom control
       }).setView([40.7128, -74.006], 12); // Centered on NYC
+
+      // Use the local tile endpoint, passing the JWT and style
       L.tileLayer(
-        `https://api.mapbox.com/styles/v1/${mapStyle}/tiles/512/{z}/{x}/{y}@2x?access_token=${mapboxToken}`,
+        `/api/maps/tiles/{z}/{x}/{y}.png?token=${authToken}&style=${mapStyle}`,
         {
           attribution:
             '&copy; <a href="https://www.mapbox.com/about/maps/">Mapbox</a> &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
@@ -231,9 +219,10 @@ const StoreLocatorView: React.FC<StoreLocatorViewProps> = ({
           zoomOffset: -1,
         }
       ).addTo(mapRef.current);
+
       L.control.zoom({ position: "bottomright" }).addTo(mapRef.current);
     }
-  }, [L, mapContainer, mapStyle, authToken, mapboxToken]); // Add L to dependency array
+  }, [L, mapContainer, authToken, mapStyle]);
 
   useEffect(() => {
     if (mapRef.current) {

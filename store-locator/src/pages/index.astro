@@ -2,16 +2,15 @@
 import Layout from "../layouts/Layout.astro";
 import StoreLocator from "../components/StoreLocator/StoreLocator.tsx";
 
-const authToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaXRlSWQiOiI2OGI3MDJiMjA3N2E2MzdlNTc4MzdlMzYiLCJjb2xsZWN0aW9uSWQiOiI2OGM0NjY4ZTMxMTkzYjJkZmM4MTczZTEiLCJtYXBib3hUb2tlbiI6InBrLmV5SjFJam9pYW1WbGJubDFjMnBoYm1VaUxDSmhJam9pWTIxbWFEVnBOVzUzTURkeGRUSnNjSGxuZFRsamRXZDZZeUo5LkZsSnRjaTdZSG1pNXktNXBXeGFNUGciLCJpYXQiOjE3NTc5NDYxNDEsImV4cCI6MTc4OTUwMzc0MX0.PEY4-TpHd_Up9Hkl4fY0KARulrZti14t690r2CS-9Ak"
+const authToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaXRlSWQiOiI2OGI3MDJiMjA3N2E2MzdlNTc4MzdlMzYiLCJjb2xsZWN0aW9uSWQiOiI2OGM0NjY4ZTMxMTkzYjJkZmM4MTczZTEiLCJtYXBib3hUb2tlbiI6InBrLmV5SjFJam9pYW1WbGJubDFjMnBoYm1VaUxDSmhJam9pWTIxbWFEVnBOVzUzTURkeGRUSnNjSGxuZFRsamRXZDZZeUo5LkZsSnRjaTdZSG1pNXktNXBXeGFNUGciLCJpYXQiOjE3NTc5NTIxOTksImV4cCI6MTc4OTUwOTc5OX0.G5RviZOCurUsIdiCS34KykYXRSmgo0OCZWZj-Xu2rng"
 
-const apiBaseUrl = import.meta.env.PUBLIC_BETTER_AUTH_URL + import.meta.env.BASE_URL;
+console.log("Astro.locals.runtime.env", Astro.locals.runtime.env.PUBLIC_BETTER_AUTH_URL)
+const apiBaseUrl = Astro.locals.runtime.env.PUBLIC_BETTER_AUTH_URL + import.meta.env.BASE_URL;
 
 ---
 
 <Layout title="Store Locator">
   <main>
-    <div style="height: 85vh; max-height: 900px; width: 60%;">
       <StoreLocator client:only="react" authToken={authToken} apiBaseUrl={apiBaseUrl} />
-    </div>
   </main>
 </Layout>
