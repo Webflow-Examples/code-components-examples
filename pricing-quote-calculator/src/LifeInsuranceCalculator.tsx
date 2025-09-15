@@ -21,6 +21,7 @@ interface LifeInsuranceCalculatorProps {
   buttonText?: string;
   primaryColor?: string;
   ctaButtonText?: string;
+  // Link to start the application process
   ctaLink?: string;
 }
 

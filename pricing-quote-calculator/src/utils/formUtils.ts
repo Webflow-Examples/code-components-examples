@@ -29,7 +29,7 @@ export const validateFormData = (formData: FormData): string | null => {
 };
 
 /**
- * Create a form input change handler
+ * Form input onChange handler for Input and Select elements
  */
 export const createInputChangeHandler = (
   setFormData: React.Dispatch<React.SetStateAction<FormData>>,
@@ -47,7 +47,7 @@ export const createInputChangeHandler = (
 };
 
 /**
- * Create a coverage change handler for range input
+ * Form input coverage change handler for range input
  */
 export const createCoverageChangeHandler = (
   setFormData: React.Dispatch<React.SetStateAction<FormData>>,
