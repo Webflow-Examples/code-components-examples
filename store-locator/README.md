@@ -9,7 +9,8 @@ This repository contains two main parts:
 1.  **A React-based Code Component (`/src/components/StoreLocator`)**:
 
     - A reusable UI for finding and displaying store locations on a map.
-    - Declared for Webflow using `@webflow/react` in `StoreLocator.webflow.tsx`, allowing designers to configure it visually through props in the Designer.
+    - A Setup UI to configure backend API Requests
+    - The frontend UI is adapted for Webflow using `@webflow/react` in `StoreLocator.webflow.tsx`, allowing designers to configure it visually through props in the Designer.
     - Built with Leaflet for map rendering.
 
 2.  **An Astro-based Backend API (`/src/pages/api`)**:
