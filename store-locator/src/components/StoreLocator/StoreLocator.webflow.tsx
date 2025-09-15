@@ -1,5 +1,5 @@
 import { declareComponent } from "@webflow/react";
-import StoreLocator from "./StoreLocator";
+import StoreLocator from "./StoreLocator.tsx";
 import { props } from "@webflow/data-types";
 
 const component = declareComponent(StoreLocator, {

@@ -1,85 +1,75 @@
-import type { APIRoute } from "astro";
-import { createDb } from "../../../../../../lib/db";
-import { site as siteSchema } from "../../../../../../lib/db/schema";
-import { eq } from "drizzle-orm";
-import { parseMapboxStyle } from "../../../../../../lib/mapbox";
+import type { APIContext } from "astro";
+import jwt from "jsonwebtoken";
+import { z } from "zod";
+
+const TileRequestParams = z.object({
+  z: z.string(),
+  x: z.string(),
+  y: z.string(),
+});
+
+const DecodedToken = z.object({
+  mapboxToken: z.string(),
+});
 
 /**
- * GET /api/maps/tiles/{z}/{x}/{y}.png?style=...
- *
- * Proxies Mapbox raster style tiles using the site-specific token from D1.
- * Requires a JWT (accepted via Authorization header or token query param).
+ * GET /api/maps/tiles/[z]/[x]/[y].png
+ * This endpoint proxies tile requests to the Mapbox Static Tiles API,
+ * using a JWT to securely pass the Mapbox access token.
  */
-export const GET: APIRoute = async ({ params, locals, url }) => {
-  const { x, y, z } = params;
-  const authToken = locals.authToken;
+export const GET = async (context: APIContext) => {
+  const { params, request } = context;
+  const { searchParams } = new URL(request.url);
 
-  if (!authToken) {
-    return new Response("Unauthorized: Missing auth token.", {
-      status: 401,
-    });
+  const token = searchParams.get("token");
+  const style = searchParams.get("style") || "streets-v12";
+
+  if (!token) {
+    return new Response("Missing token", { status: 400 });
   }
-
-  const { siteId } = authToken;
-
-  if (!siteId || !x || !y || !z) {
-    return new Response("Site ID, x, y, and z parameters are required", {
-      status: 400,
-    });
-  }
-
-  const { DB } = locals.runtime.env;
-  const db = createDb(DB);
 
   try {
-    const site = (
-      await db
-        .select({
-          mapboxKey: siteSchema.mapboxKey,
-        })
-        .from(siteSchema)
-        .where(eq(siteSchema.siteId, siteId))
-        .limit(1)
-    )[0];
+    const tileParams = TileRequestParams.parse(params);
+    const { z, x, y } = tileParams;
 
-    if (!site || !site.mapboxKey) {
-      return new Response("Mapbox key not configured for this site", {
-        status: 404,
-      });
-    }
-
-    // --- Start of new parsing logic ---
-    const styleQuery = (url.searchParams.get("style") || "streets-v11").trim();
-    const parsed = parseMapboxStyle(styleQuery);
-
-    if (!parsed) {
-      console.error("Failed to parse Mapbox style URL:", styleQuery);
-      return new Response(
-        "Invalid Mapbox style URL format. Please use 'username/style_id' or a full Mapbox style URL.",
-        { status: 400 }
+    // The JWT secret should be stored securely as an environment variable
+    const jwtSecret = context.locals.runtime.env.BETTER_AUTH_SECRET;
+    if (!jwtSecret) {
+      throw new Error(
+        "BETTER_AUTH_SECRET is not set in environment variables."
       );
     }
-    const { user: mapboxUser, styleId: mapboxStyleId } = parsed;
-    // --- End of new parsing logic ---
 
-    const tileUrl = `https://api.mapbox.com/styles/v1/${mapboxUser}/${mapboxStyleId}/tiles/512/${z}/${x}/${y}@2x?access_token=${site.mapboxKey}`;
+    const decoded = DecodedToken.parse(jwt.verify(token, jwtSecret));
+    const mapboxToken = decoded.mapboxToken;
 
-    const response = await fetch(tileUrl);
+    const mapboxUrl = `https://api.mapbox.com/styles/v1/mapbox/${style}/tiles/${z}/${x}/${y}?access_token=${mapboxToken}`;
+
+    const response = await fetch(mapboxUrl);
 
     if (!response.ok) {
-      return new Response("Error fetching tile from Mapbox", {
+      return new Response("Failed to fetch tile from Mapbox", {
         status: response.status,
       });
     }
 
-    return new Response(response.body, {
+    const image = await response.arrayBuffer();
+
+    return new Response(image, {
+      status: 200,
       headers: {
         "Content-Type": "image/png",
-        "Cache-Control": "public, max-age=86400", // Cache for 24 hours
+        "Cache-Control": "public, max-age=86400", // Cache for 1 day
       },
     });
   } catch (error) {
-    console.error("Tile fetching error:", error);
-    return new Response("Internal Server Error", { status: 500 });
+    console.error("Error processing tile request:", error);
+    if (error instanceof z.ZodError) {
+      return new Response("Invalid request parameters", { status: 400 });
+    }
+    if (error instanceof jwt.JsonWebTokenError) {
+      return new Response("Invalid token", { status: 401 });
+    }
+    return new Response("Internal server error", { status: 500 });
   }
 };
