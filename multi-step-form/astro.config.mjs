@@ -5,7 +5,7 @@ import react from "@astrojs/react";
 
 // https://astro.build/config
 export default defineConfig({
-  base: "/app",
+  base: "/form",
   output: "server",
   adapter: cloudflare({
     platformProxy: {
