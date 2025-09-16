@@ -1,25 +1,10 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import StoreLocatorDemo from "../components/StoreLocator/StoreLocatorDemo.tsx";
-
-const apiBaseUrl = Astro.locals.runtime.env.PUBLIC_BETTER_AUTH_URL + import.meta.env.BASE_URL;
+import StoreLocatorDemo from "../components/StoreLocator/StoreLocatorDemo";
 ---
 
-<Layout title="Store Locator Demo">
-  <main>
-    <div class="prose">
-      <h1>Store Locator Component Demo</h1>
-      <p>
-        This page provides a live preview of the <code>StoreLocator</code> React component. It's configured to run against your local development server.
-      </p>
-      <p>
-        To use this in a production Webflow site, you must first deploy this backend to Webflow Cloud, complete the configuration at <a href="/map/setup">/setup</a>, and use the generated token in the component's props in the Webflow Designer.
-      </p>
-    </div>
-    <div class="store-locator-wrapper">
-      <StoreLocatorDemo client:only="react" apiBaseUrl={apiBaseUrl} />
-    </div>
-  </main>
+<Layout>
+  <StoreLocatorDemo client:load />
 </Layout>
 
 <style>

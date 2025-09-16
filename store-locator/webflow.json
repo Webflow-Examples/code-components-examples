@@ -6,8 +6,7 @@
     "name": "Store Locator",
     "components": ["./src/**/*.webflow.@(js|jsx|mjs|ts|tsx)"],
     "id": "store-locator",
-    "description": "",
-    "webpackConfig": "./webpack.webflow.cjs"
+    "description": ""
   },
   "telemetry": {
     "global": {

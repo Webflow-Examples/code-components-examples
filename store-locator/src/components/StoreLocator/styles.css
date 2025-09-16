@@ -1,6 +1,11 @@
 :root {
+  --brand-color: #f77f00;
+  --brand-color-light: #fff5e6;
   --background-color: #ffffff;
-  --text-color: #000000;
+  --surface-color: #f8f8f8;
+  --border-color: #e5e5e5;
+  --text-color: #333333;
+  --text-color-muted: #767676;
   --accent-color: #ff90e8; /* pink */
   --card-background: #ffffff;
   --border-color: #000000;
@@ -22,10 +27,9 @@ body {
 
 /* App container */
 .store-locator-container {
-  position: relative;
   height: 100%;
-  min-height: 400px; /* Set a minimum height to ensure usability */
-  max-height: inherit; /* Inherit max-height from parent */
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .store-locator-view {
@@ -67,6 +71,7 @@ body {
   flex-direction: column;
   border-right: 1px solid #e0e0e0;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
 
 .search-card {
