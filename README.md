@@ -1,70 +1,72 @@
-# Getting Started with Create React App
+# Webflow Code Component Examples
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A collection of projects demonstrating how to bring code components built in React into Webflow via DevLink. Each example is a self-contained project that showcases different patterns and use cases for building interactive components that seamlessly integrate with Webflow. You can run a Devlink CLI command that will import the component into Webflow so you can try it on your Webflow sites.
 
-## Available Scripts
+## DevLink
 
-In the project directory, you can run:
+DevLink is a tool to bridge Webflow and external code. This repo showcases how to create and bring your own custom, interactive React components directly in the Webflow canvas as Webflow Components via [Shared Libraries](https://webflow.com/updates/libraries).
 
-### `npm start`
+Here are some reasons why you may want to import your custom React components into Webflow:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Custom functionality** beyond Webflow's built-in elements
+- **Interactive UI** with complex state management
+- **Data-driven components** whose bound props can be configured via the Webflow canvas or at runtime
+- **Reusable components** can be shared across multiple Webflow sites
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 📁 Available Examples
 
-### `npm test`
+You can navigate into individual projects in this repo to copy, make tweaks, and import pre-made example components into Webflow.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 🧮 [Pricing Quote Calculator](./pricing-quote-calculator/)
 
-### `npm run build`
+A pricing calculator to output an insurance premium featuring:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **Multi-input form logic** with validation
+- **URL parameter support** for pre-filling form inputs with default state
+- **Responsive design and Tailwind styling** with [DaisyUI](https://daisyui.com/)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 📝 [Multi-Step Form](./multistep-form/)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+A dynamic form generator demonstrating:
 
-### `npm run eject`
+- **Step-by-step navigation** with progress tracking
+- **Dynamic field generation** based on configuration
+- **Form validation and submission** and error handling
+- **Conditional logic** for showing/hiding fields
+- **Data persistence** across steps
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### 🗺️ [Store Locator](./store-locator/)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+A map component and backend API that plots locations demonstrating:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- **Webflow Cloud** Setup a secure backend to call protected API endpoints from your component
+- **JWT Auth** Add a JWT as a prop in your component to access protected content
+- **Webflow CMS API** get locations already listed in the Webflow CMS
+- **Mapbox Integration** geo-locate a users input and get map tiles
+- **Leaflet.js** A lightweight, open-source mapping library
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 🚀 Getting Started
 
-## Learn More
+Navigate inside a project example folder (i.e. `cd pricing-quote-calculator`) and follow the `README` inside to install the project, run it locally, and import it to Webflow.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 📖 Documentation Links
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Learn more about how importing code components into Webflow works alongside details to consider when prepping React components for Webflow compatibility.
 
-### Code Splitting
+- [Webflow Code Components Documentation](https://developers.webflow.com/code-components/introduction)
+- [Component Architecture Guide](https://developers.webflow.com/code-components/component-architecture)
+- [Prop Types Reference](https://developers.webflow.com/code-components/reference/prop-types)
+- [Styling Components](https://developers.webflow.com/code-components/styling-components)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## 🤝 Contributing
 
-### Analyzing the Bundle Size
+1. **Create a new example** in its own directory; fork this repo to make your own copy
+2. **Follow the established patterns** for file structure by looking at existing examples in this repo
+3. **Include comprehensive documentation** in the example's README
+4. **Test thoroughly** before submitting
+5. **Add the example** to this main README
+6. **Create a pull request** from your fork of the repo to the `main` branch
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## ❓ Questions / Issues
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Running into problems trying out one of the examples? Create an issue in the [Issues tab](https://github.com/Webflow-Examples/code-components-examples/issues).

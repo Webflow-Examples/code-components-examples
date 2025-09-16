@@ -1,0 +1,16 @@
+{
+  "library": {
+    "name": "Webflow Code Import Examples - Quote Calculator",
+    "components": [
+      "**/*.webflow.@(js|jsx|mjs|ts|tsx)"
+    ],
+    "id": "webflow-code-import-examples---quote-calculator"
+  },
+  "telemetry": {
+    "global": {
+      "allowTelemetry": true,
+      "lastPrompted": 1757368712207,
+      "version": "1.8.40"
+    }
+  }
+}
