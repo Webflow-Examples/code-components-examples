@@ -1,0 +1,214 @@
+# Dynamic multi-step form for Webflow & Airtable
+
+This project provides a dynamic multi-step form component built with React, designed to be added to Webflow sites as a Code Component. The form's structure, fields, and logic are all configured from an Airtable base, making it incredibly flexible and easy for Webflow and Airtable users to manage without touching code.
+
+![Form](public/form.png)
+
+## Key features
+
+- **Webflow Code Component**: Drop the form into any Webflow project with customizable properties.
+- **Dynamic Form Generation**: Create forms on-the-fly from a JSON configuration.
+- **Multi-Step Experience**: Break down long forms into user-friendly, manageable steps.
+- **Airtable-Powered**: Manage your form's entire structure—fields, steps, validation, and conditional logic—directly within an Airtable base.
+- **Webhook Submissions**: Submits form data to a specified webhook
+- **Styling**: Styled with Tailwind CSS and DaisyUI.
+
+## Project structure
+
+- `src/components/DynamicFormGenerator.jsx`: The core React component that handles form logic, state management, validation, and rendering.
+- `src/components/DynamicFormGenerator.webflow.tsx`: The Webflow Code Component definition file. It defines the props that appear in the Webflow Designer's settings panel.
+- `src/styles/component-styles.css`: The CSS file containing styles for the component, written using Tailwind CSS and DaisyUI.
+
+## How it works
+
+The workflow connects Airtable for configuration, Webflow for presentation, and a webhook for data processing.
+
+1.  **Form Configuration in Airtable**: You design your form in the [Airtable Base](https://airtable.com/appoSYwCLsZ1KeGDA/shrjViMqTb4f7apWi). In the `Forms` table, you create a record for your form and link questions from the `Form Structure` table. This setup lets you to define steps, field types, labels, placeholders, validation, and even conditional logic for showing/hiding fields.
+    ![Airtable Base Structure](public/airtable-base.png)
+
+2.  **JSON Generation**: A script extension automatically generates a JSON string that represents your form's complete configuration.
+
+3.  **Webflow Component**: In the Webflow Designer, you add the "Dynamic Form Generator" component to your page. You then copy the JSON string from Airtable and paste it into the `Form Configuration` prop of the component.
+    ![Webflow Props](public/webflow-props.png)
+4.  **Form Rendering**: The React component parses the JSON and dynamically renders the multi-step form in Webflow.
+    ![Form](public/form.png)
+5.  **Data Submission**: When a user submits the form, the data is sent to the `Webhook URL` you provide in the component's props.
+6.  **Airtable Automation**: The webhook triggers an Airtable Automation, which processes the incoming data—for example, by creating records in a `Submissions` table and in dynamically created tables for each form.
+    ![Automation](public/automation.png)
+
+## Setup guide
+
+### 1. Configure the Form in Airtable
+
+1.  Open the [Airtable Base Template](https://airtable.com/appoSYwCLsZ1KeGDA/shrjViMqTb4f7apWi).
+
+2.  Navigate to the **Forms** table and create a new record. This will represent your form and your form's Unique ID.
+3.  Navigate to the **Form Structure** table to add your questions. Each record in this table is a field in your form. Be sure to assign a `Step` number and link it to the correct form record you created in the previous step.
+4.  Go back to the **Forms** table and find your form record. The `Form Config Script` field will contain the JSON configuration. Copy this entire string.
+
+### 2. Set up the Airtable Automation
+
+1.  In your Airtable base, go to the **Automations** tab.
+
+2.  Create a new automation and select the **"When webhook received"** trigger.
+3.  Copy the generated webhook URL. You will need this for the Webflow component.
+4.  Add actions to process the form data. A common workflow is:
+
+    - **Action 1: Create record**: Create a new record in a `Submissions` table with the data received from the webhook.
+    - **Action 2: Run a script**: Add custom logic, such as creating a new table for each form submission or routing data.
+        <details>
+        <summary>Script Configuration</summary>
+
+      #### Inputs
+
+      - name: `formData`, value: `payload`
+      - name: `formId`, value: `formId`
+
+        ```javascript
+        // If Form Table doesn't exist - create it
+        const { formData, formId } = input.config();
+        const baseId = base.id;
+
+        // Get Table
+        const tables = base.tables.map((table) => table.name);
+        const table = tables.find((name) => name == formId);
+
+        // Create the table with fields
+        if (!table) {
+          // Get fields from form structure table
+          const structureTable = base.getTable("Form Structure");
+          const query = await structureTable.selectRecordsAsync({
+            fields: structureTable.fields,
+          });
+          const structureRecords = query.records;
+          const formStructure = structureRecords.filter((r) =>
+            r
+              .getCellValue("FormID")
+              .map((f) => f.name)
+              .includes(formId)
+          );
+          console.log("formStructure", formStructure);
+
+          // For each record, create a field in the new table
+
+          const fields = formStructure.map((record) => {
+            // Determine field type
+            const getFieldType = (fieldType) => {
+              switch (fieldType.toLowerCase()) {
+                case "number":
+                  return "number";
+                case "text area":
+                  return "richText";
+                case "email":
+                  return "email";
+                case "dropdown":
+                  return "singleSelect";
+                case "scale":
+                  return "number";
+                default:
+                  return "singleLineText";
+              }
+            };
+
+            const obj = {
+              name: record.name,
+              description: record.getCellValueAsString("User Label"),
+              type: getFieldType(record.getCellValueAsString("Field Type")),
+            };
+
+            if (obj.type == "number") {
+              obj.options = {};
+              obj.options.precision = 0;
+            }
+
+            if (obj.type === "singleSelect") {
+              obj.options = {};
+              obj.options.choices = record
+                .getCellValue("Options")
+                .map((values) => ({ name: values.name }));
+            }
+
+            return obj;
+          });
+
+          console.log(fields);
+
+          const url = `https://api.airtable.com/v0/meta/bases/${baseId}/tables`;
+          await fetch(url, {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${input.secret("airtableKey")}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              name: formId,
+              fields: fields,
+            }),
+          })
+            .then((response) => response.json())
+            .then((data) => console.log(data));
+        }
+        ```
+
+      </details>
+
+    - **Action 3: Run a script**: Add the record to the dynamically created table
+        <details>
+        <summary>Script Configuration</summary>
+
+      #### Inputs
+
+      - name: `data`, value: `payload`
+      - name: `formId`, value: `formId`
+
+      ```javascript
+      const { data, formId } = input.config();
+      const jsonData = JSON.parse(data);
+      console.log(jsonData);
+
+      const table = base.getTable(formId);
+      const fields = table.fields;
+
+      const singleSelectFields = fields.filter(
+        (field) => field.type == "singleSelect"
+      );
+      const numberFields = fields.filter((field) => field.type === "number");
+
+      for (let entry in jsonData) {
+        // Convert to single select format
+        if (singleSelectFields.map((field) => field.name).includes(entry))
+          jsonData[entry] = { name: jsonData[entry] };
+
+        // Convert to number format
+        if (numberFields.map((fields) => fields.name).includes(entry))
+          jsonData[entry] = parseInt(jsonData[entry]);
+      }
+
+      table.createRecordAsync(jsonData);
+      ```
+
+        </details>
+
+### 3. Add the Component in Webflow
+
+1.  In your terminal enter `npx webflow library share` follow the prompts to authenticate your workspace.
+2.  Open a Webflow site, and open the shared libraries panel, install the library. Select the installed component and add it to the page.
+3.  With the component selected, go to the **Settings** panel on the right.
+4.  Configure the component's props:
+    - **Form Name**: Give your form a title.
+    - **Form Configuration**: Paste the JSON string you copied from the `Form Config Script` extension Airtable.
+    - **Webhook URL**: Paste the URL from your Airtable Automation trigger.
+    - **Form ID**: Enter a unique ID for your form (this can be the record ID from the Airtable `Forms` table).
+    - **Dev Mode**: Set `devmode` as `true` to preview the data payload in a modal instead of sending it to the webhook.
+
+## Component props
+
+The following props are available in the Webflow Designer settings:
+
+| Prop Name    | Type      | Description                                                                                                                    |
+| ------------ | --------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `formName`   | `Text`    | The title displayed at the top of the form.                                                                                    |
+| `formConfig` | `Text`    | The JSON string that defines the form structure, copied from the Airtable base.                                                |
+| `webhookUrl` | `Text`    | The URL that the form data will be submitted to.                                                                               |
+| `formID`     | `Text`    | A unique identifier for the form, which gets included in the submission payload.                                               |
+| `devMode`    | `Variant` | If `true`, submitting the form shows a preview of the JSON payload instead of sending it to the webhook. Useful for debugging. |

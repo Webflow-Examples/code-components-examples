@@ -18,6 +18,7 @@ const DynamicFormGenerator = ({
   const [fieldErrors, setFieldErrors] = useState({});
   const [showJsonPreview, setShowJsonPreview] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [direction, setDirection] = useState("next");
   const abortControllerRef = useRef(null);
 
   const { mode, locale, interactive } = useWebflowContext();
@@ -420,7 +421,9 @@ const DynamicFormGenerator = ({
             <input
               {...commonProps}
               type="text"
-              className={`field-input ${hasError ? "error" : ""}`}
+              className={`input input-bordered w-full ${
+                hasError ? "input-error" : ""
+              }`}
               minLength={field.minChars}
               maxLength={field.maxChars}
             />
@@ -431,7 +434,9 @@ const DynamicFormGenerator = ({
             <input
               {...commonProps}
               type="email"
-              className={`field-input ${hasError ? "error" : ""}`}
+              className={`input input-bordered w-full ${
+                hasError ? "input-error" : ""
+              }`}
             />
           );
 
@@ -440,7 +445,9 @@ const DynamicFormGenerator = ({
             <input
               {...commonProps}
               type="tel"
-              className={`field-input ${hasError ? "error" : ""}`}
+              className={`input input-bordered w-full ${
+                hasError ? "input-error" : ""
+              }`}
             />
           );
 
@@ -449,7 +456,9 @@ const DynamicFormGenerator = ({
             <input
               {...commonProps}
               type="number"
-              className={`field-input ${hasError ? "error" : ""}`}
+              className={`input input-bordered w-full ${
+                hasError ? "input-error" : ""
+              }`}
               min={field.minChars}
               max={field.maxChars}
             />
@@ -459,7 +468,9 @@ const DynamicFormGenerator = ({
           return (
             <select
               {...commonProps}
-              className={`field-select ${hasError ? "error" : ""}`}
+              className={`select select-bordered w-full ${
+                hasError ? "select-error" : ""
+              }`}
             >
               <option value="">
                 {field.placeholder || "Select an option"}
@@ -476,7 +487,9 @@ const DynamicFormGenerator = ({
           return (
             <textarea
               {...commonProps}
-              className={`field-textarea ${hasError ? "error" : ""}`}
+              className={`textarea textarea-bordered w-full ${
+                hasError ? "textarea-error" : ""
+              }`}
               rows={4}
               maxLength={field.maxChars}
             />
@@ -484,23 +497,22 @@ const DynamicFormGenerator = ({
 
         case "rating":
         case "scale":
-          const minRating = field.minChars || 1;
           const maxRating = field.maxChars || 5;
           const currentRating = parseInt(formValues[field.fieldName]) || 0;
 
           return (
-            <div className="rating-container">
+            <div className="rating">
               {Array.from({ length: maxRating }, (_, index) => {
                 const starValue = index + 1;
-                const isSelected = starValue <= currentRating;
-
                 return (
-                  <button
+                  <input
                     key={starValue}
-                    type="button"
-                    className={`rating-star ${isSelected ? "active" : ""}`}
-                    aria-label={`${starValue} star`}
-                    onClick={() =>
+                    type="radio"
+                    name={`rating-${field.fieldName}`}
+                    className="mask mask-star-2 bg-orange-400"
+                    value={starValue}
+                    checked={currentRating === starValue}
+                    onChange={() =>
                       handleInputChange(field.fieldName, starValue.toString())
                     }
                   />
@@ -514,20 +526,28 @@ const DynamicFormGenerator = ({
             <input
               {...commonProps}
               type="text"
-              className={`field-input ${hasError ? "error" : ""}`}
+              className={`input input-bordered w-full ${
+                hasError ? "input-error" : ""
+              }`}
             />
           );
       }
     };
 
     return (
-      <div key={field.fieldName} className="form-field">
-        <label className="field-label">
-          {field.label}
-          {field.required && <span className="required">*</span>}
+      <div key={field.fieldName} className="form-control w-full">
+        <label className="label">
+          <span className="label-text">
+            {field.label}
+            {field.required && <span className="text-error">*</span>}
+          </span>
         </label>
         {renderFieldContent()}
-        <div className="error-message">{hasError && fieldError[0]}</div>
+        <label className="label">
+          <span className="label-text-alt text-error">
+            {hasError && fieldError[0]}
+          </span>
+        </label>
       </div>
     );
   };
@@ -555,10 +575,12 @@ const DynamicFormGenerator = ({
   // Early return if component is not mounted
   if (!isMounted) {
     return (
-      <div className="loading-container">
-        <div className="loading-card">
-          <div className="loading-spinner-large"></div>
-          <p>Initializing form...</p>
+      <div className="flex justify-center items-center p-8">
+        <div className="card w-full max-w-2xl mx-auto bg-base-100 shadow-xl">
+          <div className="card-body items-center text-center">
+            <span className="loading loading-spinner loading-lg"></span>
+            <p>Initializing form...</p>
+          </div>
         </div>
       </div>
     );
@@ -566,10 +588,12 @@ const DynamicFormGenerator = ({
 
   if (loading && !formData) {
     return (
-      <div className="loading-container">
-        <div className="loading-card">
-          <div className="loading-spinner-large"></div>
-          <p>Loading form configuration...</p>
+      <div className="flex justify-center items-center p-8">
+        <div className="card w-full max-w-2xl mx-auto bg-base-100 shadow-xl">
+          <div className="card-body items-center text-center">
+            <span className="loading loading-spinner loading-lg"></span>
+            <p>Loading form configuration...</p>
+          </div>
         </div>
       </div>
     );
@@ -577,23 +601,25 @@ const DynamicFormGenerator = ({
 
   if (error && !formData) {
     return (
-      <div className="loading-container">
-        <div className="loading-card">
-          <div className="alert alert-error">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="alert-icon"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-            <span>{error}</span>
+      <div className="flex justify-center items-center p-8">
+        <div className="card w-full max-w-2xl mx-auto bg-base-100 shadow-xl">
+          <div className="card-body items-center text-center">
+            <div role="alert" className="alert alert-error">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="stroke-current shrink-0 h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+              <span>{error}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -602,10 +628,14 @@ const DynamicFormGenerator = ({
 
   if (!formData) {
     return (
-      <div className="loading-container">
-        <div className="loading-card">
-          <h2 className="form-title">No Form Configuration</h2>
-          <p>Please provide a valid JSON configuration to generate the form.</p>
+      <div className="flex justify-center items-center p-8">
+        <div className="card w-full max-w-2xl mx-auto bg-base-100 shadow-xl">
+          <div className="card-body items-center text-center">
+            <h2 className="card-title">No Form Configuration</h2>
+            <p>
+              Please provide a valid JSON configuration to generate the form.
+            </p>
+          </div>
         </div>
       </div>
     );
@@ -614,15 +644,15 @@ const DynamicFormGenerator = ({
   // Show success state
   if (showSuccess) {
     return (
-      <div className="dynamic-form-container">
-        <div className="form-card">
-          <div className="success-container">
+      <div className="flex justify-center items-center p-8">
+        <div className="card w-full max-w-2xl mx-auto bg-base-100 shadow-xl">
+          <div className="card-body items-center text-center">
             <div className="success-icon">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
-                className="success-check"
+                className="stroke-current shrink-0 h-16 w-16 text-success"
               >
                 <path
                   strokeLinecap="round"
@@ -632,21 +662,21 @@ const DynamicFormGenerator = ({
                 />
               </svg>
             </div>
-            <h2 className="form-title">Form Submitted Successfully!</h2>
-            <p className="success-message">
-              Thank you for your submission. We'll get back to you soon.
-            </p>
-            <button
-              className="btn btn-primary"
-              onClick={() => {
-                setShowSuccess(false);
-                setCurrentStep(0);
-                setFormValues({});
-                setFieldErrors({});
-              }}
-            >
-              Submit Another Response
-            </button>
+            <h2 className="card-title">Form Submitted Successfully!</h2>
+            <p>Thank you for your submission. We'll get back to you soon.</p>
+            <div className="card-actions">
+              <button
+                className="btn btn-primary"
+                onClick={() => {
+                  setShowSuccess(false);
+                  setCurrentStep(0);
+                  setFormValues({});
+                  setFieldErrors({});
+                }}
+              >
+                Submit Another Response
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -660,140 +690,158 @@ const DynamicFormGenerator = ({
   // Handle next step with validation
   const handleNextStep = () => {
     if (validateCurrentStep()) {
+      setDirection("next");
       setCurrentStep((prev) => prev + 1);
     } else {
       setError("Please fix the validation errors before proceeding");
     }
   };
 
+  const handlePrevStep = () => {
+    setDirection("prev");
+    setCurrentStep((prev) => Math.max(0, prev - 1));
+  };
+
   return (
-    <div className="dynamic-form-container">
-      <div className="form-card">
-        <h1 className="form-title">{formName}</h1>
+    <div className="p-4 md:p-8">
+      <div className="card w-full max-w-2xl mx-auto bg-base-100 shadow-xl">
+        <div className="card-body">
+          <h1 className="card-title text-2xl mb-4">{formName}</h1>
 
-        {/* Error Display */}
-        {error && (
-          <div className="alert alert-error">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="alert-icon"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-            <span>{error}</span>
-          </div>
-        )}
-
-        {/* JSON Preview Modal */}
-        {showJsonPreview && (
-          <div className="modal">
-            <div className="modal-box">
-              <h3 className="modal-title">Form Data Preview</h3>
-              <pre className="modal-content">
-                {JSON.stringify(
-                  {
-                    submissionId: `sub_${Date.now()}_${Math.random()
-                      .toString(36)
-                      .substr(2, 9)}`,
-                    formId: formID,
-                    payload: JSON.stringify(formValues),
-                  },
-                  null,
-                  2
-                )}
-              </pre>
-              <div className="modal-action">
-                <button
-                  className="btn btn-primary"
-                  onClick={() => setShowJsonPreview(false)}
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Form Display */}
-        <div>
-          {/* Progress Bar */}
-          <div className="progress-container">
-            <div className="progress-text">
-              Step {currentStepNumber} of {totalSteps}
-            </div>
-            <div className="progress-bar">
-              <div
-                className="progress-fill"
-                style={{ width: `${((currentStep + 1) / totalSteps) * 100}%` }}
-              ></div>
-            </div>
-          </div>
-
-          {/* Form Fields */}
-          <div style={{ marginBottom: "2rem" }}>
-            {currentStepData.map((field) => renderField(field))}
-          </div>
-
-          {/* Navigation Buttons */}
-          <div className="button-container">
-            <button
-              className="btn btn-outline"
-              onClick={() => setCurrentStep((prev) => Math.max(0, prev - 1))}
-              disabled={currentStep === 0}
-            >
-              Previous
-            </button>
-
-            {currentStep < totalSteps - 1 ? (
-              <button className="btn btn-primary" onClick={handleNextStep}>
-                Next
-              </button>
-            ) : (
-              <button
-                className="btn btn-success"
-                onClick={handleSubmit}
-                disabled={loading}
+          {/* Error Display */}
+          {error && (
+            <div role="alert" className="alert alert-error">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="stroke-current shrink-0 h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
               >
-                {loading ? (
-                  <div className="loading-spinner"></div>
-                ) : devMode === "true" ? (
-                  "Preview JSON"
-                ) : (
-                  "Submit Form"
-                )}
-              </button>
-            )}
-          </div>
-        </div>
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+              <span>{error}</span>
+            </div>
+          )}
 
-        {/* Dev Mode Indicator */}
-        {devMode === "true" && (
-          <div className="alert alert-info">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              className="alert-icon"
+          {/* JSON Preview Modal */}
+          {showJsonPreview && (
+            <dialog id="json_preview_modal" className="modal modal-open">
+              <div className="modal-box">
+                <h3 className="font-bold text-lg">Form Data Preview</h3>
+                <pre className="bg-base-200 p-4 rounded-box mt-4">
+                  {JSON.stringify(
+                    {
+                      submissionId: `sub_${Date.now()}_${Math.random()
+                        .toString(36)
+                        .substr(2, 9)}`,
+                      formId: formID,
+                      payload: JSON.stringify(formValues),
+                    },
+                    null,
+                    2
+                  )}
+                </pre>
+                <div className="modal-action">
+                  <form method="dialog">
+                    <button
+                      className="btn"
+                      onClick={() => setShowJsonPreview(false)}
+                    >
+                      Close
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </dialog>
+          )}
+
+          {/* Form Display */}
+          <div>
+            {/* Progress Bar */}
+            <div className="my-4">
+              <div className="text-sm mb-1">
+                Step {currentStepNumber} of {totalSteps}
+              </div>
+              <progress
+                className="progress progress-primary w-full"
+                value={currentStep + 1}
+                max={totalSteps}
+              ></progress>
+            </div>
+
+            {/* Form Fields */}
+            <div
+              key={currentStep}
+              className={`space-y-4 mb-8 ${
+                animateCards
+                  ? direction === "next"
+                    ? "animate-slide-in-right"
+                    : "animate-slide-in-left"
+                  : ""
+              }`}
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-              ></path>
-            </svg>
-            <span>
-              Dev Mode: Form data will be previewed instead of submitted
-            </span>
+              {currentStepData.map((field) => renderField(field))}
+            </div>
+
+            {/* Navigation Buttons */}
+            <div className="card-actions justify-between items-center">
+              <button
+                className="btn btn-outline"
+                onClick={handlePrevStep}
+                disabled={currentStep === 0}
+              >
+                Previous
+              </button>
+
+              {currentStep < totalSteps - 1 ? (
+                <button className="btn btn-primary" onClick={handleNextStep}>
+                  Next
+                </button>
+              ) : (
+                <button
+                  className="btn btn-success"
+                  onClick={handleSubmit}
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <span className="loading loading-spinner"></span>
+                  ) : devMode === "true" ? (
+                    "Preview JSON"
+                  ) : (
+                    "Submit Form"
+                  )}
+                </button>
+              )}
+            </div>
           </div>
-        )}
+
+          {/* Dev Mode Indicator */}
+          {devMode === "true" && (
+            <div role="alert" className="alert alert-info mt-6">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                className="stroke-current shrink-0 w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                ></path>
+              </svg>
+              <span>
+                Dev Mode: Form data will be previewed instead of submitted
+              </span>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -4,7 +4,41 @@ import FormEditor from '../components/FormEditor.tsx';
 ---
 
 <Layout title="Dynamic Form Generator">
-	<main>
-		<FormEditor client:load />
+	<main class="container mx-auto px-4 py-8">
+		<!-- Hero Section -->
+		<div class="hero min-h-96 bg-base-200 rounded-lg mb-8">
+			<div class="hero-content text-center">
+				<div class="max-w-4xl">
+					<h1 class="text-5xl font-bold text-base-content mb-6">
+						Dynamic Multi-Step Form Generator
+					</h1>
+					<p class="text-xl text-base-content/80 mb-8">
+						Create powerful, multi-step forms for Webflow with Airtable integration. 
+						Configure your form structure in Airtable and watch it come to life in real-time.
+					</p>
+					<div class="flex flex-col sm:flex-row gap-4 justify-center">
+						<a href=`${import.meta.env.BASE_URL}/docs` class="btn btn-primary btn-lg">
+							📚 View Documentation
+						</a>
+						<a href="https://airtable.com/appoSYwCLsZ1KeGDA/shrjViMqTb4f7apWi/tbl0GAMnHX5Bd5YxF/viwM1Tt73f52IWBL0?blocks=show" class="btn btn-outline btn-lg" target="_blank">
+							📋 Get Airtable Template
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Form Editor Section -->
+		<div class="card bg-base-100 shadow-xl">
+			<div class="card-body">
+				<h2 class="card-title text-2xl mb-4">Live Form Editor</h2>
+				<p class="text-base-content/70 mb-6">
+					Use the JSON editor on the left shows the form configuration output by the Airtable base.
+
+					Submit the form to see updates in the Airtable base.
+				</p>
+				<FormEditor client:load />
+			</div>
+		</div>
 	</main>
 </Layout>

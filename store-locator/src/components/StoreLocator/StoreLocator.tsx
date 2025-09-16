@@ -236,7 +236,7 @@ const StoreLocator: React.FC<StoreLocatorProps> = ({
 
       L.control.zoom({ position: "bottomright" }).addTo(mapRef.current);
     }
-  }, [L, mapContainer, authToken, mapStyle]);
+  }, [L, mapContainer, authToken, mapStyle, apiBaseUrl]);
 
   useEffect(() => {
     if (mapRef.current) {
