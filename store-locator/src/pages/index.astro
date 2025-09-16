@@ -1,0 +1,34 @@
+---
+import Layout from "../layouts/Layout.astro";
+import StoreLocatorDemo from "../components/StoreLocator/StoreLocatorDemo";
+---
+
+<Layout>
+  <StoreLocatorDemo client:load />
+</Layout>
+
+<style>
+  .prose {
+    max-width: 65ch;
+    margin: 0 auto 2rem auto;
+    padding: 0 2rem;
+    text-align: center;
+  }
+  .prose a {
+    color: #3245ff;
+    text-decoration: none;
+  }
+  .prose a:hover {
+    text-decoration: underline;
+  }
+  .store-locator-wrapper {
+    width: 100%;
+    height: 80vh;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+  }
+</style>

@@ -1,0 +1,76 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@plugin "daisyui" {
+  themes: light --default;
+}
+
+/* Compact badge styling - target both links and images */
+.prose a[href=""] img[src*="shields.io"],
+.prose img[src*="shields.io"],
+.prose img[alt="React"],
+.prose img[alt="Astro"],
+.prose img[alt="Tailwind CSS"],
+.prose img[alt="Webflow"],
+.prose img[alt="Airtable"] {
+  height: 25px !important;
+  max-height: 25px !important;
+  width: auto !important;
+  transform: scale(0.7) !important;
+  transform-origin: left top !important;
+  margin: 1px 2px 1px 0 !important;
+  display: inline !important;
+  vertical-align: middle !important;
+}
+
+/* Style the anchor tags containing badges */
+.prose a[href=""] {
+  display: inline !important;
+  text-decoration: none !important;
+  margin: 0 1px !important;
+}
+
+/* Force badges to stay on one line */
+.prose p:first-child,
+.prose p:has(img[src*="shields.io"]),
+.prose p:has(a[href=""]) {
+  margin-bottom: 6px !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  overflow-x: auto !important;
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  gap: 1px !important;
+  padding-bottom: 2px !important;
+}
+
+/* Animation for form steps */
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in-right {
+  animation: slideInFromRight 0.3s ease-out;
+}
+
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in-left {
+  animation: slideInFromLeft 0.3s ease-out;
+}

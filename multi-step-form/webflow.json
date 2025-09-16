@@ -1,0 +1,24 @@
+{
+  "cloud": {
+    "framework": "astro"
+  },
+  "devlink": {
+    "rootDir": "./devlink",
+    "cssModules": true,
+    "fileExtensions": {
+      "js": "jsx"
+    }
+  },
+  "telemetry": {
+    "global": {
+      "allowTelemetry": true,
+      "lastPrompted": 1757967936037,
+      "version": "1.8.41"
+    }
+  },
+  "library": {
+    "name": "Multi-Step Form",
+    "id": "multi-step-form",
+    "description": ""
+  }
+}

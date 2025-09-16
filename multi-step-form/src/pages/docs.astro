@@ -1,0 +1,133 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { marked } from 'marked';
+import readmeContent from '../../README.md?raw';
+
+const htmlContent = marked.parse(readmeContent, { gfm: true, breaks: true });
+---
+
+<Layout title="Documentation">
+  <main class="container mx-auto px-4 py-8">
+    <div class="prose prose-lg max-w-none" set:html={htmlContent}>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  @import "tailwindcss";
+  @plugin "daisyui" {
+    themes: corporate --default;
+  }
+  
+  .prose {
+    max-width: 80ch;
+    margin: 0 auto;
+  }
+  
+  /* Scoped prose styling - only affects elements within .prose container */
+  .prose h1 {
+    @apply text-4xl font-bold text-base-content mb-6 mt-8;
+  }
+  .prose h2 {
+    @apply text-3xl font-bold text-base-content mb-4 mt-6;
+  }
+  .prose h3 {
+    @apply text-2xl font-bold text-base-content mb-3 mt-5;
+  }
+  .prose p {
+    @apply text-base text-base-content mb-4;
+  }
+  .prose ul {
+    @apply list-disc list-inside mb-4 text-base-content;
+  }
+  .prose ol {
+    @apply list-decimal list-outside mb-4 text-base-content pl-6;
+  }
+  .prose li {
+    @apply mb-1;
+  }
+  .prose a {
+    @apply link link-primary font-medium transition-all duration-200;
+  }
+  .prose a:hover {
+    @apply link-hover;
+  }
+  .prose code {
+    @apply bg-base-300 text-base-content px-2 py-1 rounded text-sm border border-base-300 font-mono;
+  }
+  .prose pre {
+    @apply bg-base-300 p-4 rounded-lg overflow-x-auto mb-4 border border-base-300 shadow-sm;
+  }
+  .prose pre code {
+    @apply bg-transparent p-0 border-0;
+  }
+  .prose table {
+    @apply table table-zebra w-full mb-4 border border-base-300 rounded-lg overflow-hidden shadow-sm;
+  }
+  .prose th {
+    @apply bg-base-200 text-base-content font-bold;
+  }
+  .prose td {
+    @apply text-base-content;
+  }
+  .prose details {
+    @apply bg-base-100 mb-4 border border-base-300 shadow-sm rounded-lg overflow-hidden;
+  }
+  .prose summary {
+    @apply text-base-content font-semibold cursor-pointer p-6 bg-base-200 hover:bg-base-300 transition-all duration-200 relative list-none;
+    font-size: 1.1rem;
+  }
+  .prose summary::-webkit-details-marker {
+    display: none;
+  }
+  .prose summary::marker {
+    display: none;
+  }
+  .prose summary::before {
+    content: "+";
+    position: absolute;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: all 0.3s ease;
+    color: hsl(var(--p));
+    font-size: 1.5rem;
+    font-weight: 300;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: hsl(var(--p) / 0.1);
+  }
+  .prose details[open] summary::before {
+    content: "−";
+    transform: translateY(-50%) rotate(0deg);
+    background-color: hsl(var(--p) / 0.2);
+  }
+  .prose details[open] > summary {
+    @apply border-b border-base-300 bg-base-300;
+  }
+  .prose details > *:not(summary) {
+    @apply p-6 bg-base-100 text-base-content leading-relaxed;
+  }
+  .prose details > *:not(summary) p {
+    @apply mb-3;
+  }
+  .prose details > *:not(summary) p:last-child {
+    @apply mb-0;
+  }
+  .prose blockquote {
+    @apply border-l-4 border-primary bg-base-200 p-4 my-4 italic rounded-r-lg shadow-sm;
+  }
+  .prose hr {
+    @apply border-base-300 my-8;
+  }
+  .prose strong {
+    @apply font-bold text-base-content;
+  }
+  .prose em {
+    @apply italic text-base-content;
+  }
+</style>

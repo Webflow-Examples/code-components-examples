@@ -1,0 +1,43 @@
+---
+import { ViewTransitions } from 'astro:transitions';
+import Navbar from '../components/Navbar/Navbar';
+import Footer from '../components/Footer/Footer';
+
+const apiBaseUrl = Astro.locals.runtime.env.PUBLIC_BETTER_AUTH_URL + import.meta.env.BASE_URL;
+---
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/map/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Webfloe Code Components: Store Locator</title>
+		<ViewTransitions />
+	</head>
+	<body>
+		<Navbar client:load apiBaseUrl={apiBaseUrl} title="Timewarp Studios" />
+		<main class="main-content">
+			<slot />
+		</main>
+		<Footer client:load />
+	</body>
+</html>
+
+<style is:global>
+	@import "../components/StoreLocator/styles.css";
+	html,
+	body {
+		margin: 0;
+		width: 100%;
+		height: 100%;
+	}
+	body {
+		display: flex;
+		flex-direction: column;
+	}
+	.main-content {
+		flex: 1;
+		min-height: 0;
+	}
+</style>

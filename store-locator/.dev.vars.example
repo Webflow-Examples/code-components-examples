@@ -1,0 +1,9 @@
+# Webflow OAuth Configuration
+# Get these from your Webflow app settings: https://developers.webflow.com/
+WEBFLOW_CLIENT_ID=your_webflow_client_id_here
+WEBFLOW_CLIENT_SECRET=your_webflow_client_secret_here
+
+# BetterAuth Configuration
+# Generate a secure random string for production
+BETTER_AUTH_SECRET=your_better_auth_secret_here
+PUBLIC_BETTER_AUTH_URL=http://localhost:8787
