@@ -1,10 +1,12 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import StoreLocatorDemo from "../components/StoreLocator/StoreLocatorDemo";
+
+const apiBaseUrl = Astro.locals.runtime.env.PUBLIC_BETTER_AUTH_URL + import.meta.env.BASE_URL;
 ---
 
 <Layout>
-  <StoreLocatorDemo client:load />
+  <StoreLocatorDemo client:load apiBaseUrl={apiBaseUrl} />
 </Layout>
 
 <style>

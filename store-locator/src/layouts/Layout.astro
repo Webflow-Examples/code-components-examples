@@ -4,6 +4,8 @@ import Navbar from '../components/Navbar/Navbar';
 import Footer from '../components/Footer/Footer';
 
 const apiBaseUrl = Astro.locals.runtime.env.PUBLIC_BETTER_AUTH_URL + import.meta.env.BASE_URL;
+console.log("API BASE URL")
+console.log("apiBaseUrl", apiBaseUrl);
 ---
 <!doctype html>
 <html lang="en">
@@ -12,7 +14,7 @@ const apiBaseUrl = Astro.locals.runtime.env.PUBLIC_BETTER_AUTH_URL + import.meta
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/map/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Webfloe Code Components: Store Locator</title>
+		<title>Webflow Code Components: Store Locator</title>
 		<ViewTransitions />
 	</head>
 	<body>
