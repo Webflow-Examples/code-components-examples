@@ -30,7 +30,7 @@ This will start the Astro development server, and you can view the component at 
 
 - `src/components/DynamicFormGenerator.jsx`: The core React component that handles form logic, state management, validation, and rendering.
 - `src/components/DynamicFormGenerator.webflow.tsx`: The Webflow Code Component definition file. It defines the props that appear in the Webflow Designer's settings panel.
-- `src/styles/component-styles.css`: The CSS file containing styles for the component, written using Tailwind CSS and DaisyUI.
+- `src/styles/globals.css`: The CSS file containing styles for the component, written using Tailwind CSS and DaisyUI.
 
 ---
 
