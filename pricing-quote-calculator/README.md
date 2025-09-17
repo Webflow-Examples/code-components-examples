@@ -1,6 +1,6 @@
 # Pricing Quote Calculator
 
-This code component example is a flexible pricing calculator widget for calculating a monthly premium estimate.
+This code component example is a flexible pricing calculator widget for calculating a monthly premium estimate. [See a live example here.](https://cc-test-66117f.webflow.io/insurance-quote-widget)
 
 ![](./screenshots/demo-screenshot.png)
 

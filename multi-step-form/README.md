@@ -6,7 +6,7 @@
 [![Webflow](https://img.shields.io/badge/Webflow-4353FF?style=for-the-badge&logo=webflow&logoColor=white)]()
 [![Airtable](https://img.shields.io/badge/Airtable-F7B928?style=for-the-badge&logo=airtable&logoColor=black)]()
 
-A dynamic, multi-step form component for Webflow, powered by Airtable for easy configuration and management.
+A dynamic, multi-step form component for Webflow, powered by Airtable for easy configuration and management. [See a live example here](https://hello-webflow-cloud.webflow.io/form)
 
 ## Installation
 
