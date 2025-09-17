@@ -1,25 +1,18 @@
-// @ts-check
 import { defineConfig } from "astro/config";
-import cloudflare from "@astrojs/cloudflare"; // Import the Cloudflare adapter
+import cloudflare from "@astrojs/cloudflare";
 import react from "@astrojs/react";
 
 // https://astro.build/config
 export default defineConfig({
-  output: "server",
   base: "/map",
-  build: {
-    assets: "static",
-  },
-  security: {
-    checkOrigin: false,
-  },
+  output: "server",
   adapter: cloudflare({
     platformProxy: {
-      persist: true,
+      enabled: true,
     },
   }),
+
   integrations: [react()],
-  // Optimize the build configuration for the Edge runtime
   vite: {
     resolve: {
       // Use react-dom/server.edge instead of react-dom/server.browser for React 19.
@@ -29,6 +22,9 @@ export default defineConfig({
             "react-dom/server": "react-dom/server.edge",
           }
         : undefined,
+    },
+    ssr: {
+      noExternal: ["@webflow/react", "@webflow/data-types"],
     },
   },
 });

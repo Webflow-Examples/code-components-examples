@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import StoreLocatorView from "./StoreLocator";
+import StoreLocator from "./StoreLocator";
 
 interface StoreLocatorDemoProps {
   apiBaseUrl: string;
@@ -17,7 +17,7 @@ const StoreLocatorDemo: React.FC<StoreLocatorDemoProps> = ({ apiBaseUrl }) => {
   if (submittedToken) {
     return (
       <div style={{ width: "100%", height: "100%" }}>
-        <StoreLocatorView authToken={submittedToken} apiBaseUrl={apiBaseUrl} />
+        <StoreLocator authToken={submittedToken} apiBaseUrl={apiBaseUrl} />
         <div style={{ textAlign: "center", marginTop: "1rem" }}>
           <button onClick={() => setSubmittedToken("")}>
             Use a different token

@@ -230,7 +230,7 @@ This component connects Airtable for configuration, Webflow for presentation, an
 
 ## Community
 
-For help, discussion about best practices, or other convos:
+For help, discussion about examples and best practices:
 
 [Join the Webflow App Developers Forum](https://discourse.webflow.com/c/app-developers/90)
 
