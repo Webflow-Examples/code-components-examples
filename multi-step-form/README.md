@@ -52,7 +52,7 @@ This component connects Airtable for configuration, Webflow for presentation, an
 1.  Open the [Airtable Base Template](https://airtable.com/appoSYwCLsZ1KeGDA/shrjViMqTb4f7apWi) and duplicate it.
 2.  In the **Forms** table, create a record for your form.
 3.  In the **Form Structure** table, add your questions, assign them to steps, and link them to your form.
-4.  Copy the JSON from the `Form Config Script` field in your **Forms** table record.
+4.  Copy the JSON from the `Form Config Script` in the extensions panel.
 
 ### 2. Set up the Airtable automation
 
