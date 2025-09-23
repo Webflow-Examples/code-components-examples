@@ -141,14 +141,6 @@ export default function Home() {
                 </div>
 
                 <div className="flex flex-col items-center gap-2">
-                  <Avatar className="h-12 w-12">
-                    <AvatarImage src="https://github.com/vercel.png" alt="@vercel" />
-                    <AvatarFallback>VC</AvatarFallback>
-                  </Avatar>
-                  <span className="text-sm text-muted-foreground">Large</span>
-                </div>
-
-                <div className="flex flex-col items-center gap-2">
                   <Avatar className="h-6 w-6">
                     <AvatarFallback className="text-xs">SM</AvatarFallback>
                   </Avatar>
