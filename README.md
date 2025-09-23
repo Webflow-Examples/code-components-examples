@@ -45,6 +45,13 @@ A map component and backend API that plots locations demonstrating:
 - **Mapbox Integration** geo-locate a users input and get map tiles
 - **Leaflet.js** A lightweight, open-source mapping library
 
+## 🧩 [Shadcn/ui Components](./shadcn-components/)
+
+A list of base Shadcn/ui components adapted for Webflow code components:
+
+- **Base building block components** with props exposed for Webflow
+- **Tailwind styling**
+
 ## 🚀 Getting Started
 
 Navigate inside a project example folder (i.e. `cd pricing-quote-calculator`) and follow the `README` inside to install the project, run it locally, and import it to Webflow.
