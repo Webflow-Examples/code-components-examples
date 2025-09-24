@@ -1,8 +1,8 @@
 import { Input } from "./input";
-import { props } from '@webflow/data-types';
+import { props } from "@webflow/data-types";
 import { declareComponent } from "@webflow/react";
 
-import "../../app/globals.css";
+import "../../../app/globals.css";
 
 export default declareComponent(Input, {
   name: "Input",
@@ -15,7 +15,19 @@ export default declareComponent(Input, {
     }),
     type: props.Variant({
       name: "Type",
-      options: ["text", "email", "password", "number", "tel", "url", "search", "date", "time", "datetime-local", "file"],
+      options: [
+        "text",
+        "email",
+        "password",
+        "number",
+        "tel",
+        "url",
+        "search",
+        "date",
+        "time",
+        "datetime-local",
+        "file",
+      ],
       defaultValue: "text",
     }),
     placeholder: props.Text({

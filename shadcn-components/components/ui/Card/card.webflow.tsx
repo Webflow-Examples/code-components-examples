@@ -11,7 +11,7 @@ import {
 import { props } from "@webflow/data-types";
 import { declareComponent } from "@webflow/react";
 
-import "../../app/globals.css";
+import "../../../app/globals.css";
 
 interface WebflowCardProps {
   className?: string;
