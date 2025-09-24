@@ -1,8 +1,8 @@
 import { Button } from "./button";
-import { props } from '@webflow/data-types';
+import { props } from "@webflow/data-types";
 import { declareComponent } from "@webflow/react";
 
-import "../../app/globals.css";
+import "../../../app/globals.css";
 
 export default declareComponent(Button, {
   name: "Button",
@@ -15,7 +15,14 @@ export default declareComponent(Button, {
     }),
     variant: props.Variant({
       name: "Variant",
-      options: ["default", "destructive", "outline", "secondary", "ghost", "link"],
+      options: [
+        "default",
+        "destructive",
+        "outline",
+        "secondary",
+        "ghost",
+        "link",
+      ],
       defaultValue: "default",
     }),
     size: props.Variant({

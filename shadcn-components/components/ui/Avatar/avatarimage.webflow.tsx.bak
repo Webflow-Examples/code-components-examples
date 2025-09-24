@@ -1,0 +1,141 @@
+// This file defines the Webflow Code Component wrapper for the ShadCN AvatarImage React component.
+
+// Webflow has its own proprietary prop system (`@webflow/data-types`) which differs from standard React props.
+// Our base `AvatarImage` React component expects standard `src` and `alt` string props.
+// Webflow, however, provides an `Image` prop type (`PropType.Image`) which returns a structured object `{ src: string, alt?: string }`.
+// To bridge this difference, we need a wrapper component that translates Webflow's prop structure into the format our React component expects.
+
+// PROP MAPPING:
+// 1. Define the expected props for the base ShadCN AvatarImage React component.
+// 2. Define `WebflowAvatarImageProps` to accept Webflow-specific prop types, such as `PropValues[PropType.Image]`.
+// 3. Use `Omit<AvatarImageProps, "src" | "alt">` to ensure that our wrapper component doesn't expect `src` and `alt` directly, as they will come from the `image` prop.
+// 4. Inside the `WebflowAvatarImage` component, we safely extract `src` and `alt` from the `image` prop provided by Webflow.
+// 5. These extracted `src` and `alt` values, along with any other standard props (like `className`), are then passed down to the original `AvatarImage` React component.
+
+import React from "react";
+import { props, PropType, PropValues } from "@webflow/data-types";
+import { declareComponent } from "@webflow/react";
+import { cn } from "@/lib/utils";
+
+import "../../../app/globals.css";
+
+// ** SHADCN AvatarImage REACT COMPONENT **
+
+// Defines the expected props for the base ShadCN AvatarImage React component.
+type AvatarImageProps = {
+  className?: string; // Standard React className prop for styling.
+  src: string; // The image source URL.
+  alt: string; // The alternative text for the image.
+};
+
+// The actual React component that renders the image, handles loading, and error states.
+const AvatarImage: React.FC<AvatarImageProps> = ({
+  className,
+  src,
+  alt = "Avatar",
+}) => {
+  const [imageError, setImageError] = React.useState(false);
+  const [imageLoaded, setImageLoaded] = React.useState(false);
+
+  const handleImageError = () => {
+    setImageError(true);
+  };
+
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+    setImageError(false);
+  };
+
+  // Very aggressive debugging styles for fallback and image
+  const fallbackStyle =
+    imageError || !src
+      ? {
+          backgroundColor: "red",
+          width: "70px",
+          height: "70px",
+          border: "8px solid orange",
+          color: "white",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontSize: "2em",
+        }
+      : {};
+
+  // Only render image if src is provided and no error occurred
+  if (!src || imageError) {
+    return (
+      <div
+        style={fallbackStyle}
+        className={cn(
+          "rounded-full flex items-center justify-center text-white",
+          className
+        )}
+      >
+        {alt ? alt.charAt(0).toUpperCase() : "?"}
+      </div>
+    );
+  }
+
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={src}
+      alt={alt}
+      className={cn("aspect-square size-full object-cover", className)}
+      onError={handleImageError}
+      onLoad={handleImageLoad}
+      style={{
+        background: "cyan", // Aggressive debugging background
+        border: "8px solid magenta", // Aggressive debugging border
+        width: "70px", // Explicit size for debugging
+        height: "70px", // Explicit size for debugging
+        opacity: imageLoaded ? 1 : 0,
+        transition: "opacity 0.2s ease-in-out",
+      }}
+    />
+  );
+};
+
+export { AvatarImage };
+
+// ** WEBFLOW WRAPPER COMPONENT **
+
+// Defines the props for the Webflow wrapper component.
+type WebflowAvatarImageProps = {
+  className?: string;
+  image?: PropValues[PropType.Image]; // The Webflow Image prop, providing src and alt.
+} & Omit<AvatarImageProps, "src" | "alt">; // Exclude `src` and `alt` from the base props as they are handled by the `image` prop from Webflow.
+
+// The Webflow Code Component wrapper. This component adapts Webflow's props to the React component's expectations.
+const WebflowAvatarImage = ({ image, ...props }: WebflowAvatarImageProps) => {
+  console.log("WebflowAvatarImage: Rendering wrapper. Image prop:", image);
+  return (
+    <AvatarImage
+      src={image?.src || ""} // Extracts the image source URL from the Webflow `image` prop.
+      alt={image?.alt || "Avatar"} // Extracts the alt text from the Webflow `image` prop.
+      {...props} // Spreads any remaining props (e.g., `className`) directly to the `AvatarImage` component.
+    />
+  );
+};
+
+// ** WEBFLOW COMPONENT DEFINITION **
+
+// Declares the Webflow Code Component with its metadata and prop definitions for the Webflow Designer.
+export default declareComponent(WebflowAvatarImage, {
+  name: "AvatarImage",
+  description:
+    "A ShadCN UI avatar image component - place inside Avatar component",
+  group: "Display",
+  props: {
+    className: props.Text({
+      name: "Class Name",
+      defaultValue: "",
+      tooltip: "Optional: Add Additional Tailwind CSS classes",
+    }),
+    image: props.Image({
+      name: "Image",
+      tooltip: "Select an image for the avatar.",
+    }),
+  },
+});

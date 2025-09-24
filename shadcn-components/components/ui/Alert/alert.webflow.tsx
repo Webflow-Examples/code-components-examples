@@ -1,9 +1,9 @@
 import React from "react";
 import { Alert, AlertTitle, AlertDescription } from "./alert";
-import { props } from '@webflow/data-types';
+import { props } from "@webflow/data-types";
 import { declareComponent } from "@webflow/react";
 
-import "../../app/globals.css";
+import "../../../app/globals.css";
 
 interface WebflowAlertProps {
   className?: string;
@@ -50,7 +50,7 @@ export default declareComponent(WebflowAlert, {
       defaultValue: "Alert Title",
     }),
     description: props.Text({
-      name: "Description", 
+      name: "Description",
       defaultValue: "Your alert description goes here.",
     }),
     showIcon: props.Visibility({

@@ -1,8 +1,8 @@
 import { Badge } from "./badge";
-import { props } from '@webflow/data-types';
+import { props } from "@webflow/data-types";
 import { declareComponent } from "@webflow/react";
 
-import "../../app/globals.css";
+import "../../../app/globals.css";
 
 export default declareComponent(Badge, {
   name: "Badge",
