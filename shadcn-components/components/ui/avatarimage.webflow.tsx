@@ -42,10 +42,6 @@ const WebflowAvatarImage: React.FC<WebflowAvatarImageProps> = ({
       className={cn("aspect-square size-full object-cover", className)}
       onError={handleImageError}
       onLoad={handleImageLoad}
-      style={{
-        opacity: imageLoaded ? 1 : 0,
-        transition: 'opacity 0.2s ease-in-out'
-      }}
     />
   );
 };
