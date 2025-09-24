@@ -1,9 +1,9 @@
 {
   "library": {
-    "name": "ShadCN UI Components - Vic Test",
+    "name": "ShadCN UI Components Examples",
     "components": ["./components/**/*.webflow.@(js|jsx|mjs|ts|tsx)"],
     "description": "",
-    "id": "shadcn-ui-components---vic-test",
+    "id": "shadcn-ui-components---examples",
     "bundleConfig": "./webpack.webflow.js"
   },
   "telemetry": {

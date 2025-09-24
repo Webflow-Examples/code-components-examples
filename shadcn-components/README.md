@@ -8,8 +8,6 @@
 
 A comprehensive collection of base [shadcn/ui](https://ui.shadcn.com/) components adapted for Webflow Code Components. These components can be dropped into any Webflow site and configured visually through the Webflow Designer.
 
-![](./screenshots/shadcn-demo.png)
-
 ## Available Components
 
 ### Layout & Navigation
