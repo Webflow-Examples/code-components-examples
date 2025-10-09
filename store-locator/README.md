@@ -72,7 +72,49 @@ Add the following fields to the collection. The `slug` field is the unique ident
 
 > **Note:** The `Latitude` and `Longitude` fields are optional. If an address is provided without coordinates, the backend will automatically geocode it using Mapbox and store the results.
 
-#### 3. Environment Variables
+> **Note:** You can use the [Webflow MCP Server](https://developers.webflow.com/data/docs/ai-tools) to handle the CMS setup on your site. See details in the dropdown below.
+
+<details>
+    <summary>Add MCP Server to your Client</summary>
+
+    ### Cursor
+
+    ```
+    {
+        "mcpServers": {
+            "webflow": {
+            "url": "https://mcp.webflow.com/sse"
+            }
+        }
+    }
+    ```
+
+    ### Claude Desktop
+    ```
+    {
+    "mcpServers": {
+        "webflow": {
+        "command": "npx",
+        "args": ["mcp-remote", "https://mcp.webflow.com/sse"]
+        }
+    }
+    }
+    ```
+
+    ### Windsurf
+    ```
+    {
+    "mcpServers": {
+        "webflow": {
+        "serverUrl": "https://mcp.webflow.com/sse"
+        }
+    }
+    }
+    ```
+
+</details>
+
+#### 3. Add Environment Variables
 
 This project uses a `.dev.vars` file for local development and Cloudflare secrets for production. Create a `.dev.vars` file in the root of your project by copying the example:
 
@@ -82,11 +124,21 @@ cp .dev.vars.example .dev.vars
 
 Fill in the required values:
 
-- `WEBFLOW_CLIENT_ID` & `WEBFLOW_CLIENT_SECRET`: Get these by creating a new Webflow App under your Workspace settings. Set the Redirect URI to `[YOUR_DEPLOYED_URL]/api/auth/oauth2/callback/webflow`.
+- `WEBFLOW_CLIENT_ID` & `WEBFLOW_CLIENT_SECRET`: Get these by creating a new Webflow App under your Workspace settings. Set the Redirect URI to `[YOUR_DEPLOYED_URL]/api/auth/oauth2/callback/webflow`. Or to `http://localhost:4321/api/auth/oauth2/callback/webflow` if testing locally.
 - `BETTER_AUTH_SECRET`: A long, random string you create to sign JWTs.
 - `PUBLIC_BETTER_AUTH_URL`: The base URL where this app will be deployed (e.g., `https://my-site.webflow.io/map`).
 
 When you deploy to Webflow Cloud, you will need to add these as Secrets in your Webflow Cloud dashboard, which is linked from your Site Settings -> Webflow Cloud tab.
+
+#### 4. Run locally
+
+To run the project locally, you'll first neeed to set up your DB. Run the follwing command in your terminal
+
+`npm run db:apply:local`
+
+Then you can start the app:
+
+`npm run dev`
 
 #### 4. Deploy to Webflow Cloud
 
@@ -107,8 +159,8 @@ Once configured, Webflow Cloud will automatically deploy your application whenev
 Once your backend is deployed, navigate to its setup page (e.g., `https://my-site.webflow.io/map/setup`).
 
 1.  **Login with Webflow**: Authenticate your account.
-2.  **Select Site & Collection**: Choose the Webflow site and the `Locations` collection you created earlier.
-3.  **Enter Mapbox Key**: Paste your public Mapbox access token.
+2.  **Enter Mapbox Key**: Paste your public Mapbox access token.
+3.  **Select Site & Collection**: Choose the Webflow site and the `Locations` collection you created earlier.
 4.  **Save & Generate Token**: Click the button to save your settings and generate the JWT.
 5.  **Copy the Token**: Copy the generated auth token. You will need it in the Webflow Designer.
 
