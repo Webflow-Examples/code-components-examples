@@ -140,6 +140,8 @@ Then you can start the app:
 
 `npm run dev`
 
+See the component configuration section for more details.
+
 #### 4. Deploy to Webflow Cloud
 
 Follow the official [Webflow Cloud Getting Started Guide](https://developers.webflow.com/webflow-cloud/getting-started) to deploy this application. The key steps are:
