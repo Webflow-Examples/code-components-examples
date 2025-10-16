@@ -1,0 +1,16 @@
+{
+  "library": {
+    "name": "ShadCN UI Components Examples",
+    "components": ["./components/**/*.webflow.@(js|jsx|mjs|ts|tsx)"],
+    "description": "",
+    "id": "shadcn-ui-components---examples",
+    "bundleConfig": "./webpack.webflow.js"
+  },
+  "telemetry": {
+    "global": {
+      "allowTelemetry": true,
+      "lastPrompted": 1756871120594,
+      "version": "1.8.38"
+    }
+  }
+}
