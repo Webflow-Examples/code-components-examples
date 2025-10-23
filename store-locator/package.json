@@ -35,7 +35,7 @@
     "@types/node": "^24.3.3",
     "@webflow/data-types": "^1.0.1",
     "@webflow/react": "^1.0.1",
-    "@webflow/webflow-cli": "^1.8.43",
+    "@webflow/webflow-cli": "^1.8.46",
     "better-sqlite3": "^12.2.0",
     "drizzle-kit": "^0.31.4",
     "tsx": "^4.20.5",
