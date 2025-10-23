@@ -1,6 +1,7 @@
 {
   "cloud": {
-    "framework": "astro"
+    "framework": "astro",
+    "project_id": "1d47e132-2ccc-4162-b273-a98a156178fa"
   },
   "library": {
     "name": "Store Locator",
