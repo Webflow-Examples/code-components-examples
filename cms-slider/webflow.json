@@ -1,0 +1,17 @@
+{
+  "library": {
+    "name": "cms-slider",
+    "components": [
+      "./src/**/*.webflow.@(js|jsx|mjs|ts|tsx)"
+    ],
+    "description": "CMS Slider",
+    "id": "cms-slider"
+  },
+  "telemetry": {
+    "global": {
+      "allowTelemetry": false,
+      "lastPrompted": 1758750531599,
+      "version": "1.8.44"
+    }
+  }
+}

@@ -35,6 +35,16 @@ A dynamic form generator demonstrating:
 - **Conditional logic** for showing/hiding fields
 - **Data persistence** across steps
 
+### 🎠 [CMS Slider](./cms-slider/)
+
+A carousel slider that integrates with Webflow CMS collections featuring:
+
+- **CMS Collection Integration** extracts and displays items from Webflow CMS Collection list.
+- **React Slick** carousel with configurable options (autoplay, infinite loop, dots, arrows).
+- **Shadow DOM styling** for proper style isolation in Webflow Code Component.
+- **Slot-based content** accepts Webflow CMS collection lists as component slots.
+- **Customizable behavior** control slides to show, scroll speed, and autoplay settings.
+
 ### 🗺️ [Store Locator](./store-locator/)
 
 A map component and backend API that plots locations demonstrating:
