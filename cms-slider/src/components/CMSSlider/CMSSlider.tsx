@@ -33,8 +33,9 @@ const CMSSlider = (props: CMSSliderProps) => {
   const parentRef = useRef<HTMLDivElement>(null);
 
   // Extract CMS collection items from Webflow slot
-  const { cmsCollectionComponentSlotRef, slideElements } =
-    useCMSCollectionItems("cmsCollectionComponentSlot");
+  const { cmsCollectionComponentSlotRef, items } = useCMSCollectionItems(
+    "cmsCollectionComponentSlot"
+  );
 
   // Inject global styles into shadow DOM
   useShadowGlobalStyles(parentRef);
@@ -50,7 +51,7 @@ const CMSSlider = (props: CMSSliderProps) => {
       </div>
 
       {/* Render slider once CMS items are extracted */}
-      {slideElements && slideElements.length > 0 && (
+      {items && items.length > 0 && (
         <SlickSlider
           infinite={infinite}
           slidesToShow={slidesToShow}
@@ -61,8 +62,8 @@ const CMSSlider = (props: CMSSliderProps) => {
           autoplaySpeed={autoplaySpeed}
           swipeToSlide={true}
         >
-          {slideElements.map((slide, index) => (
-            <SlideItem key={index} slide={slide} index={index} />
+          {items.map((item, index) => (
+            <SlideItem key={index} item={item} index={index} />
           ))}
         </SlickSlider>
       )}

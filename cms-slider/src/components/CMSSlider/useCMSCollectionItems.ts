@@ -7,12 +7,10 @@ import { useEffect, useMemo, useRef, useState } from "react";
  */
 export function useCMSCollectionItems(slotName: string) {
   const cmsCollectionComponentSlotRef = useRef<HTMLDivElement>(null);
-  const [slideElements, setSlideElements] = useState<HTMLDivElement[] | null>(
-    null
-  );
+  const [items, setItems] = useState<HTMLDivElement[] | null>(null);
 
   useEffect(() => {
-    if (slideElements === null && cmsCollectionComponentSlotRef.current) {
+    if (items === null && cmsCollectionComponentSlotRef.current) {
       // Find the slot element by name
       const slot = cmsCollectionComponentSlotRef.current.querySelector(
         `[name="${slotName}"]`
@@ -29,22 +27,20 @@ export function useCMSCollectionItems(slotName: string) {
               )
             ) as HTMLDivElement[]
           ).map((slide) => slide.cloneNode(true) as HTMLDivElement);
-          setSlideElements(slides);
+          setItems(slides);
         }
       }
     }
-  }, [cmsCollectionComponentSlotRef.current, slideElements]);
+  }, [cmsCollectionComponentSlotRef.current, items]);
 
   // Filter out empty slides and memoize for performance
-  const memoizedSlideElements = useMemo(
-    () =>
-      slideElements?.filter((slide) => slide && slide.children.length > 0) ??
-      [],
-    [slideElements]
+  const memoizedItems = useMemo(
+    () => items?.filter((item) => item && item.children.length > 0) ?? [],
+    [items]
   );
 
   return {
     cmsCollectionComponentSlotRef,
-    slideElements: memoizedSlideElements,
+    items: memoizedItems,
   };
 }
