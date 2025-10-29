@@ -1,0 +1,16 @@
+{
+  "library": {
+    "name": "Webflow Code Import Examples - Percentage Tracker",
+    "components": [
+      "**/*.webflow.@(js|jsx|mjs|ts|tsx)"
+    ],
+    "id": "webflow-code-import-examples---percentage-tracker"
+  },
+  "telemetry": {
+    "global": {
+      "allowTelemetry": true,
+      "lastPrompted": 1757368712207,
+      "version": "1.8.40"
+    }
+  }
+}
