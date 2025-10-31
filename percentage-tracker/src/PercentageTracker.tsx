@@ -1,6 +1,8 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 type PercentageTrackerProps = {
+  progressHeader?: string
+  progressDescription?: string
   value: number
   label?: string
   color?: string
@@ -15,18 +17,18 @@ const clampValue = (input: number) => {
   return Math.min(100, Math.max(0, Math.round(input)))
 }
 
-const PercentageTracker = ({ value, label, color = '#16a34a', delay = 0 }: PercentageTrackerProps) => {
-  const normalizedValue = useMemo(() => clampValue(value), [value])
+const PercentageTracker = ({ value, progressHeader, progressDescription, label, color = '#16a34a', delay = 0 }: PercentageTrackerProps) => {
+  const normalizedValue = clampValue(value)
   const animationDelay = Math.max(0, delay)
   const [displayValue, setDisplayValue] = useState(0)
 
   useEffect(() => {
-    const timeout = window.setTimeout(() => {
+    const timeout = setTimeout(() => {
       setDisplayValue(normalizedValue)
     }, animationDelay)
 
     return () => {
-      window.clearTimeout(timeout)
+      clearTimeout(timeout)
     }
   }, [normalizedValue, animationDelay])
 
@@ -34,8 +36,8 @@ const PercentageTracker = ({ value, label, color = '#16a34a', delay = 0 }: Perce
     <div className="w-full max-w-xl mx-auto p-8 bg-base-100 shadow-xl rounded-box">
       <div className="flex items-end justify-between mb-6">
         <div>
-          <h2 className="text-2xl font-semibold text-base-content">Progress</h2>
-          <p className="text-sm text-base-content/70">Tracking completion towards your goal</p>
+          {progressHeader && <h2 className="text-2xl font-semibold text-base-content">{progressHeader}</h2>}
+          {progressDescription && <p className="text-sm text-base-content/70">{progressDescription}</p>}
         </div>
         <span className="text-4xl font-bold text-base-content">{displayValue}%</span>
       </div>

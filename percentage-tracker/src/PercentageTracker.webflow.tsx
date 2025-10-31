@@ -8,6 +8,12 @@ export default declareComponent(PercentageTracker, {
   description: 'An animated progress tracker with customizable label, color, and delay.',
   group: 'Feedback',
   props: {
+    progressHeader: props.Text({
+      name: 'Progress Header',
+    }),
+    progressDescription: props.Text({
+      name: 'Progress Description',
+    }),
     value: props.Number({
       name: 'Value',
       min: 0,

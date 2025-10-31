@@ -1,6 +1,6 @@
 {
   "library": {
-    "name": "Webflow Code Import Examples - Percentage Tracker",
+    "name": "Percentage Tracker (Code Component Examples)",
     "components": [
       "**/*.webflow.@(js|jsx|mjs|ts|tsx)"
     ],
