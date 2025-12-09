@@ -1,0 +1,15 @@
+{
+  "library": {
+    "name": "CMS Map",
+    "components": ["./src/**/*.webflow.@(js|jsx|mjs|ts|tsx)"],
+    "description": "CMS Map",
+    "id": "cms-map"
+  },
+  "telemetry": {
+    "global": {
+      "allowTelemetry": false,
+      "lastPrompted": 1758750531599,
+      "version": "1.8.44"
+    }
+  }
+}

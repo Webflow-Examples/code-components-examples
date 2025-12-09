@@ -1,0 +1,118 @@
+/* Ensure map container is properly positioned */
+#map-container {
+  position: relative;
+  overflow: hidden;
+  min-height: 400px;
+}
+
+/* Ensure mapbox canvas renders properly */
+.mapboxgl-canvas {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Custom marker styles - optimized for smooth movement */
+.custom-marker {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  /* GPU acceleration for smoother movement */
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+  backface-visibility: hidden;
+  /* Remove transition during pan/zoom for better performance */
+  transition: none;
+}
+
+.custom-marker:hover {
+  transform: translate3d(0, 0, 0) scale(1.1);
+  transition: transform 0.2s ease-out;
+}
+
+/* Alternative: Simple colored pin */
+.simple-marker {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #ff0000;
+  border: 2px solid white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+
+/* Navigation controls (zoom buttons) positioning */
+.mapboxgl-ctrl-top-right {
+  top: var(--controls-vertical-padding, 0px) !important;
+  right: var(--controls-horizontal-padding, 0) !important;
+}
+
+.mapboxgl-ctrl-top-left {
+  top: var(--controls-vertical-padding, 0px) !important;
+  left: var(--controls-horizontal-padding, 0px) !important;
+}
+.mapboxgl-ctrl-bottom-right {
+  bottom: var(--controls-vertical-padding, 0px) !important;
+  right: var(--controls-horizontal-padding, 0px) !important;
+}
+.mapboxgl-ctrl-bottom-left{
+  bottom: var(--controls-vertical-padding, 0px) !important;
+  left: var(--controls-horizontal-padding, 0px) !important;
+}
+/* Optional: Style the navigation control buttons */
+.mapboxgl-ctrl-group {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.mapboxgl-ctrl-group button {
+  width: 36px;
+  height: 36px;
+}
+
+.mapboxgl-ctrl-group button:hover {
+  background-color: #f0f0f0;
+}
+
+/* Mapbox popup customization */
+.mapboxgl-popup {
+  z-index: 10;
+}
+
+.mapboxgl-popup-content {
+  padding: 0 !important;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  min-width: 200px;
+}
+
+.mapboxgl-popup-close-button {
+  font-size: 20px;
+  padding: 8px;
+  right: 4px;
+  top: 4px;
+}
+
+.mapboxgl-popup-anchor-top .mapboxgl-popup-tip,
+.mapboxgl-popup-anchor-top-left .mapboxgl-popup-tip,
+.mapboxgl-popup-anchor-top-right .mapboxgl-popup-tip {
+  border-bottom-color: white;
+}
+
+.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip,
+.mapboxgl-popup-anchor-bottom-left .mapboxgl-popup-tip,
+.mapboxgl-popup-anchor-bottom-right .mapboxgl-popup-tip {
+  border-top-color: white;
+}
+
+.mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
+  border-right-color: white;
+}
+
+.mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
+  border-left-color: white;
+}
+

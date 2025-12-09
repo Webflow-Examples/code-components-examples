@@ -45,6 +45,17 @@ A carousel slider that integrates with Webflow CMS collections featuring:
 - **Slot-based content** accepts Webflow CMS collection lists as component slots.
 - **Customizable behavior** control slides to show, scroll speed, and autoplay settings.
 
+### 🗺️ [CMS Map](./cms-map/)
+
+An interactive map component that displays CMS-driven location data featuring:
+
+- **CMS Collection Integration** automatically extracts location data from Webflow CMS Collection lists.
+- **Mapbox GL JS** powered interactive maps with custom markers and smooth navigation.
+- **Auto-Fit Bounds** automatically adjusts map view to show all markers with configurable padding.
+- **Custom Popups** display rich HTML content from CMS fields in map marker popups.
+- **Slot-based content** accepts Webflow CMS collection lists as component slots.
+- **Flexible Configuration** control map center, zoom level, bounds fitting, and control positioning.
+
 ### 🗺️ [Store Locator](./store-locator/)
 
 A map component and backend API that plots locations demonstrating:
