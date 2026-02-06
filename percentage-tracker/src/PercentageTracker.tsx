@@ -1,12 +1,22 @@
 import { useEffect, useState } from 'react'
 
 type PercentageTrackerProps = {
+  // Main header text for the progress tracker
   progressHeader?: string
+  // Secondary description text under the header text
   progressDescription?: string
+  // The value of the progress tracker, from 0 to 100.
   value: number
+  // An optional label text to display below the progress tracker.
   label?: string
+  // The color of the header text
+  headerColorProp?: string
+  // The color of the progress highlighted on the bar
   color?: string
+  // The delay in milliseconds before the progress tracker starts animating. Defaults to 0.
   delay?: number
+  // The content slot to display below the progress tracker.
+  contentSlot?: React.ReactNode
 }
 
 const clampValue = (input: number) => {
@@ -17,7 +27,7 @@ const clampValue = (input: number) => {
   return Math.min(100, Math.max(0, Math.round(input)))
 }
 
-const PercentageTracker = ({ value, progressHeader, progressDescription, label, color = '#16a34a', delay = 0 }: PercentageTrackerProps) => {
+const PercentageTracker = ({ value, progressHeader, progressDescription, label, headerColorProp = 'black', color = '#16a34a', delay = 0, contentSlot }: PercentageTrackerProps) => {
   const normalizedValue = clampValue(value)
   const animationDelay = Math.max(0, delay)
   const [displayValue, setDisplayValue] = useState(0)
@@ -36,8 +46,9 @@ const PercentageTracker = ({ value, progressHeader, progressDescription, label, 
     <div className="w-full max-w-xl mx-auto p-8 bg-base-100 shadow-xl rounded-box">
       <div className="flex items-end justify-between mb-6">
         <div>
-          {progressHeader && <h2 className="text-2xl font-semibold text-base-content">{progressHeader}</h2>}
+          {progressHeader && <h2 className="text-2xl font-semibold text-base-content" style={{ color: headerColorProp, fontFamily: "inherit" }}>{progressHeader}</h2>}
           {progressDescription && <p className="text-sm text-base-content/70">{progressDescription}</p>}
+          {contentSlot}
         </div>
         <span className="text-4xl font-bold text-base-content">{displayValue}%</span>
       </div>
