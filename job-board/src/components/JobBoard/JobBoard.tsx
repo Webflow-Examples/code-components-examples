@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 export interface JobBoardProps {
   id?: string;
@@ -6,34 +6,34 @@ export interface JobBoardProps {
   heading?: React.ReactNode;
   subheading?: string;
   layout?: "2-column" | "3-column" | "4-column";
-  cardStyle?: "minimal" | "bordered" | "elevated";
+  cardStyle?: "elevated" | "outlined" | "minimal";
   showFilters?: boolean;
-  departmentFilterLabel?: string;
-  departmentFilterPlaceholder?: string;
-  locationFilterLabel?: string;
-  locationFilterPlaceholder?: string;
+  filterDepartmentLabel?: string;
+  filterLocationLabel?: string;
+  filterAllDepartmentsText?: string;
+  filterAllLocationsText?: string;
+  jobsPerPage?: number;
+  paginationType?: "load-more" | "pagination" | "show-all";
+  loadMoreButtonText?: string;
+  previousButtonText?: string;
+  nextButtonText?: string;
   applyButtonText?: string;
+  departmentLabelText?: string;
+  locationLabelText?: string;
+  showDepartmentOnCard?: boolean;
+  showLocationOnCard?: boolean;
+  openInNewTab?: boolean;
   loadingText?: string;
   showLoadingSpinner?: boolean;
   errorHeading?: string;
   errorMessage?: string;
-  errorRetryButtonText?: string;
-  showErrorRetryButton?: boolean;
+  retryButtonText?: string;
+  showRetryButton?: boolean;
   emptyStateHeading?: string;
   emptyStateMessage?: string;
-  emptyStateResetButtonText?: string;
-  showEmptyStateResetButton?: boolean;
-  enablePagination?: boolean;
-  initialJobsPerPage?: number;
-  jobsPerPageIncrement?: number;
-  loadMoreButtonText?: string;
-  showJobCount?: boolean;
-  jobCountText?: string;
-  showDepartmentOnCard?: boolean;
-  showLocationOnCard?: boolean;
-  openLinksInNewTab?: boolean;
-  departmentLabel?: string;
-  locationLabel?: string;
+  resultsCountText?: string;
+  showResultsCount?: boolean;
+  cacheTimeout?: number;
 }
 
 interface GreenhouseJob {
@@ -47,141 +47,210 @@ interface GreenhouseJob {
     id: number;
     name: string;
   }>;
+  offices?: Array<{
+    id: number;
+    name: string;
+    location?: string;
+  }>;
+  content?: string;
+  updated_at: string;
+  requisition_id?: string;
+  metadata?: Array<{
+    id: number;
+    name: string;
+    value: string;
+  }>;
 }
 
 interface GreenhouseResponse {
   jobs: GreenhouseJob[];
 }
 
+const layoutColumns = {
+  "2-column": "2",
+  "3-column": "3",
+  "4-column": "4",
+};
+
 export default function JobBoard({
   id,
-  boardToken = "figma",
+  boardToken = "",
   heading = "Open Positions",
   subheading = "Join our team and help us build the future",
   layout = "3-column",
   cardStyle = "elevated",
   showFilters = true,
-  departmentFilterLabel = "Department",
-  departmentFilterPlaceholder = "All Departments",
-  locationFilterLabel = "Location",
-  locationFilterPlaceholder = "All Locations",
+  filterDepartmentLabel = "Department",
+  filterLocationLabel = "Location",
+  filterAllDepartmentsText = "All Departments",
+  filterAllLocationsText = "All Locations",
+  jobsPerPage = 12,
+  paginationType = "load-more",
+  loadMoreButtonText = "Load More Jobs",
+  previousButtonText = "Previous",
+  nextButtonText = "Next",
   applyButtonText = "Apply Now",
-  loadingText = "Loading positions...",
-  showLoadingSpinner = true,
-  errorHeading = "Unable to Load Positions",
-  errorMessage = "We're having trouble loading our open positions. Please try again later or contact us directly.",
-  errorRetryButtonText = "Try Again",
-  showErrorRetryButton = true,
-  emptyStateHeading = "No Positions Found",
-  emptyStateMessage = "There are no open positions matching your criteria. Try adjusting your filters or check back later.",
-  emptyStateResetButtonText = "Clear Filters",
-  showEmptyStateResetButton = true,
-  enablePagination = true,
-  initialJobsPerPage = 9,
-  jobsPerPageIncrement = 9,
-  loadMoreButtonText = "Load More Positions",
-  showJobCount = true,
-  jobCountText = "{count} open positions",
+  departmentLabelText = "Department:",
+  locationLabelText = "Location:",
   showDepartmentOnCard = true,
   showLocationOnCard = true,
-  openLinksInNewTab = true,
-  departmentLabel = "Department:",
-  locationLabel = "Location:",
+  openInNewTab = true,
+  loadingText = "Loading open positions...",
+  showLoadingSpinner = true,
+  errorHeading = "Unable to Load Jobs",
+  errorMessage = "We're having trouble loading our open positions. Please try again later or contact us directly.",
+  retryButtonText = "Try Again",
+  showRetryButton = true,
+  emptyStateHeading = "No Positions Available",
+  emptyStateMessage = "There are no open positions matching your criteria at this time. Check back soon or adjust your filters.",
+  resultsCountText = "{count} positions found",
+  showResultsCount = true,
+  cacheTimeout = 5,
 }: JobBoardProps) {
   const [jobs, setJobs] = useState<GreenhouseJob[]>([]);
-  const [filteredJobs, setFilteredJobs] = useState<GreenhouseJob[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-  const [retryCount, setRetryCount] = useState(0);
-  const [selectedDepartment, setSelectedDepartment] = useState("");
-  const [selectedLocation, setSelectedLocation] = useState("");
-  const [visibleCount, setVisibleCount] = useState(initialJobsPerPage);
+  const [error, setError] = useState<string | null>(null);
+  const [selectedDepartment, setSelectedDepartment] = useState<string>("");
+  const [selectedLocation, setSelectedLocation] = useState<string>("");
+  const [currentPage, setCurrentPage] = useState(1);
 
-  useEffect(() => {
+  const fetchJobs = async () => {
     if (!boardToken) {
+      setError("Board token is required");
       setLoading(false);
-      setError(true);
       return;
     }
 
-    let cancelled = false;
     setLoading(true);
-    setError(false);
+    setError(null);
 
-    fetch(
-      `https://boards-api.greenhouse.io/v1/boards/${boardToken}/jobs?content=true`
-    )
-      .then((response) => {
-        if (!response.ok) throw new Error("Failed to fetch jobs");
-        return response.json();
-      })
-      .then((data: GreenhouseResponse) => {
-        if (!cancelled) {
-          setJobs(data.jobs || []);
-          setFilteredJobs(data.jobs || []);
-        }
-      })
-      .catch(() => {
-        if (!cancelled) setError(true);
-      })
-      .finally(() => {
-        if (!cancelled) setLoading(false);
-      });
+    try {
+      const response = await fetch(
+        `https://boards-api.greenhouse.io/v1/boards/${boardToken}/jobs?content=true`
+      );
 
-    return () => { cancelled = true; };
-  }, [boardToken, retryCount]);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch jobs: ${response.status}`);
+      }
+
+      const data: GreenhouseResponse = await response.json();
+      setJobs(data.jobs || []);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to load jobs");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    let filtered = jobs;
+    fetchJobs();
+  }, [boardToken]);
 
-    if (selectedDepartment) {
-      filtered = filtered.filter((job) =>
-        (job.departments || []).some((dept) => dept.name === selectedDepartment)
-      );
+  const departments = useMemo(() => {
+    const deptSet = new Set<string>();
+    jobs.forEach((job) => {
+      (job.departments || []).forEach((dept) => {
+        deptSet.add(dept.name);
+      });
+    });
+    return Array.from(deptSet).sort();
+  }, [jobs]);
+
+  const locations = useMemo(() => {
+    const locSet = new Set<string>();
+    jobs.forEach((job) => {
+      if (job.location?.name) {
+        locSet.add(job.location.name);
+      }
+      (job.offices || []).forEach((office) => {
+        if (office.name) {
+          locSet.add(office.name);
+        }
+      });
+    });
+    return Array.from(locSet).sort();
+  }, [jobs]);
+
+  const filteredJobs = useMemo(() => {
+    return jobs.filter((job) => {
+      if (selectedDepartment) {
+        const jobDepts = (job.departments || []).map((d) => d.name);
+        if (!jobDepts.includes(selectedDepartment)) {
+          return false;
+        }
+      }
+
+      if (selectedLocation) {
+        const jobLocs: string[] = [];
+        if (job.location?.name) {
+          jobLocs.push(job.location.name);
+        }
+        (job.offices || []).forEach((office) => {
+          if (office.name) {
+            jobLocs.push(office.name);
+          }
+        });
+        if (!jobLocs.includes(selectedLocation)) {
+          return false;
+        }
+      }
+
+      return true;
+    });
+  }, [jobs, selectedDepartment, selectedLocation]);
+
+  const paginatedJobs = useMemo(() => {
+    if (paginationType === "show-all") {
+      return filteredJobs;
     }
-
-    if (selectedLocation) {
-      filtered = filtered.filter((job) => job.location?.name === selectedLocation);
+    if (paginationType === "load-more") {
+      return filteredJobs.slice(0, currentPage * jobsPerPage);
     }
+    const start = (currentPage - 1) * jobsPerPage;
+    return filteredJobs.slice(start, start + jobsPerPage);
+  }, [filteredJobs, currentPage, jobsPerPage, paginationType]);
 
-    setFilteredJobs(filtered);
-    setVisibleCount(initialJobsPerPage);
-  }, [selectedDepartment, selectedLocation, jobs, initialJobsPerPage]);
-
-  const departments = Array.from(
-    new Set(jobs.flatMap((job) => (job.departments || []).map((dept) => dept.name)))
-  ).sort();
-
-  const locations = Array.from(
-    new Set(jobs.map((job) => job.location?.name).filter(Boolean))
-  ).sort();
-
-  const handleRetry = () => {
-    setRetryCount((c) => c + 1);
-  };
-
-  const handleResetFilters = () => {
-    setSelectedDepartment("");
-    setSelectedLocation("");
-  };
+  const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
+  const hasMore = paginatedJobs.length < filteredJobs.length;
 
   const handleLoadMore = () => {
-    setVisibleCount((prev) => prev + jobsPerPageIncrement);
+    setCurrentPage((prev) => prev + 1);
   };
 
-  const visibleJobs = enablePagination
-    ? filteredJobs.slice(0, visibleCount)
-    : filteredJobs;
-
-  const hasMoreJobs = filteredJobs.length > visibleCount;
-
-  const columnMap = {
-    "2-column": "2",
-    "3-column": "3",
-    "4-column": "4",
+  const handlePreviousPage = () => {
+    setCurrentPage((prev) => Math.max(1, prev - 1));
   };
 
-  const columns = columnMap[layout];
+  const handleNextPage = () => {
+    setCurrentPage((prev) => Math.min(totalPages, prev + 1));
+  };
+
+  const handleRetry = () => {
+    fetchJobs();
+  };
+
+  const handleDepartmentChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedDepartment(e.target.value);
+    setCurrentPage(1);
+  };
+
+  const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedLocation(e.target.value);
+    setCurrentPage(1);
+  };
+
+  const getJobDepartment = (job: GreenhouseJob): string => {
+    return (job.departments || [])[0]?.name ?? "";
+  };
+
+  const getJobLocation = (job: GreenhouseJob): string => {
+    if (job.location?.name) {
+      return job.location.name;
+    }
+    return (job.offices || [])[0]?.name ?? "";
+  };
+
+  const columns = layoutColumns[layout];
 
   if (loading) {
     return (
@@ -202,13 +271,13 @@ export default function JobBoard({
         <div className="wf-jobboard-error">
           <h2 className="wf-jobboard-error-heading">{errorHeading}</h2>
           <p className="wf-jobboard-error-message">{errorMessage}</p>
-          {showErrorRetryButton && (
+          {showRetryButton && (
             <button
-              className="wf-jobboard-error-button"
+              className="wf-jobboard-retry-button"
               onClick={handleRetry}
               type="button"
             >
-              {errorRetryButtonText}
+              {retryButtonText}
             </button>
           )}
         </div>
@@ -216,7 +285,16 @@ export default function JobBoard({
     );
   }
 
-  const isEmpty = filteredJobs.length === 0;
+  if (jobs.length === 0) {
+    return (
+      <div id={id} className="wf-jobboard">
+        <div className="wf-jobboard-empty">
+          <h2 className="wf-jobboard-empty-heading">{emptyStateHeading}</h2>
+          <p className="wf-jobboard-empty-message">{emptyStateMessage}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
@@ -225,24 +303,26 @@ export default function JobBoard({
       style={{ "--wf-jobboard-columns": columns } as React.CSSProperties}
     >
       <header className="wf-jobboard-header">
-        <h2 className="wf-jobboard-heading">{heading}</h2>
-        {subheading && <p className="wf-jobboard-subheading">{subheading}</p>}
+        <h1 className="wf-jobboard-heading">{heading}</h1>
+        {subheading && (
+          <p className="wf-jobboard-subheading">{subheading}</p>
+        )}
       </header>
 
       {showFilters && (departments.length > 0 || locations.length > 0) && (
         <div className="wf-jobboard-filters">
           {departments.length > 0 && (
-            <div className="wf-jobboard-filter-group">
+            <div className="wf-jobboard-filter">
               <label htmlFor="department-filter" className="wf-jobboard-filter-label">
-                {departmentFilterLabel}
+                {filterDepartmentLabel}
               </label>
               <select
                 id="department-filter"
                 className="wf-jobboard-filter-select"
                 value={selectedDepartment}
-                onChange={(e) => setSelectedDepartment(e.target.value)}
+                onChange={handleDepartmentChange}
               >
-                <option value="">{departmentFilterPlaceholder}</option>
+                <option value="">{filterAllDepartmentsText}</option>
                 {departments.map((dept) => (
                   <option key={dept} value={dept}>
                     {dept}
@@ -253,17 +333,17 @@ export default function JobBoard({
           )}
 
           {locations.length > 0 && (
-            <div className="wf-jobboard-filter-group">
+            <div className="wf-jobboard-filter">
               <label htmlFor="location-filter" className="wf-jobboard-filter-label">
-                {locationFilterLabel}
+                {filterLocationLabel}
               </label>
               <select
                 id="location-filter"
                 className="wf-jobboard-filter-select"
                 value={selectedLocation}
-                onChange={(e) => setSelectedLocation(e.target.value)}
+                onChange={handleLocationChange}
               >
-                <option value="">{locationFilterPlaceholder}</option>
+                <option value="">{filterAllLocationsText}</option>
                 {locations.map((loc) => (
                   <option key={loc} value={loc}>
                     {loc}
@@ -275,53 +355,44 @@ export default function JobBoard({
         </div>
       )}
 
-      {showJobCount && !isEmpty && (
-        <div className="wf-jobboard-count">
-          {jobCountText.replace("{count}", String(filteredJobs.length))}
+      {showResultsCount && (
+        <div className="wf-jobboard-results-count">
+          {resultsCountText.replace("{count}", filteredJobs.length.toString())}
         </div>
       )}
 
-      {isEmpty ? (
+      {filteredJobs.length === 0 ? (
         <div className="wf-jobboard-empty">
-          <h3 className="wf-jobboard-empty-heading">{emptyStateHeading}</h3>
+          <h2 className="wf-jobboard-empty-heading">{emptyStateHeading}</h2>
           <p className="wf-jobboard-empty-message">{emptyStateMessage}</p>
-          {showEmptyStateResetButton &&
-            (selectedDepartment || selectedLocation) && (
-              <button
-                className="wf-jobboard-empty-button"
-                onClick={handleResetFilters}
-                type="button"
-              >
-                {emptyStateResetButtonText}
-              </button>
-            )}
         </div>
       ) : (
         <>
-          <div className={`wf-jobboard-grid wf-jobboard-grid-${layout}`}>
-            {visibleJobs.map((job) => (
-              <article
-                key={job.id}
-                className={`wf-jobboard-card wf-jobboard-card-${cardStyle}`}
-              >
+          <div className={`wf-jobboard-grid wf-jobboard-grid-${cardStyle}`}>
+            {paginatedJobs.map((job) => (
+              <article key={job.id} className={`wf-jobboard-card wf-jobboard-card-${cardStyle}`}>
                 <h3 className="wf-jobboard-card-title">{job.title}</h3>
 
                 <div className="wf-jobboard-card-meta">
-                  {showDepartmentOnCard && (job.departments || []).length > 0 && (
-                    <div className="wf-jobboard-card-department">
-                      <span className="wf-jobboard-card-label">
-                        {departmentLabel}
-                      </span>{" "}
-                      {(job.departments || [])[0]?.name}
+                  {showDepartmentOnCard && getJobDepartment(job) && (
+                    <div className="wf-jobboard-card-meta-item">
+                      <span className="wf-jobboard-card-meta-label">
+                        {departmentLabelText}
+                      </span>
+                      <span className="wf-jobboard-card-meta-value">
+                        {getJobDepartment(job)}
+                      </span>
                     </div>
                   )}
 
-                  {showLocationOnCard && (
-                    <div className="wf-jobboard-card-location">
-                      <span className="wf-jobboard-card-label">
-                        {locationLabel}
-                      </span>{" "}
-                      {job.location?.name}
+                  {showLocationOnCard && getJobLocation(job) && (
+                    <div className="wf-jobboard-card-meta-item">
+                      <span className="wf-jobboard-card-meta-label">
+                        {locationLabelText}
+                      </span>
+                      <span className="wf-jobboard-card-meta-value">
+                        {getJobLocation(job)}
+                      </span>
                     </div>
                   )}
                 </div>
@@ -329,8 +400,8 @@ export default function JobBoard({
                 <a
                   href={job.absolute_url}
                   className="wf-jobboard-card-button"
-                  target={openLinksInNewTab ? "_blank" : undefined}
-                  rel={openLinksInNewTab ? "noopener noreferrer" : undefined}
+                  target={openInNewTab ? "_blank" : undefined}
+                  rel={openInNewTab ? "noopener noreferrer" : undefined}
                 >
                   {applyButtonText}
                 </a>
@@ -338,7 +409,7 @@ export default function JobBoard({
             ))}
           </div>
 
-          {enablePagination && hasMoreJobs && (
+          {paginationType === "load-more" && hasMore && (
             <div className="wf-jobboard-pagination">
               <button
                 className="wf-jobboard-load-more"
@@ -346,6 +417,30 @@ export default function JobBoard({
                 type="button"
               >
                 {loadMoreButtonText}
+              </button>
+            </div>
+          )}
+
+          {paginationType === "pagination" && totalPages > 1 && (
+            <div className="wf-jobboard-pagination">
+              <button
+                className="wf-jobboard-pagination-button"
+                onClick={handlePreviousPage}
+                disabled={currentPage === 1}
+                type="button"
+              >
+                {previousButtonText}
+              </button>
+              <span className="wf-jobboard-pagination-info">
+                Page {currentPage} of {totalPages}
+              </span>
+              <button
+                className="wf-jobboard-pagination-button"
+                onClick={handleNextPage}
+                disabled={currentPage === totalPages}
+                type="button"
+              >
+                {nextButtonText}
               </button>
             </div>
           )}
