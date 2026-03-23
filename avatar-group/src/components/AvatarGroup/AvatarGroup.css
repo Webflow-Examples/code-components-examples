@@ -1,0 +1,159 @@
+/*
+ * Webflow Site Variables Used:
+ * - --background-primary: Avatar background and overflow indicator
+ * - --text-primary: Initials and overflow text
+ * - --border-color: Avatar border ring
+ * - --accent-color: Status indicator colors (fallback)
+ */
+
+/* Box sizing reset */
+.wf-avatargroup *,
+.wf-avatargroup *::before,
+.wf-avatargroup *::after {
+  box-sizing: border-box;
+}
+
+/* Root element - inherit Webflow typography + default padding */
+.wf-avatargroup {
+  font-family: inherit;
+  color: inherit;
+  line-height: inherit;
+  padding: 24px;
+  --wf-avatargroup-size: 40px;
+  --wf-avatargroup-overlap: -12px;
+  --wf-avatargroup-bg-color: transparent;
+}
+
+/* Container */
+.wf-avatargroup-container {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+}
+
+/* Single mode - no overlap */
+.wf-avatargroup--single .wf-avatargroup-container {
+  gap: 0;
+}
+
+/* Group mode - apply overlap */
+.wf-avatargroup--group .wf-avatargroup-avatar {
+  margin-left: var(--wf-avatargroup-overlap);
+}
+
+.wf-avatargroup--group .wf-avatargroup-avatar:first-child {
+  margin-left: 0;
+}
+
+.wf-avatargroup--group .wf-avatargroup-overflow {
+  margin-left: var(--wf-avatargroup-overlap);
+}
+
+/* Avatar wrapper */
+.wf-avatargroup-avatar {
+  position: relative;
+  width: var(--wf-avatargroup-size);
+  height: var(--wf-avatargroup-size);
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--wf-avatargroup-bg-color);
+  flex-shrink: 0;
+}
+
+/* Avatar with border */
+.wf-avatargroup-avatar--bordered {
+  box-shadow: 0 0 0 2px var(--background-primary, #ffffff);
+  border: 1px solid var(--border-color, #e5e5e5);
+}
+
+/* Avatar image */
+.wf-avatargroup-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Avatar initials */
+.wf-avatargroup-initials {
+  color: #ffffff;
+  font-weight: 600;
+  font-size: calc(var(--wf-avatargroup-size) * 0.4);
+  line-height: 1;
+  user-select: none;
+}
+
+/* Size variants - adjust initials font size */
+.wf-avatargroup--small .wf-avatargroup-initials {
+  font-size: 12px;
+}
+
+.wf-avatargroup--medium .wf-avatargroup-initials {
+  font-size: 14px;
+}
+
+.wf-avatargroup--large .wf-avatargroup-initials {
+  font-size: 16px;
+}
+
+.wf-avatargroup--extra-large .wf-avatargroup-initials {
+  font-size: 20px;
+}
+
+/* Status indicator */
+.wf-avatargroup-status {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: calc(var(--wf-avatargroup-size) * 0.25);
+  height: calc(var(--wf-avatargroup-size) * 0.25);
+  border-radius: 50%;
+  border: 2px solid var(--background-primary, #ffffff);
+}
+
+/* Status variants */
+.wf-avatargroup-status--online {
+  background: #10b981;
+}
+
+.wf-avatargroup-status--offline {
+  background: #6b7280;
+}
+
+.wf-avatargroup-status--busy {
+  background: #ef4444;
+}
+
+/* Overflow indicator */
+.wf-avatargroup-overflow {
+  background: var(--background-primary, #ffffff);
+  border: 1px solid var(--border-color, #e5e5e5);
+}
+
+.wf-avatargroup-overflow-text {
+  color: var(--text-primary, #1a1a1a);
+  font-weight: 600;
+  font-size: calc(var(--wf-avatargroup-size) * 0.35);
+  line-height: 1;
+  user-select: none;
+}
+
+/* Size variants - adjust overflow text font size */
+.wf-avatargroup--small .wf-avatargroup-overflow-text {
+  font-size: 11px;
+}
+
+.wf-avatargroup--medium .wf-avatargroup-overflow-text {
+  font-size: 13px;
+}
+
+.wf-avatargroup--large .wf-avatargroup-overflow-text {
+  font-size: 15px;
+}
+
+.wf-avatargroup--extra-large .wf-avatargroup-overflow-text {
+  font-size: 18px;
+}

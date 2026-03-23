@@ -1,0 +1,10 @@
+{
+  "library": {
+    "name": "AvatarGroup",
+    "components": [
+      "./src/**/*.webflow.@(js|jsx|mjs|ts|tsx)"
+    ],
+    "description": "A flexible avatar component that displays user profile images in circular containers with configurable sizes (small, medium, large, extra-large). When no image is provided, automatically generates initials from a name prop with a colored background. Supports both single avatar and group modes, where group mode overlaps multiple avatars horizontally with configurable overlap spacing. When the group exceeds a maximum count, displays a '+N' overflow indicator. Features an optional status indicator dot (online green, offline gray, busy red) positioned at the bottom-right corner. Includes optional border ring styling for enhanced visual separation.",
+    "id": "avatar-group"
+  }
+}
