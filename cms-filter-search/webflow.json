@@ -1,0 +1,10 @@
+{
+  "library": {
+    "name": "CmsFilterSearch",
+    "components": [
+      "./src/**/*.webflow.@(js|jsx|mjs|ts|tsx)"
+    ],
+    "description": "A comprehensive CMS filter and search component for displaying and filtering collection items as cards. Features a search input that filters items by title and description, category filter buttons/chips for quick filtering, and a grid/list view toggle. Displays active filter indicators and item count. Each item card shows an image, title, description, and category tag. Includes smooth animated transitions when filtering and an empty state message when no items match the current filters. Cards arrange in a responsive grid that stacks on mobile, or as a vertical list depending on view mode.",
+    "id": "cms-filter-search"
+  }
+}
