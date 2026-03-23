@@ -1,0 +1,10 @@
+{
+  "library": {
+    "name": "QuoteBuilder",
+    "components": [
+      "./src/**/*.webflow.@(js|jsx|mjs|ts|tsx)"
+    ],
+    "description": "An interactive pricing calculator with a two-column layout that displays input controls on the left and a live-updating results panel on the right (stacking vertically on mobile). The input section contains labeled number fields with increment/decrement buttons, dropdown selects for option choices, and toggle switches for add-ons. The results panel shows a breakdown of line items with labels, quantities, unit prices, and subtotals, plus a prominent total with configurable currency formatting. All calculations update in real-time as users interact with inputs. The component features a clean card-based design with clear visual separation between input sections and the results panel, and includes a call-to-action button at the bottom for quote requests or contact.",
+    "id": "quote-builder"
+  }
+}

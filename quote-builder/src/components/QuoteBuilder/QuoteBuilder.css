@@ -1,0 +1,398 @@
+/*
+ * Webflow Site Variables Used:
+ * - --background-primary: Main background color for cards and panels
+ * - --background-secondary: Hover states and subtle backgrounds
+ * - --text-primary: Main text color for headings and labels
+ * - --text-secondary: Muted text for subheadings and helper text
+ * - --border-color: Borders, dividers, and input outlines
+ * - --accent-color: CTA button, toggle active state, focus outlines
+ * - --accent-text-color: Text color on accent backgrounds
+ * - --border-radius: Corner rounding for all elements
+ */
+
+/* Box sizing reset scoped to component */
+.wf-quotebuilder *,
+.wf-quotebuilder *::before,
+.wf-quotebuilder *::after {
+  box-sizing: border-box;
+}
+
+/* Root element - inherit Webflow typography + default padding */
+.wf-quotebuilder {
+  font-family: inherit;
+  color: inherit;
+  line-height: inherit;
+  padding: 24px;
+}
+
+/* Layout variants */
+.wf-quotebuilder-layout-side-by-side .wf-quotebuilder-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+.wf-quotebuilder-layout-stacked .wf-quotebuilder-container {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* Header section */
+.wf-quotebuilder-header {
+  margin-bottom: 32px;
+}
+
+.wf-quotebuilder-heading {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-primary, #1a1a1a);
+  margin: 0 0 8px 0;
+  line-height: 1.2;
+}
+
+.wf-quotebuilder-subheading {
+  font-size: 16px;
+  color: var(--text-secondary, #737373);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Container */
+.wf-quotebuilder-container {
+  margin-bottom: 32px;
+}
+
+/* Input section */
+.wf-quotebuilder-inputs {
+  background: var(--background-primary, #ffffff);
+  border: 1px solid var(--border-color, #e5e5e5);
+  border-radius: var(--border-radius, 8px);
+  padding: 24px;
+}
+
+.wf-quotebuilder-section-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-primary, #1a1a1a);
+  margin: 0 0 20px 0;
+  line-height: 1.3;
+}
+
+.wf-quotebuilder-inputs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.wf-quotebuilder-input-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.wf-quotebuilder-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary, #1a1a1a);
+  line-height: 1.4;
+}
+
+/* Number input */
+.wf-quotebuilder-number-input {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+}
+
+.wf-quotebuilder-decrement,
+.wf-quotebuilder-increment {
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border-color, #e5e5e5);
+  background: var(--background-primary, #ffffff);
+  border-radius: var(--border-radius, 8px);
+  color: var(--text-primary, #1a1a1a);
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.wf-quotebuilder-decrement:hover,
+.wf-quotebuilder-increment:hover {
+  background: var(--background-secondary, #f5f5f5);
+  border-color: var(--text-secondary, #737373);
+}
+
+.wf-quotebuilder-decrement:focus-visible,
+.wf-quotebuilder-increment:focus-visible {
+  outline: 2px solid var(--accent-color, #1a1a1a);
+  outline-offset: 2px;
+}
+
+.wf-quotebuilder-decrement:active,
+.wf-quotebuilder-increment:active {
+  background: var(--border-color, #e5e5e5);
+}
+
+.wf-quotebuilder-number-field {
+  width: 80px;
+  height: 36px;
+  border: 1px solid var(--border-color, #e5e5e5);
+  background: var(--background-primary, #ffffff);
+  border-radius: var(--border-radius, 8px);
+  color: var(--text-primary, #1a1a1a);
+  font-size: 14px;
+  text-align: center;
+  padding: 0 8px;
+  transition: border-color 0.2s;
+}
+
+.wf-quotebuilder-number-field:hover {
+  border-color: var(--text-secondary, #737373);
+}
+
+.wf-quotebuilder-number-field:focus {
+  outline: none;
+  border-color: var(--accent-color, #1a1a1a);
+}
+
+.wf-quotebuilder-number-field:focus-visible {
+  outline: 2px solid var(--accent-color, #1a1a1a);
+  outline-offset: 2px;
+}
+
+/* Select dropdown */
+.wf-quotebuilder-select {
+  width: 100%;
+  height: 40px;
+  border: 1px solid var(--border-color, #e5e5e5);
+  background: var(--background-primary, #ffffff);
+  border-radius: var(--border-radius, 8px);
+  color: var(--text-primary, #1a1a1a);
+  font-size: 14px;
+  padding: 0 12px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.wf-quotebuilder-select:hover {
+  border-color: var(--text-secondary, #737373);
+}
+
+.wf-quotebuilder-select:focus {
+  outline: none;
+  border-color: var(--accent-color, #1a1a1a);
+}
+
+.wf-quotebuilder-select:focus-visible {
+  outline: 2px solid var(--accent-color, #1a1a1a);
+  outline-offset: 2px;
+}
+
+/* Toggle switch */
+.wf-quotebuilder-toggle {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.wf-quotebuilder-toggle-input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.wf-quotebuilder-toggle-slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--border-color, #e5e5e5);
+  border-radius: 24px;
+  transition: background-color 0.2s;
+}
+
+.wf-quotebuilder-toggle-slider::before {
+  content: "";
+  position: absolute;
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background: var(--background-primary, #ffffff);
+  border-radius: 50%;
+  transition: transform 0.2s;
+}
+
+.wf-quotebuilder-toggle:hover .wf-quotebuilder-toggle-slider {
+  background: var(--text-secondary, #737373);
+}
+
+.wf-quotebuilder-toggle-input:checked + .wf-quotebuilder-toggle-slider {
+  background: var(--accent-color, #1a1a1a);
+}
+
+.wf-quotebuilder-toggle-input:checked + .wf-quotebuilder-toggle-slider::before {
+  transform: translateX(24px);
+}
+
+.wf-quotebuilder-toggle-input:focus-visible + .wf-quotebuilder-toggle-slider {
+  outline: 2px solid var(--accent-color, #1a1a1a);
+  outline-offset: 2px;
+}
+
+.wf-quotebuilder-toggle-input:disabled + .wf-quotebuilder-toggle-slider {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Results section */
+.wf-quotebuilder-results {
+  background: var(--background-primary, #ffffff);
+  border: 1px solid var(--border-color, #e5e5e5);
+  border-radius: var(--border-radius, 8px);
+  padding: 24px;
+}
+
+.wf-quotebuilder-results-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border-color, #e5e5e5);
+}
+
+.wf-quotebuilder-result-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.wf-quotebuilder-result-label {
+  font-size: 14px;
+  color: var(--text-primary, #1a1a1a);
+  line-height: 1.5;
+  flex: 1;
+}
+
+.wf-quotebuilder-result-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.wf-quotebuilder-result-quantity {
+  font-size: 13px;
+  color: var(--text-secondary, #737373);
+  line-height: 1.4;
+}
+
+.wf-quotebuilder-result-unit-price {
+  font-size: 13px;
+  color: var(--text-secondary, #737373);
+}
+
+.wf-quotebuilder-result-subtotal {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary, #1a1a1a);
+  line-height: 1.4;
+}
+
+/* Total section */
+.wf-quotebuilder-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.wf-quotebuilder-total-label {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary, #1a1a1a);
+  line-height: 1.3;
+}
+
+.wf-quotebuilder-total-amount {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--accent-color, #1a1a1a);
+  line-height: 1.2;
+}
+
+/* Footer section */
+.wf-quotebuilder-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.wf-quotebuilder-cta {
+  display: inline-block;
+  padding: 14px 32px;
+  background: var(--accent-color, #1a1a1a);
+  color: var(--accent-text-color, #ffffff);
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: var(--border-radius, 8px);
+  transition: opacity 0.2s, transform 0.2s;
+  cursor: pointer;
+  border: none;
+  line-height: 1.4;
+}
+
+.wf-quotebuilder-cta:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.wf-quotebuilder-cta:focus-visible {
+  outline: 2px solid var(--accent-color, #1a1a1a);
+  outline-offset: 2px;
+}
+
+.wf-quotebuilder-cta:active {
+  transform: translateY(0);
+  opacity: 0.8;
+}
+
+.wf-quotebuilder-cta-subtext {
+  font-size: 13px;
+  color: var(--text-secondary, #737373);
+  text-align: center;
+  margin: 0;
+  line-height: 1.5;
+  max-width: 400px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .wf-quotebuilder-layout-side-by-side .wf-quotebuilder-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .wf-quotebuilder-heading {
+    font-size: 24px;
+  }
+  
+  .wf-quotebuilder-total-amount {
+    font-size: 24px;
+  }
+}
