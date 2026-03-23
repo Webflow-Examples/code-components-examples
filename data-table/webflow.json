@@ -1,0 +1,10 @@
+{
+  "library": {
+    "name": "DataTable",
+    "components": [
+      "./src/**/*.webflow.@(js|jsx|mjs|ts|tsx)"
+    ],
+    "description": "A fully-featured data table component that renders structured tabular data with interactive sorting and filtering capabilities. Displays data in a traditional table layout on desktop with clickable column headers that toggle between ascending and descending sort with visual arrow indicators. Includes a search input at the top that filters rows across all columns in real-time, with a row count display showing total and filtered results. Supports visual customization through striped rows, hover highlighting, and density variants (compact/comfortable spacing). On mobile viewports, automatically transforms into a card-based stacked layout where each row becomes a card with label-value pairs. Shows an empty state message when no rows match the current filter. Accepts data as JSON through a text prop and supports up to 10 columns and 100 rows with smooth client-side performance.",
+    "id": "data-table"
+  }
+}

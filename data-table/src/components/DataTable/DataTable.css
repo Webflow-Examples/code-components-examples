@@ -1,0 +1,252 @@
+/*
+ * Webflow Site Variables Used:
+ * - --background-primary: Table background, card backgrounds
+ * - --background-secondary: Striped rows, hover states
+ * - --text-primary: Main text, headings, table data
+ * - --text-secondary: Row count, empty state message, card labels
+ * - --border-color: Table borders, card borders, input borders
+ * - --accent-color: Sort indicator active state
+ * - --border-radius: Table container, cards, search input
+ */
+
+.wf-datatable *,
+.wf-datatable *::before,
+.wf-datatable *::after {
+  box-sizing: border-box;
+}
+
+.wf-datatable {
+  font-family: inherit;
+  color: inherit;
+  line-height: inherit;
+  padding: 24px;
+}
+
+.wf-datatable-header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.wf-datatable-heading {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-primary, #1a1a1a);
+}
+
+.wf-datatable-search-wrapper {
+  width: 100%;
+}
+
+.wf-datatable-search-input {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--text-primary, #1a1a1a);
+  background: var(--background-primary, #ffffff);
+  border: 1px solid var(--border-color, #e5e5e5);
+  border-radius: var(--border-radius, 8px);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.wf-datatable-search-input::placeholder {
+  color: var(--text-secondary, #737373);
+}
+
+.wf-datatable-search-input:focus {
+  border-color: var(--accent-color, #1a1a1a);
+}
+
+.wf-datatable-search-input:focus-visible {
+  outline: 2px solid var(--accent-color, #1a1a1a);
+  outline-offset: 2px;
+}
+
+.wf-datatable-row-count {
+  font-size: 14px;
+  color: var(--text-secondary, #737373);
+}
+
+.wf-datatable-empty-state {
+  padding: 48px 24px;
+  text-align: center;
+  background: var(--background-primary, #ffffff);
+  border: 1px solid var(--border-color, #e5e5e5);
+  border-radius: var(--border-radius, 8px);
+}
+
+.wf-datatable-empty-heading {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary, #1a1a1a);
+}
+
+.wf-datatable-empty-message {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-secondary, #737373);
+}
+
+.wf-datatable-desktop {
+  display: block;
+  overflow-x: auto;
+  border: 1px solid var(--border-color, #e5e5e5);
+  border-radius: var(--border-radius, 8px);
+  background: var(--background-primary, #ffffff);
+}
+
+.wf-datatable-mobile {
+  display: none;
+}
+
+.wf-datatable-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.wf-datatable-thead {
+  background: var(--background-primary, #ffffff);
+  border-bottom: 2px solid var(--border-color, #e5e5e5);
+}
+
+.wf-datatable-header-row {
+  background: var(--background-primary, #ffffff);
+}
+
+.wf-datatable-th {
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-primary, #1a1a1a);
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s;
+}
+
+.wf-datatable-th:hover {
+  background: var(--background-secondary, #f5f5f5);
+}
+
+.wf-datatable-th:focus-visible {
+  outline: 2px solid var(--accent-color, #1a1a1a);
+  outline-offset: -2px;
+}
+
+.wf-datatable-th-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wf-datatable-sort-indicator {
+  display: inline-flex;
+  align-items: center;
+  color: var(--accent-color, #1a1a1a);
+  font-size: 12px;
+}
+
+.wf-datatable-tbody {
+  background: var(--background-primary, #ffffff);
+}
+
+.wf-datatable-row {
+  border-bottom: 1px solid var(--border-color, #e5e5e5);
+  transition: background-color 0.2s;
+}
+
+.wf-datatable-row:last-child {
+  border-bottom: none;
+}
+
+.wf-datatable[data-striped="true"] .wf-datatable-row:nth-child(even) {
+  background: var(--background-secondary, #f5f5f5);
+}
+
+.wf-datatable[data-hover="true"] .wf-datatable-row:hover {
+  background: var(--background-secondary, #f5f5f5);
+}
+
+.wf-datatable-td {
+  padding: 12px 16px;
+  color: var(--text-primary, #1a1a1a);
+}
+
+.wf-datatable[data-density="compact"] .wf-datatable-th {
+  padding: 8px 12px;
+}
+
+.wf-datatable[data-density="compact"] .wf-datatable-td {
+  padding: 8px 12px;
+}
+
+.wf-datatable-card {
+  padding: 16px;
+  margin-bottom: 12px;
+  background: var(--background-primary, #ffffff);
+  border: 1px solid var(--border-color, #e5e5e5);
+  border-radius: var(--border-radius, 8px);
+}
+
+.wf-datatable-card:last-child {
+  margin-bottom: 0;
+}
+
+.wf-datatable-card-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border-color, #e5e5e5);
+  gap: 16px;
+}
+
+.wf-datatable-card-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.wf-datatable-card-row:first-child {
+  padding-top: 0;
+}
+
+.wf-datatable-card-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary, #737373);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+}
+
+.wf-datatable-card-value {
+  font-size: 14px;
+  color: var(--text-primary, #1a1a1a);
+  text-align: right;
+  word-break: break-word;
+}
+
+@media (max-width: 768px) {
+  .wf-datatable-desktop {
+    display: none;
+  }
+
+  .wf-datatable-mobile {
+    display: block;
+  }
+
+  .wf-datatable-heading {
+    font-size: 20px;
+  }
+
+  .wf-datatable-header {
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+}
