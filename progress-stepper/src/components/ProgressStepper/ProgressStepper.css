@@ -1,0 +1,278 @@
+/*
+ * Webflow Site Variables Used:
+ * - --background-primary: Step circle backgrounds
+ * - --background-secondary: Hover states for clickable steps
+ * - --text-primary: Step labels and numbers
+ * - --text-secondary: Step descriptions and upcoming steps
+ * - --border-color: Step circle borders and connectors
+ * - --accent-color: Current and completed step backgrounds
+ * - --accent-text-color: Text on accent backgrounds
+ * - --border-radius: Step circle rounding
+ */
+
+/* Box sizing reset */
+.wf-progressstepper *,
+.wf-progressstepper *::before,
+.wf-progressstepper *::after {
+  box-sizing: border-box;
+}
+
+/* Root element - inherit Webflow typography + default padding */
+.wf-progressstepper {
+  font-family: inherit;
+  color: inherit;
+  line-height: inherit;
+  padding: 24px;
+  --wf-progressstepper-circle-size: 40px;
+  --wf-progressstepper-connector-thickness: 2px;
+}
+
+/* Container */
+.wf-progressstepper-container {
+  display: flex;
+  width: 100%;
+}
+
+/* Horizontal layout */
+.wf-progressstepper-horizontal .wf-progressstepper-container {
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+/* Vertical layout */
+.wf-progressstepper-vertical .wf-progressstepper-container {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Step wrapper */
+.wf-progressstepper-step-wrapper {
+  display: flex;
+  position: relative;
+}
+
+.wf-progressstepper-horizontal .wf-progressstepper-step-wrapper {
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.wf-progressstepper-vertical .wf-progressstepper-step-wrapper {
+  flex-direction: row;
+  align-items: flex-start;
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.wf-progressstepper-vertical .wf-progressstepper-step-wrapper:last-child {
+  margin-bottom: 0;
+}
+
+/* Step container */
+.wf-progressstepper-step {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.wf-progressstepper-horizontal .wf-progressstepper-step {
+  flex-direction: column;
+  text-align: center;
+}
+
+.wf-progressstepper-vertical .wf-progressstepper-step {
+  flex-direction: row;
+  text-align: left;
+}
+
+/* Circle button */
+.wf-progressstepper-circle {
+  width: var(--wf-progressstepper-circle-size);
+  height: var(--wf-progressstepper-circle-size);
+  border-radius: 50%;
+  border: 2px solid var(--border-color, #e5e5e5);
+  background: var(--background-primary, #ffffff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  cursor: default;
+  transition: all 0.2s ease;
+  padding: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-secondary, #737373);
+}
+
+/* Clickable circle */
+.wf-progressstepper-circle-clickable {
+  cursor: pointer;
+}
+
+.wf-progressstepper-circle-clickable:hover {
+  background: var(--background-secondary, #f5f5f5);
+  border-color: var(--accent-color, #1a1a1a);
+}
+
+.wf-progressstepper-circle-clickable:focus-visible {
+  outline: 2px solid var(--accent-color, #1a1a1a);
+  outline-offset: 2px;
+}
+
+.wf-progressstepper-circle:disabled {
+  cursor: default;
+}
+
+/* Current step circle */
+.wf-progressstepper-step-current .wf-progressstepper-circle {
+  background: var(--accent-color, #1a1a1a);
+  border-color: var(--accent-color, #1a1a1a);
+  color: var(--accent-text-color, #ffffff);
+}
+
+/* Completed step circle */
+.wf-progressstepper-step-completed .wf-progressstepper-circle {
+  background: var(--accent-color, #1a1a1a);
+  border-color: var(--accent-color, #1a1a1a);
+  color: var(--accent-text-color, #ffffff);
+}
+
+/* Upcoming step circle */
+.wf-progressstepper-step-upcoming .wf-progressstepper-circle {
+  background: var(--background-primary, #ffffff);
+  border-color: var(--border-color, #e5e5e5);
+  color: var(--text-secondary, #737373);
+  opacity: 0.6;
+}
+
+/* Step number */
+.wf-progressstepper-number {
+  display: block;
+  line-height: 1;
+}
+
+/* Checkmark icon */
+.wf-progressstepper-checkmark {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+/* Content container */
+.wf-progressstepper-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.wf-progressstepper-horizontal .wf-progressstepper-content {
+  align-items: center;
+  margin-top: 8px;
+}
+
+.wf-progressstepper-vertical .wf-progressstepper-content {
+  align-items: flex-start;
+}
+
+/* Step label */
+.wf-progressstepper-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary, #1a1a1a);
+  line-height: 1.4;
+}
+
+.wf-progressstepper-step-current .wf-progressstepper-label {
+  color: var(--accent-color, #1a1a1a);
+}
+
+.wf-progressstepper-step-upcoming .wf-progressstepper-label {
+  color: var(--text-secondary, #737373);
+  opacity: 0.6;
+}
+
+/* Step description */
+.wf-progressstepper-description {
+  font-size: 12px;
+  color: var(--text-secondary, #737373);
+  line-height: 1.4;
+}
+
+.wf-progressstepper-step-upcoming .wf-progressstepper-description {
+  opacity: 0.6;
+}
+
+/* Connector line */
+.wf-progressstepper-connector {
+  background: var(--border-color, #e5e5e5);
+  transition: background-color 0.2s ease;
+}
+
+.wf-progressstepper-horizontal .wf-progressstepper-connector {
+  position: absolute;
+  top: calc(var(--wf-progressstepper-circle-size) / 2);
+  left: calc(50% + var(--wf-progressstepper-circle-size) / 2);
+  right: calc(-50% + var(--wf-progressstepper-circle-size) / 2);
+  height: var(--wf-progressstepper-connector-thickness);
+  transform: translateY(-50%);
+}
+
+.wf-progressstepper-vertical .wf-progressstepper-connector {
+  position: absolute;
+  left: calc(var(--wf-progressstepper-circle-size) / 2);
+  top: calc(var(--wf-progressstepper-circle-size) + 4px);
+  bottom: calc(-24px + 4px);
+  width: var(--wf-progressstepper-connector-thickness);
+  transform: translateX(-50%);
+}
+
+/* Completed connector */
+.wf-progressstepper-connector-completed {
+  background: var(--accent-color, #1a1a1a);
+}
+
+/* Upcoming connector */
+.wf-progressstepper-connector-upcoming {
+  background: var(--border-color, #e5e5e5);
+  opacity: 0.6;
+}
+
+/* Responsive: Switch to vertical on mobile */
+@media (max-width: 640px) {
+  .wf-progressstepper-horizontal .wf-progressstepper-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .wf-progressstepper-horizontal .wf-progressstepper-step-wrapper {
+    flex-direction: row;
+    align-items: flex-start;
+    width: 100%;
+    margin-bottom: 24px;
+  }
+
+  .wf-progressstepper-horizontal .wf-progressstepper-step-wrapper:last-child {
+    margin-bottom: 0;
+  }
+
+  .wf-progressstepper-horizontal .wf-progressstepper-step {
+    flex-direction: row;
+    text-align: left;
+  }
+
+  .wf-progressstepper-horizontal .wf-progressstepper-content {
+    align-items: flex-start;
+    margin-top: 0;
+  }
+
+  .wf-progressstepper-horizontal .wf-progressstepper-connector {
+    position: absolute;
+    left: calc(var(--wf-progressstepper-circle-size) / 2);
+    top: calc(var(--wf-progressstepper-circle-size) + 4px);
+    bottom: calc(-24px + 4px);
+    width: var(--wf-progressstepper-connector-thickness);
+    height: auto;
+    right: auto;
+    transform: translateX(-50%);
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "library": {
+    "name": "ProgressStepper",
+    "components": [
+      "./src/**/*.webflow.@(js|jsx|mjs|ts|tsx)"
+    ],
+    "description": "A multi-step progress indicator that visually tracks user progress through a sequential process. Displays numbered circles connected by horizontal or vertical lines, with completed steps showing checkmarks, the current step highlighted with an accent color, and future steps dimmed. Each step includes a label and optional description text. Supports 3-8 configurable steps with individual visibility controls. Offers a clickable variant that allows navigation to previously completed steps. Automatically switches from horizontal to vertical layout on mobile devices for optimal responsive behavior.",
+    "id": "progress-stepper"
+  }
+}
