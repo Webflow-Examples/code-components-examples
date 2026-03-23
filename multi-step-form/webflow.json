@@ -1,24 +1,10 @@
 {
-  "cloud": {
-    "framework": "astro"
-  },
-  "devlink": {
-    "rootDir": "./devlink",
-    "cssModules": true,
-    "fileExtensions": {
-      "js": "jsx"
-    }
-  },
-  "telemetry": {
-    "global": {
-      "allowTelemetry": true,
-      "lastPrompted": 1757967936037,
-      "version": "1.8.41"
-    }
-  },
   "library": {
-    "name": "Multi-Step Form",
-    "id": "multi-step-form",
-    "description": ""
+    "name": "MultiStepForm",
+    "components": [
+      "./src/**/*.webflow.@(js|jsx|mjs|ts|tsx)"
+    ],
+    "description": "A progressive multi-step form component that breaks long forms into sequential steps with smooth slide transitions. Displays a visual progress indicator at the top showing current, completed, and remaining steps. Each step contains a configurable group of form fields including text inputs, select dropdowns, textareas, and checkboxes with validation. Navigation buttons at the bottom allow moving between steps with 'Back' and 'Next' (changing to 'Submit' on final step). Validates required fields before allowing progression. Includes a final review/summary step displaying all entered values before submission. Supports 2-6 configurable steps with titles and optional descriptions. Fully responsive with vertically stacked fields on mobile and horizontal progress indicator that adapts to smaller screens.",
+    "id": "multi-step-form"
   }
 }

@@ -1,0 +1,597 @@
+/*
+ * Webflow Site Variables Used:
+ * - --background-primary: Main form background
+ * - --background-secondary: Hover states, secondary backgrounds
+ * - --text-primary: Main text color
+ * - --text-secondary: Labels, descriptions, muted text
+ * - --border-color: Borders, dividers, progress indicators
+ * - --accent-color: Active steps, primary buttons, progress fill
+ * - --accent-text-color: Text on accent backgrounds
+ * - --border-radius: Corner rounding for all elements
+ */
+
+/* Box sizing reset */
+.wf-multistepform *,
+.wf-multistepform *::before,
+.wf-multistepform *::after {
+  box-sizing: border-box;
+}
+
+/* Root element - inherit Webflow typography + default padding */
+.wf-multistepform {
+  font-family: inherit;
+  color: inherit;
+  line-height: inherit;
+  padding: 24px;
+}
+
+/* Container */
+.wf-multistepform-container {
+  max-width: 800px;
+  margin: 0 auto;
+  background: var(--background-primary, #ffffff);
+  border: 1px solid var(--border-color, #e5e5e5);
+  border-radius: var(--border-radius, 8px);
+  padding: 32px;
+}
+
+/* Header */
+.wf-multistepform-header {
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.wf-multistepform-title {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--text-primary, #1a1a1a);
+  margin: 0 0 8px 0;
+}
+
+.wf-multistepform-description {
+  font-size: 16px;
+  color: var(--text-secondary, #737373);
+  margin: 0;
+}
+
+/* Progress container */
+.wf-multistepform-progress {
+  margin-bottom: 32px;
+}
+
+/* Progress Bar */
+.wf-multistepform-progress-bar {
+  width: 100%;
+  height: 8px;
+  background: var(--background-secondary, #f5f5f5);
+  border-radius: var(--border-radius, 8px);
+  overflow: hidden;
+}
+
+.wf-multistepform-progress-bar-fill {
+  height: 100%;
+  background: var(--accent-color, #1a1a1a);
+  transition: width 0.3s ease;
+}
+
+/* Progress Stepper */
+.wf-multistepform-progress-stepper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  position: relative;
+}
+
+.wf-multistepform-progress-stepper::before {
+  content: '';
+  position: absolute;
+  top: 20px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--border-color, #e5e5e5);
+  z-index: 0;
+}
+
+.wf-multistepform-progress-step {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  z-index: 1;
+}
+
+.wf-multistepform-progress-step-clickable {
+  cursor: pointer;
+}
+
+.wf-multistepform-progress-step-clickable:hover .wf-multistepform-progress-step-circle {
+  background: var(--background-secondary, #f5f5f5);
+}
+
+.wf-multistepform-progress-step-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--background-primary, #ffffff);
+  border: 2px solid var(--border-color, #e5e5e5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.wf-multistepform-progress-step-completed .wf-multistepform-progress-step-circle {
+  background: var(--accent-color, #1a1a1a);
+  border-color: var(--accent-color, #1a1a1a);
+}
+
+.wf-multistepform-progress-step-active .wf-multistepform-progress-step-circle {
+  border-color: var(--accent-color, #1a1a1a);
+  border-width: 3px;
+}
+
+.wf-multistepform-progress-step-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary, #737373);
+}
+
+.wf-multistepform-progress-step-completed .wf-multistepform-progress-step-number {
+  color: var(--accent-text-color, #ffffff);
+}
+
+.wf-multistepform-progress-step-active .wf-multistepform-progress-step-number {
+  color: var(--accent-color, #1a1a1a);
+}
+
+.wf-multistepform-progress-step-label {
+  font-size: 14px;
+  color: var(--text-secondary, #737373);
+  text-align: center;
+  font-weight: 500;
+}
+
+.wf-multistepform-progress-step-active .wf-multistepform-progress-step-label {
+  color: var(--text-primary, #1a1a1a);
+  font-weight: 600;
+}
+
+/* Progress Dots */
+.wf-multistepform-progress-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+
+.wf-multistepform-progress-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--border-color, #e5e5e5);
+  transition: all 0.3s ease;
+}
+
+.wf-multistepform-progress-dot-clickable {
+  cursor: pointer;
+}
+
+.wf-multistepform-progress-dot-clickable:hover {
+  background: var(--text-secondary, #737373);
+}
+
+.wf-multistepform-progress-dot-completed {
+  background: var(--accent-color, #1a1a1a);
+}
+
+.wf-multistepform-progress-dot-active {
+  background: var(--accent-color, #1a1a1a);
+  width: 16px;
+  height: 16px;
+}
+
+/* Form */
+.wf-multistepform-form {
+  width: 100%;
+}
+
+/* Content area */
+.wf-multistepform-content {
+  min-height: 300px;
+  margin-bottom: 24px;
+}
+
+/* Step */
+.wf-multistepform-step {
+  animation-duration: 0.3s;
+  animation-fill-mode: both;
+}
+
+.wf-multistepform-step-slide-in-right {
+  animation-name: slideInRight;
+}
+
+.wf-multistepform-step-slide-in-left {
+  animation-name: slideInLeft;
+}
+
+.wf-multistepform-step-fade-in {
+  animation-name: fadeIn;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Step header */
+.wf-multistepform-step-header {
+  margin-bottom: 24px;
+}
+
+.wf-multistepform-step-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-primary, #1a1a1a);
+  margin: 0 0 8px 0;
+}
+
+.wf-multistepform-step-description {
+  font-size: 14px;
+  color: var(--text-secondary, #737373);
+  margin: 0;
+}
+
+/* Fields */
+.wf-multistepform-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.wf-multistepform-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.wf-multistepform-field-checkbox {
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.wf-multistepform-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary, #1a1a1a);
+}
+
+.wf-multistepform-required {
+  color: #dc2626;
+  margin-left: 4px;
+}
+
+.wf-multistepform-input,
+.wf-multistepform-select,
+.wf-multistepform-textarea {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 16px;
+  color: var(--text-primary, #1a1a1a);
+  background: var(--background-primary, #ffffff);
+  border: 1px solid var(--border-color, #e5e5e5);
+  border-radius: var(--border-radius, 8px);
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.wf-multistepform-input:hover,
+.wf-multistepform-select:hover,
+.wf-multistepform-textarea:hover {
+  border-color: var(--text-secondary, #737373);
+}
+
+.wf-multistepform-input:focus,
+.wf-multistepform-select:focus,
+.wf-multistepform-textarea:focus {
+  outline: none;
+  border-color: var(--accent-color, #1a1a1a);
+  box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.1);
+}
+
+.wf-multistepform-input::placeholder,
+.wf-multistepform-textarea::placeholder {
+  color: var(--text-secondary, #737373);
+}
+
+.wf-multistepform-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.wf-multistepform-select {
+  cursor: pointer;
+}
+
+.wf-multistepform-checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.wf-multistepform-checkbox {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  cursor: pointer;
+  accent-color: var(--accent-color, #1a1a1a);
+  flex-shrink: 0;
+}
+
+.wf-multistepform-checkbox-text {
+  font-size: 14px;
+  color: var(--text-primary, #1a1a1a);
+  line-height: 1.5;
+}
+
+/* Review section */
+.wf-multistepform-review {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.wf-multistepform-review-section {
+  padding: 20px;
+  background: var(--background-secondary, #f5f5f5);
+  border-radius: var(--border-radius, 8px);
+}
+
+.wf-multistepform-review-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  gap: 16px;
+}
+
+.wf-multistepform-review-section-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary, #1a1a1a);
+  margin: 0;
+}
+
+.wf-multistepform-review-edit-button {
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--accent-color, #1a1a1a);
+  background: var(--background-primary, #ffffff);
+  border: 1px solid var(--border-color, #e5e5e5);
+  border-radius: var(--border-radius, 8px);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.wf-multistepform-review-edit-button:hover {
+  background: var(--background-secondary, #f5f5f5);
+  border-color: var(--accent-color, #1a1a1a);
+}
+
+.wf-multistepform-review-edit-button:focus-visible {
+  outline: 2px solid var(--accent-color, #1a1a1a);
+  outline-offset: 2px;
+}
+
+.wf-multistepform-review-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.wf-multistepform-review-field {
+  display: flex;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.wf-multistepform-review-field-label {
+  font-weight: 500;
+  color: var(--text-secondary, #737373);
+  min-width: 140px;
+}
+
+.wf-multistepform-review-field-value {
+  color: var(--text-primary, #1a1a1a);
+  word-break: break-word;
+}
+
+/* Error message */
+.wf-multistepform-error {
+  padding: 12px 16px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: var(--border-radius, 8px);
+  color: #dc2626;
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
+/* Navigation */
+.wf-multistepform-navigation {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-color, #e5e5e5);
+}
+
+.wf-multistepform-button {
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: var(--border-radius, 8px);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  font-family: inherit;
+}
+
+.wf-multistepform-button-back {
+  background: var(--background-secondary, #f5f5f5);
+  color: var(--text-primary, #1a1a1a);
+  border: 1px solid var(--border-color, #e5e5e5);
+}
+
+.wf-multistepform-button-back:hover {
+  background: var(--border-color, #e5e5e5);
+}
+
+.wf-multistepform-button-back:focus-visible {
+  outline: 2px solid var(--accent-color, #1a1a1a);
+  outline-offset: 2px;
+}
+
+.wf-multistepform-button-next,
+.wf-multistepform-button-submit {
+  background: var(--accent-color, #1a1a1a);
+  color: var(--accent-text-color, #ffffff);
+  margin-left: auto;
+}
+
+.wf-multistepform-button-next:hover,
+.wf-multistepform-button-submit:hover {
+  opacity: 0.9;
+}
+
+.wf-multistepform-button-next:focus-visible,
+.wf-multistepform-button-submit:focus-visible {
+  outline: 2px solid var(--accent-color, #1a1a1a);
+  outline-offset: 2px;
+}
+
+.wf-multistepform-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Success state */
+.wf-multistepform-submitted {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+}
+
+.wf-multistepform-success {
+  text-align: center;
+  padding: 48px 24px;
+  max-width: 500px;
+}
+
+.wf-multistepform-success-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 24px;
+  background: var(--accent-color, #1a1a1a);
+  color: var(--accent-text-color, #ffffff);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  font-weight: 600;
+}
+
+.wf-multistepform-success-title {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--text-primary, #1a1a1a);
+  margin: 0 0 12px 0;
+}
+
+.wf-multistepform-success-message {
+  font-size: 16px;
+  color: var(--text-secondary, #737373);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .wf-multistepform-container {
+    padding: 24px;
+  }
+
+  .wf-multistepform-title {
+    font-size: 24px;
+  }
+
+  .wf-multistepform-step-title {
+    font-size: 20px;
+  }
+
+  .wf-multistepform-progress-stepper {
+    flex-wrap: wrap;
+  }
+
+  .wf-multistepform-progress-step-label {
+    font-size: 12px;
+  }
+
+  .wf-multistepform-review-section-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .wf-multistepform-review-field {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .wf-multistepform-review-field-label {
+    min-width: auto;
+  }
+
+  .wf-multistepform-navigation {
+    flex-direction: column;
+  }
+
+  .wf-multistepform-button-next,
+  .wf-multistepform-button-submit {
+    margin-left: 0;
+  }
+}

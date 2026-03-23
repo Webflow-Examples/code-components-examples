@@ -1,239 +1,143 @@
-# Dynamic Multi-Step Form for Webflow
+# MultiStepForm
 
-[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)]()
-[![Astro](https://img.shields.io/badge/Astro-BC52EE?style=for-the-badge&logo=astro&logoColor=white)]()
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)]()
-[![Webflow](https://img.shields.io/badge/Webflow-4353FF?style=for-the-badge&logo=webflow&logoColor=white)]()
-[![Airtable](https://img.shields.io/badge/Airtable-F7B928?style=for-the-badge&logo=airtable&logoColor=black)]()
+A progressive multi-step form component that breaks long forms into sequential steps with smooth slide transitions.
 
-A dynamic, multi-step form component for Webflow, powered by Airtable for easy configuration and management. [See a live example here](https://hello-webflow-cloud.webflow.io/form)
+## Getting Started
 
-## Installation
-
+Install dependencies:
 ```bash
 npm install
 ```
 
-## Usage
+Share the component to your Webflow workspace:
+```bash
+npx webflow library share
+```
 
-To start the development server, run the following command:
-
+For local development:
 ```bash
 npm run dev
 ```
 
-This will start the Astro development server, and you can view the component at `http://localhost:4321`.
+## Designer Properties
 
----
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| ID | Id | — | HTML ID attribute for the form element |
+| Progress Style | Variant | stepper | Visual style of the progress indicator (bar, stepper, dots) |
+| Transition Direction | Variant | slide | Animation direction when changing steps (slide, fade) |
+| Number of Steps | Number | 3 | Total number of form steps (2-6, excluding review step) |
+| Show Review Step | Boolean | true | Show a summary/review step before final submission |
+| Form Title | TextNode | Complete Your Application | Main form heading displayed at the top |
+| Form Description | Text | Please fill out all required fields to continue | Optional description text below the main heading |
+| Step 1 Title | Text | Personal Information | Title for step 1 |
+| Step 1 Description | Text | Tell us about yourself | Optional description for step 1 |
+| Step 1 Visible | Visibility | — | Show or hide step 1 |
+| Step 2 Title | Text | Contact Details | Title for step 2 |
+| Step 2 Description | Text | How can we reach you? | Optional description for step 2 |
+| Step 2 Visible | Visibility | — | Show or hide step 2 |
+| Step 3 Title | Text | Preferences | Title for step 3 |
+| Step 3 Description | Text | Customize your experience | Optional description for step 3 |
+| Step 3 Visible | Visibility | — | Show or hide step 3 |
+| Step 4 Title | Text | Additional Information | Title for step 4 |
+| Step 4 Description | Text | Any other details we should know | Optional description for step 4 |
+| Step 4 Visible | Visibility | — | Show or hide step 4 |
+| Step 5 Title | Text | Review & Confirm | Title for step 5 |
+| Step 5 Description | Text | Final details | Optional description for step 5 |
+| Step 5 Visible | Visibility | — | Show or hide step 5 |
+| Step 6 Title | Text | Confirmation | Title for step 6 |
+| Step 6 Description | Text | Last step | Optional description for step 6 |
+| Step 6 Visible | Visibility | — | Show or hide step 6 |
+| Review Step Title | Text | Review Your Information | Title for the review/summary step |
+| Review Step Description | Text | Please review your information before submitting | Description for the review/summary step |
+| Back Button Text | Text | Back | Text for the back navigation button |
+| Next Button Text | Text | Next | Text for the next navigation button |
+| Submit Button Text | Text | Submit | Text for the submit button on the final step |
+| Validation Error Message | Text | Please fill out all required fields before continuing | Error message shown when required fields are incomplete |
+| Success Message | Text | Thank you! Your form has been submitted successfully. | Message displayed after successful form submission |
+| Show Step Numbers | Boolean | true | Display step numbers in the progress indicator |
+| Show Step Descriptions | Boolean | true | Display optional descriptions under step titles |
+| Allow Step Skipping | Boolean | false | Allow users to click on completed steps to navigate back |
+| Form Action | Link | — | Form submission endpoint URL |
+| Edit Button Text | Text | Edit | Text for edit buttons on the review step |
 
-## Project structure
+## Styling
 
-- `src/components/DynamicFormGenerator.jsx`: The core React component that handles form logic, state management, validation, and rendering.
-- `src/components/DynamicFormGenerator.webflow.tsx`: The Webflow Code Component definition file. It defines the props that appear in the Webflow Designer's settings panel.
-- `src/styles/globals.css`: The CSS file containing styles for the component, written using Tailwind CSS and DaisyUI.
+This component automatically adapts to your Webflow site's design system through site variables and inherited properties.
 
----
+### Site Variables
 
-## How it works
+To match your site's design system, define these CSS variables in your Webflow project settings. The component will use the fallback values shown below until you configure them.
 
-This component connects Airtable for configuration, Webflow for presentation, and a webhook for data processing.
+| Site Variable | What It Controls | Fallback |
+|---------------|------------------|----------|
+| --background-primary | Main form background and input fields | #ffffff |
+| --background-secondary | Hover states, secondary backgrounds, and review sections | #f5f5f5 |
+| --text-primary | Main text color for headings and content | #1a1a1a |
+| --text-secondary | Labels, descriptions, and muted text | #737373 |
+| --border-color | Borders, dividers, and progress indicators | #e5e5e5 |
+| --accent-color | Active steps, primary buttons, and progress fill | #1a1a1a |
+| --accent-text-color | Text on accent-colored backgrounds | #ffffff |
+| --border-radius | Corner rounding for all form elements | 8px |
 
-1.  **Form Configuration in Airtable**: Design your form in an [Airtable Base](https://airtable.com/appoSYwCLsZ1KeGDA/shrjViMqTb4f7apWi). Define steps, fields, validation, and conditional logic.
-2.  **JSON Generation**: An Airtable script generates a JSON configuration for your form.
-3.  **Webflow Component**: Add the "Dynamic Form Generator" component in Webflow and paste the JSON configuration.
-4.  **Form Rendering**: The React component parses the JSON and renders the multi-step form.
-5.  **Data Submission**: Form data is sent to a specified webhook.
-6.  **Airtable Automation**: The webhook triggers an Airtable Automation to process the data.
+### Inherited Properties
 
-## Setup guide
+The component inherits these CSS properties from its parent element:
+- `font-family` — Typography style
+- `color` — Text color
+- `line-height` — Text spacing
 
-### 1. Configure the form in Airtable
+## Extending in Code
 
-1.  Open the [Airtable Base Template](https://airtable.com/appoSYwCLsZ1KeGDA/shrjViMqTb4f7apWi) and duplicate it.
-2.  In the **Forms** table, create a record for your form.
-3.  In the **Form Structure** table, add your questions, assign them to steps, and link them to your form.
-4.  Copy the JSON from the `Form Config Script` in the extensions panel.
+### Custom Form Submission Handler
 
-### 2. Set up the Airtable automation
+Intercept form submission to send data to your own API endpoint:
 
-1.  In your Airtable base, go to **Automations**.
-2.  Create an automation with a **"When webhook received"** trigger.
-3.  Copy the webhook URL.
-4.  Add actions to process the form data
-    <details>
-    <summary> Action Setup Details</summary>
-
-    1. **Action 1: Create record**: Create a new record in a `Submissions` table with the data received from the webhook.
-
-    2. **Action 2: Run a script**: Add custom logic, to create a new form-specific table for submissions.
-    <details>
-        <summary>Script Configuration</summary>
-
-    #### Inputs
-
-    | Name       | Value     |
-    | ---------- | --------- |
-    | `formData` | `payload` |
-    | `formId`   | `formId`  |
-
-    #### Script Code
-
-    ```javascript
-    // If Form Table doesn't exist - create it
-    const { formData, formId } = input.config();
-    const baseId = base.id;
-
-    // Get Table
-    const tables = base.tables.map((table) => table.name);
-    const table = tables.find((name) => name == formId);
-
-    // Create the table with fields
-    if (!table) {
-      // Get fields from form structure table
-      const structureTable = base.getTable("Form Structure");
-      const query = await structureTable.selectRecordsAsync({
-        fields: structureTable.fields,
-      });
-      const structureRecords = query.records;
-      const formStructure = structureRecords.filter((r) =>
-        r
-          .getCellValue("FormID")
-          .map((f) => f.name)
-          .includes(formId)
-      );
-      console.log("formStructure", formStructure);
-
-      // For each record, create a field in the new table
-
-      const fields = formStructure.map((record) => {
-        // Determine field type
-        const getFieldType = (fieldType) => {
-          switch (fieldType.toLowerCase()) {
-            case "number":
-              return "number";
-            case "text area":
-              return "richText";
-            case "email":
-              return "email";
-            case "dropdown":
-              return "singleSelect";
-            case "scale":
-              return "number";
-            default:
-              return "singleLineText";
-          }
-        };
-
-        const obj = {
-          name: record.name,
-          description: record.getCellValueAsString("User Label"),
-          type: getFieldType(record.getCellValueAsString("Field Type")),
-        };
-
-        if (obj.type == "number") {
-          obj.options = {};
-          obj.options.precision = 0;
-        }
-
-        if (obj.type === "singleSelect") {
-          obj.options = {};
-          obj.options.choices = record
-            .getCellValue("Options")
-            .map((values) => ({ name: values.name }));
-        }
-
-        return obj;
-      });
-
-      console.log(fields);
-
-      const url = `https://api.airtable.com/v0/meta/bases/${baseId}/tables`;
-      await fetch(url, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${input.secret("airtableKey")}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: formId,
-          fields: fields,
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => console.log(data));
+```javascript
+document.querySelector('.wf-multistepform-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  
+  try {
+    const response = await fetch('/api/submit', {
+      method: 'POST',
+      body: JSON.stringify(Object.fromEntries(formData)),
+      headers: { 'Content-Type': 'application/json' }
+    });
+    
+    if (response.ok) {
+      // Show success state
+      console.log('Form submitted successfully');
     }
-    ```
+  } catch (error) {
+    console.error('Submission failed:', error);
+  }
+});
+```
 
-    </details>
+### Track Step Progress with Analytics
 
-    3. **Action 3: Run a Script:** Add a script to create new records in the form-specfic table
-    <details>
-    <summary>Script Configuration</summary>
+Monitor user progress through the form steps:
 
-    #### Inputs
-
-    | Name       | Value     |
-    | ---------- | --------- |
-    | `formData` | `payload` |
-    | `formId`   | `formId`  |
-
-    #### Script Code
-
-    ```javascript
-    const { data, formId } = input.config();
-    const jsonData = JSON.parse(data);
-    console.log(jsonData);
-
-    const table = base.getTable(formId);
-    const fields = table.fields;
-
-    const singleSelectFields = fields.filter(
-      (field) => field.type == "singleSelect"
-    );
-    const numberFields = fields.filter((field) => field.type === "number");
-
-    for (let entry in jsonData) {
-      // Convert to single select format
-      if (singleSelectFields.map((field) => field.name).includes(entry))
-        jsonData[entry] = { name: jsonData[entry] };
-
-      // Convert to number format
-      if (numberFields.map((fields) => fields.name).includes(entry))
-        jsonData[entry] = parseInt(jsonData[entry]);
+```javascript
+const observer = new MutationObserver((mutations) => {
+  mutations.forEach((mutation) => {
+    if (mutation.attributeName === 'class') {
+      const activeStep = document.querySelector('.wf-multistepform-progress-step-active');
+      if (activeStep) {
+        const stepNumber = activeStep.querySelector('.wf-multistepform-progress-step-number').textContent;
+        // Send to your analytics platform
+        analytics.track('Form Step Viewed', { step: stepNumber });
+      }
     }
+  });
+});
 
-    table.createRecordAsync(jsonData);
-    ```
+document.querySelectorAll('.wf-multistepform-progress-step').forEach((step) => {
+  observer.observe(step, { attributes: true });
+});
+```
 
-      </details>
+## Dependencies
 
-</details>
-
-### 3. Add the component in Webflow
-
-1.  Share the component to your Webflow workspace using the Webflow CLI:
-    ```bash
-    npx webflow library share
-    ```
-2.  Install the library in your Webflow site and add the component to a page.
-3.  Configure the component's props in the **Settings** panel.
-
-## Component properties
-
-| Prop Name    | Type      | Description                                                                                                                    |
-| ------------ | --------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| `formName`   | `Text`    | The title displayed at the top of the form.                                                                                    |
-| `formConfig` | `Text`    | The JSON string that defines the form structure, copied from the Airtable base.                                                |
-| `webhookUrl` | `Text`    | The URL that the form data will be submitted to.                                                                               |
-| `formID`     | `Text`    | A unique identifier for the form, which gets included in the submission payload.                                               |
-| `devMode`    | `Variant` | If `true`, submitting the form shows a preview of the JSON payload instead of sending it to the webhook. Useful for debugging. |
-
-## Community
-
-For help, discussion about examples and best practices:
-
-[Join the Webflow App Developers Forum](https://discourse.webflow.com/c/app-developers/90)
-
-To connect and swap ideas with other Webflow developers:
-
-[Join the Unofficial Webflow Discord Server](https://discord.gg/webflow)
+No external dependencies.
