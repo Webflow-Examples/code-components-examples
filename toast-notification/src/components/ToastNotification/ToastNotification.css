@@ -1,0 +1,294 @@
+/*
+ * Webflow Site Variables Used:
+ * - --background-primary: Toast card background
+ * - --background-secondary: Close button hover state
+ * - --text-primary: Message text color
+ * - --text-secondary: Description text color
+ * - --border-color: Toast card border
+ * - --border-radius: Toast card and button rounding
+ * - --success-color: Success variant border and icon color
+ * - --success-bg: Success variant background tint
+ * - --error-color: Error variant border and icon color
+ * - --error-bg: Error variant background tint
+ * - --warning-color: Warning variant border and icon color
+ * - --warning-bg: Warning variant background tint
+ * - --info-color: Info variant border and icon color
+ * - --info-bg: Info variant background tint
+ */
+
+/* Box sizing reset */
+.wf-toastnotification *,
+.wf-toastnotification *::before,
+.wf-toastnotification *::after {
+  box-sizing: border-box;
+}
+
+/* Root container - fixed positioning for toast notifications */
+.wf-toastnotification {
+  font-family: inherit;
+  color: inherit;
+  line-height: inherit;
+  position: fixed;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  pointer-events: none;
+  max-width: 420px;
+  width: calc(100% - 48px);
+}
+
+/* Position variants */
+.wf-toastnotification-position-top-right {
+  top: 24px;
+  right: 24px;
+}
+
+.wf-toastnotification-position-top-left {
+  top: 24px;
+  left: 24px;
+}
+
+.wf-toastnotification-position-bottom-right {
+  bottom: 24px;
+  right: 24px;
+}
+
+.wf-toastnotification-position-bottom-left {
+  bottom: 24px;
+  left: 24px;
+}
+
+/* Toast card */
+.wf-toastnotification-card {
+  background: var(--background-primary, #ffffff);
+  border: 1px solid var(--border-color, #e5e5e5);
+  border-radius: var(--border-radius, 8px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  pointer-events: auto;
+  position: relative;
+  border-left-width: 4px;
+}
+
+/* Animation states */
+.wf-toastnotification-animated .wf-toastnotification-card {
+  animation: wf-toast-slide-in 0.3s ease-out;
+}
+
+.wf-toastnotification-position-top-right.wf-toastnotification-animated .wf-toastnotification-card,
+.wf-toastnotification-position-bottom-right.wf-toastnotification-animated .wf-toastnotification-card {
+  animation: wf-toast-slide-in-right 0.3s ease-out;
+}
+
+.wf-toastnotification-position-top-left.wf-toastnotification-animated .wf-toastnotification-card,
+.wf-toastnotification-position-bottom-left.wf-toastnotification-animated .wf-toastnotification-card {
+  animation: wf-toast-slide-in-left 0.3s ease-out;
+}
+
+@keyframes wf-toast-slide-in-right {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes wf-toast-slide-in-left {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Variant colors - success */
+.wf-toastnotification-variant-success {
+  border-left-color: var(--success-color, #22c55e);
+  background: var(--success-bg, #f0fdf4);
+}
+
+.wf-toastnotification-variant-success .wf-toastnotification-icon {
+  color: var(--success-color, #22c55e);
+}
+
+.wf-toastnotification-variant-success .wf-toastnotification-progress-bar {
+  background: var(--success-color, #22c55e);
+}
+
+/* Variant colors - error */
+.wf-toastnotification-variant-error {
+  border-left-color: var(--error-color, #ef4444);
+  background: var(--error-bg, #fef2f2);
+}
+
+.wf-toastnotification-variant-error .wf-toastnotification-icon {
+  color: var(--error-color, #ef4444);
+}
+
+.wf-toastnotification-variant-error .wf-toastnotification-progress-bar {
+  background: var(--error-color, #ef4444);
+}
+
+/* Variant colors - warning */
+.wf-toastnotification-variant-warning {
+  border-left-color: var(--warning-color, #f59e0b);
+  background: var(--warning-bg, #fffbeb);
+}
+
+.wf-toastnotification-variant-warning .wf-toastnotification-icon {
+  color: var(--warning-color, #f59e0b);
+}
+
+.wf-toastnotification-variant-warning .wf-toastnotification-progress-bar {
+  background: var(--warning-color, #f59e0b);
+}
+
+/* Variant colors - info */
+.wf-toastnotification-variant-info {
+  border-left-color: var(--info-color, #3b82f6);
+  background: var(--info-bg, #eff6ff);
+}
+
+.wf-toastnotification-variant-info .wf-toastnotification-icon {
+  color: var(--info-color, #3b82f6);
+}
+
+.wf-toastnotification-variant-info .wf-toastnotification-progress-bar {
+  background: var(--info-color, #3b82f6);
+}
+
+/* Content container */
+.wf-toastnotification-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+}
+
+/* Icon wrapper */
+.wf-toastnotification-icon-wrapper {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+}
+
+.wf-toastnotification-icon {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+/* Text content */
+.wf-toastnotification-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.wf-toastnotification-message {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--text-primary, #1a1a1a);
+  margin: 0;
+}
+
+.wf-toastnotification-description {
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--text-secondary, #737373);
+  margin-top: 4px;
+}
+
+/* Close button */
+.wf-toastnotification-close {
+  flex-shrink: 0;
+  background: transparent;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  border-radius: var(--border-radius, 8px);
+  color: var(--text-secondary, #737373);
+  transition: background-color 0.2s, color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  margin-top: -2px;
+}
+
+.wf-toastnotification-close:hover {
+  background: var(--background-secondary, #f5f5f5);
+  color: var(--text-primary, #1a1a1a);
+}
+
+.wf-toastnotification-close:focus-visible {
+  outline: 2px solid var(--info-color, #3b82f6);
+  outline-offset: 2px;
+}
+
+.wf-toastnotification-close:active {
+  transform: scale(0.95);
+}
+
+.wf-toastnotification-close svg {
+  width: 14px;
+  height: 14px;
+  display: block;
+}
+
+/* Progress bar container */
+.wf-toastnotification-progress-container {
+  height: 4px;
+  background: var(--border-color, #e5e5e5);
+  overflow: hidden;
+}
+
+.wf-toastnotification-progress-bar {
+  height: 100%;
+  transition: width 0.1s linear;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .wf-toastnotification {
+    width: calc(100% - 32px);
+    max-width: none;
+  }
+
+  .wf-toastnotification-position-top-right,
+  .wf-toastnotification-position-top-left {
+    top: 16px;
+    left: 16px;
+    right: 16px;
+  }
+
+  .wf-toastnotification-position-bottom-right,
+  .wf-toastnotification-position-bottom-left {
+    bottom: 16px;
+    left: 16px;
+    right: 16px;
+  }
+
+  .wf-toastnotification-content {
+    padding: 12px;
+  }
+
+  .wf-toastnotification-message {
+    font-size: 13px;
+  }
+
+  .wf-toastnotification-description {
+    font-size: 12px;
+  }
+}

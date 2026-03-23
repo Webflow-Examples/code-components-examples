@@ -1,0 +1,5 @@
+{
+  "name": "Toast Notifications",
+  "description": "Temporary notification messages with success, error, warning, and info variants. Auto-dismiss with progress bar.",
+  "category": "Feedback"
+}

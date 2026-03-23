@@ -1,0 +1,10 @@
+{
+  "library": {
+    "name": "ToastNotification",
+    "components": [
+      "./src/**/*.webflow.@(js|jsx|mjs|ts|tsx)"
+    ],
+    "description": "A toast notification system that displays temporary messages in a configurable screen corner (top-right, top-left, bottom-right, bottom-left). Each toast card features a colored left border and icon matching the variant (success with green checkmark, error with red X, warning with yellow exclamation, info with blue info icon), followed by a bold message title and optional lighter description text below. A close button (X) appears on the right. A progress bar animates along the bottom edge, depleting over the auto-dismiss duration. Toasts stack vertically with 12px gaps, slide in smoothly from their corner direction, and fade out when dismissed. Maximum 5 toasts visible simultaneously; oldest auto-dismiss when the limit is exceeded. Fully responsive with appropriate padding and max-width constraints.",
+    "id": "toast-notification"
+  }
+}
