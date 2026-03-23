@@ -1,0 +1,183 @@
+/*
+ * Webflow Site Variables Used:
+ * - --background-primary: Track background when unchecked
+ * - --background-secondary: Hover states
+ * - --text-primary: Label text color
+ * - --text-secondary: Description text color
+ * - --border-color: Track border
+ * - --accent-color: Track background when checked
+ * - --accent-text-color: Thumb color and icon color when checked
+ * - --border-radius: Track and thumb rounding
+ */
+
+/* Box sizing reset */
+.wf-toggleswitch *,
+.wf-toggleswitch *::before,
+.wf-toggleswitch *::after {
+  box-sizing: border-box;
+}
+
+/* Root element - inherit Webflow typography + default padding */
+.wf-toggleswitch {
+  font-family: inherit;
+  color: inherit;
+  line-height: inherit;
+  padding: 24px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: fit-content;
+}
+
+/* Size variants - custom properties */
+.wf-toggleswitch--size-small {
+  --wf-toggleswitch-track-width: 36px;
+  --wf-toggleswitch-track-height: 20px;
+  --wf-toggleswitch-thumb-size: 16px;
+  --wf-toggleswitch-thumb-offset: 2px;
+  --wf-toggleswitch-label-size: 14px;
+  --wf-toggleswitch-description-size: 12px;
+}
+
+.wf-toggleswitch--size-medium {
+  --wf-toggleswitch-track-width: 44px;
+  --wf-toggleswitch-track-height: 24px;
+  --wf-toggleswitch-thumb-size: 20px;
+  --wf-toggleswitch-thumb-offset: 2px;
+  --wf-toggleswitch-label-size: 16px;
+  --wf-toggleswitch-description-size: 14px;
+}
+
+.wf-toggleswitch--size-large {
+  --wf-toggleswitch-track-width: 52px;
+  --wf-toggleswitch-track-height: 28px;
+  --wf-toggleswitch-thumb-size: 24px;
+  --wf-toggleswitch-thumb-offset: 2px;
+  --wf-toggleswitch-label-size: 18px;
+  --wf-toggleswitch-description-size: 16px;
+}
+
+/* Label position variants */
+.wf-toggleswitch--label-left {
+  flex-direction: row;
+}
+
+.wf-toggleswitch--label-right {
+  flex-direction: row-reverse;
+}
+
+/* Label wrapper */
+.wf-toggleswitch-label-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Label */
+.wf-toggleswitch-label {
+  font-size: var(--wf-toggleswitch-label-size);
+  font-weight: 500;
+  color: var(--text-primary, #1a1a1a);
+  line-height: 1.4;
+}
+
+/* Description */
+.wf-toggleswitch-description {
+  font-size: var(--wf-toggleswitch-description-size);
+  color: var(--text-secondary, #737373);
+  line-height: 1.4;
+}
+
+/* Button */
+.wf-toggleswitch-button {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  flex-shrink: 0;
+  position: relative;
+  outline: none;
+}
+
+.wf-toggleswitch-button:focus-visible {
+  outline: 2px solid var(--accent-color, #1a1a1a);
+  outline-offset: 2px;
+  border-radius: calc(var(--border-radius, 8px) * 2);
+}
+
+/* Track */
+.wf-toggleswitch-track {
+  display: block;
+  width: var(--wf-toggleswitch-track-width);
+  height: var(--wf-toggleswitch-track-height);
+  background: var(--background-primary, #ffffff);
+  border: 1px solid var(--border-color, #e5e5e5);
+  border-radius: calc(var(--wf-toggleswitch-track-height) / 2);
+  position: relative;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.wf-toggleswitch-button:hover .wf-toggleswitch-track {
+  background: var(--background-secondary, #f5f5f5);
+}
+
+.wf-toggleswitch--checked .wf-toggleswitch-track {
+  background: var(--accent-color, #1a1a1a);
+  border-color: var(--accent-color, #1a1a1a);
+}
+
+.wf-toggleswitch--checked .wf-toggleswitch-button:hover .wf-toggleswitch-track {
+  background: var(--accent-color, #1a1a1a);
+  opacity: 0.9;
+}
+
+/* Thumb */
+.wf-toggleswitch-thumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--wf-toggleswitch-thumb-size);
+  height: var(--wf-toggleswitch-thumb-size);
+  background: var(--text-primary, #1a1a1a);
+  border-radius: 50%;
+  position: absolute;
+  top: var(--wf-toggleswitch-thumb-offset);
+  left: var(--wf-toggleswitch-thumb-offset);
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.wf-toggleswitch--checked .wf-toggleswitch-thumb {
+  transform: translateX(calc(var(--wf-toggleswitch-track-width) - var(--wf-toggleswitch-thumb-size) - (var(--wf-toggleswitch-thumb-offset) * 2)));
+  background: var(--accent-text-color, #ffffff);
+}
+
+/* Icon */
+.wf-toggleswitch-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-text-color, #ffffff);
+}
+
+.wf-toggleswitch--checked .wf-toggleswitch-icon {
+  color: var(--accent-color, #1a1a1a);
+}
+
+.wf-toggleswitch-icon svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* Disabled state */
+.wf-toggleswitch--disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.wf-toggleswitch--disabled .wf-toggleswitch-button {
+  cursor: not-allowed;
+}
+
+.wf-toggleswitch--disabled .wf-toggleswitch-label {
+  color: var(--text-secondary, #737373);
+}

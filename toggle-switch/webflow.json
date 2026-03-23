@@ -1,0 +1,10 @@
+{
+  "library": {
+    "name": "ToggleSwitch",
+    "components": [
+      "./src/**/*.webflow.@(js|jsx|mjs|ts|tsx)"
+    ],
+    "description": "A switch/toggle component for on/off boolean states. Displays as a horizontal track with a circular sliding thumb that animates smoothly between left (off) and right (on) positions. Includes a label that can be positioned to the left or right of the switch, with optional description text below the label. Supports three sizes (small, medium, large) that scale the track, thumb, and typography. Features a disabled state that grays out the component and prevents interaction. The on state uses a configurable accent color via CSS variable. Includes a visible focus ring for keyboard accessibility. Optionally displays on/off icons inside the thumb circle.",
+    "id": "toggle-switch"
+  }
+}
