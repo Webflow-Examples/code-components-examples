@@ -1,0 +1,10 @@
+{
+  "library": {
+    "name": "CarouselSlider",
+    "components": [
+      "./src/**/*.webflow.@(js|jsx|mjs|ts|tsx)"
+    ],
+    "description": "An advanced carousel component that displays one slide at a time with smooth transitions between slides. Each slide is a card containing an image, title, description, and optional CTA button with link. Features navigation arrows on both sides, dot indicators below for position tracking, and supports auto-play with pause-on-hover. Offers configurable transition effects (slide or fade), aspect ratios, and loop mode. Responsive design displays full-width slides on mobile and optionally shows a peek of adjacent slides on desktop. Supports touch/swipe gestures for mobile interaction and can accommodate 2-12 slides with individual visibility controls.",
+    "id": "carousel-slider"
+  }
+}
