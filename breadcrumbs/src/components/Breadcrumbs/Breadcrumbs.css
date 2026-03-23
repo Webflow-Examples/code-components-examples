@@ -1,0 +1,195 @@
+/*
+ * Webflow Site Variables Used:
+ * - --background-primary: Main background color
+ * - --background-secondary: Hover states
+ * - --text-primary: Main text color
+ * - --text-secondary: Separator color
+ * - --border-color: Ellipsis menu border
+ * - --accent-color: Link hover color
+ * - --border-radius: Menu and button rounding
+ */
+
+/* Box sizing reset */
+.wf-breadcrumbs *,
+.wf-breadcrumbs *::before,
+.wf-breadcrumbs *::after {
+  box-sizing: border-box;
+}
+
+/* Root element - inherit Webflow typography + default padding */
+.wf-breadcrumbs {
+  font-family: inherit;
+  color: inherit;
+  line-height: inherit;
+  padding: 24px;
+}
+
+/* Breadcrumb list */
+.wf-breadcrumbs-list {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Desktop breadcrumbs - visible on larger screens */
+.wf-breadcrumbs-desktop {
+  display: flex;
+}
+
+/* Mobile breadcrumbs - hidden by default, shown on smaller screens */
+.wf-breadcrumbs-mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .wf-breadcrumbs-desktop {
+    display: none;
+  }
+  
+  .wf-breadcrumbs-mobile {
+    display: flex;
+  }
+}
+
+/* Breadcrumb item */
+.wf-breadcrumbs-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Breadcrumb link */
+.wf-breadcrumbs-link {
+  color: var(--text-primary, #1a1a1a);
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s;
+  display: inline-flex;
+  align-items: center;
+}
+
+.wf-breadcrumbs-link:hover {
+  color: var(--accent-color, #1a1a1a);
+  text-decoration: underline;
+}
+
+.wf-breadcrumbs-link:focus-visible {
+  outline: 2px solid var(--accent-color, #1a1a1a);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Home link */
+.wf-breadcrumbs-home {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Home icon */
+.wf-breadcrumbs-home-icon {
+  width: 16px;
+  height: 16px;
+  color: currentColor;
+}
+
+/* Separator */
+.wf-breadcrumbs-separator {
+  color: var(--text-secondary, #737373);
+  font-size: 14px;
+  user-select: none;
+}
+
+/* Current page (non-clickable) */
+.wf-breadcrumbs-current {
+  color: var(--text-primary, #1a1a1a);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Ellipsis container */
+.wf-breadcrumbs-ellipsis-container {
+  position: relative;
+}
+
+/* Ellipsis button */
+.wf-breadcrumbs-ellipsis-button {
+  background: transparent;
+  border: none;
+  color: var(--text-primary, #1a1a1a);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: var(--border-radius, 8px);
+  transition: background-color 0.2s;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.wf-breadcrumbs-ellipsis-button:hover {
+  background: var(--background-secondary, #f5f5f5);
+}
+
+.wf-breadcrumbs-ellipsis-button:focus-visible {
+  outline: 2px solid var(--accent-color, #1a1a1a);
+  outline-offset: 2px;
+}
+
+.wf-breadcrumbs-ellipsis-button:active {
+  background: var(--border-color, #e5e5e5);
+}
+
+/* Ellipsis menu */
+.wf-breadcrumbs-ellipsis-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 4px;
+  background: var(--background-primary, #ffffff);
+  border: 1px solid var(--border-color, #e5e5e5);
+  border-radius: var(--border-radius, 8px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  min-width: 200px;
+}
+
+/* Ellipsis list */
+.wf-breadcrumbs-ellipsis-list {
+  list-style: none;
+  margin: 0;
+  padding: 8px;
+}
+
+/* Ellipsis item */
+.wf-breadcrumbs-ellipsis-item {
+  margin: 0;
+}
+
+.wf-breadcrumbs-ellipsis-item .wf-breadcrumbs-link {
+  display: block;
+  padding: 8px 12px;
+  border-radius: var(--border-radius, 8px);
+  transition: background-color 0.2s;
+}
+
+.wf-breadcrumbs-ellipsis-item .wf-breadcrumbs-link:hover {
+  background: var(--background-secondary, #f5f5f5);
+  text-decoration: none;
+}
+
+/* Screen reader only text */
+.wf-breadcrumbs-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

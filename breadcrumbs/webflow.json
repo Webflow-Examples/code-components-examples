@@ -1,0 +1,10 @@
+{
+  "library": {
+    "name": "Breadcrumbs",
+    "components": [
+      "./src/**/*.webflow.@(js|jsx|mjs|ts|tsx)"
+    ],
+    "description": "A breadcrumb navigation component that displays a hierarchical path to the current page. Shows a home icon as the first item, followed by up to 6 levels of navigation links separated by a configurable separator (slash, chevron, or arrow). The last item represents the current page and is rendered as non-interactive text. On mobile viewports, middle items collapse into an ellipsis menu, showing only the first and last two items to save space. Each breadcrumb level has configurable label text and URL link properties.",
+    "id": "breadcrumbs"
+  }
+}
