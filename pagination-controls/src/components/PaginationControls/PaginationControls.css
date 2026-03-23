@@ -1,0 +1,281 @@
+/*
+ * Webflow Site Variables Used:
+ * - --background-primary: Main background color
+ * - --background-secondary: Hover states
+ * - --text-primary: Main text color
+ * - --text-secondary: Muted text, labels
+ * - --border-color: Borders and dividers
+ * - --accent-color: Active page background
+ * - --accent-text-color: Active page text
+ * - --border-radius: Corner rounding
+ */
+
+/* Box sizing reset */
+.wf-paginationcontrols *,
+.wf-paginationcontrols *::before,
+.wf-paginationcontrols *::after {
+  box-sizing: border-box;
+}
+
+/* Root element - inherit typography + default padding */
+.wf-paginationcontrols {
+  font-family: inherit;
+  color: inherit;
+  line-height: inherit;
+  padding: 24px;
+  --wf-paginationcontrols-button-height: 40px;
+  --wf-paginationcontrols-button-min-width: 40px;
+  --wf-paginationcontrols-spacing: 8px;
+  --wf-paginationcontrols-compact-button-height: 32px;
+  --wf-paginationcontrols-compact-button-min-width: 32px;
+  --wf-paginationcontrols-compact-spacing: 4px;
+}
+
+/* Container */
+.wf-paginationcontrols-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+/* Alignment variants */
+.wf-paginationcontrols-align-left .wf-paginationcontrols-container {
+  align-items: flex-start;
+}
+
+.wf-paginationcontrols-align-center .wf-paginationcontrols-container {
+  align-items: center;
+}
+
+.wf-paginationcontrols-align-right .wf-paginationcontrols-container {
+  align-items: flex-end;
+}
+
+/* Header section */
+.wf-paginationcontrols-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+}
+
+/* Info text */
+.wf-paginationcontrols-info {
+  display: flex;
+  align-items: center;
+}
+
+.wf-paginationcontrols-info-text {
+  font-size: 14px;
+  color: var(--text-secondary, #737373);
+  font-weight: 500;
+}
+
+/* Items count */
+.wf-paginationcontrols-items-count {
+  display: flex;
+  align-items: center;
+}
+
+.wf-paginationcontrols-items-text {
+  font-size: 14px;
+  color: var(--text-secondary, #737373);
+}
+
+/* Buttons container */
+.wf-paginationcontrols-buttons {
+  display: flex;
+  align-items: center;
+  gap: var(--wf-paginationcontrols-spacing);
+  flex-wrap: wrap;
+}
+
+/* Pages container */
+.wf-paginationcontrols-pages {
+  display: flex;
+  align-items: center;
+  gap: var(--wf-paginationcontrols-spacing);
+}
+
+/* Base button styles */
+.wf-paginationcontrols-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--wf-paginationcontrols-button-min-width);
+  height: var(--wf-paginationcontrols-button-height);
+  padding: 0 16px;
+  background: var(--background-primary, #ffffff);
+  border: 1px solid var(--border-color, #e5e5e5);
+  border-radius: var(--border-radius, 8px);
+  color: var(--text-primary, #1a1a1a);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+  white-space: nowrap;
+}
+
+.wf-paginationcontrols-button:hover {
+  background: var(--background-secondary, #f5f5f5);
+  border-color: var(--border-color, #e5e5e5);
+}
+
+.wf-paginationcontrols-button:focus-visible {
+  outline: 2px solid var(--accent-color, #1a1a1a);
+  outline-offset: 2px;
+}
+
+.wf-paginationcontrols-button:active {
+  background: var(--background-secondary, #f5f5f5);
+}
+
+.wf-paginationcontrols-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background: var(--background-primary, #ffffff);
+}
+
+.wf-paginationcontrols-button:disabled:hover {
+  background: var(--background-primary, #ffffff);
+  border-color: var(--border-color, #e5e5e5);
+}
+
+/* Button text */
+.wf-paginationcontrols-button-text {
+  display: inline-block;
+}
+
+/* Page number buttons */
+.wf-paginationcontrols-page {
+  min-width: var(--wf-paginationcontrols-button-min-width);
+  padding: 0 12px;
+}
+
+/* Active page button */
+.wf-paginationcontrols-page-active {
+  background: var(--accent-color, #1a1a1a);
+  color: var(--accent-text-color, #ffffff);
+  border-color: var(--accent-color, #1a1a1a);
+  font-weight: 600;
+}
+
+.wf-paginationcontrols-page-active:hover {
+  background: var(--accent-color, #1a1a1a);
+  border-color: var(--accent-color, #1a1a1a);
+  color: var(--accent-text-color, #ffffff);
+}
+
+/* Previous/Next buttons */
+.wf-paginationcontrols-previous,
+.wf-paginationcontrols-next {
+  min-width: auto;
+}
+
+/* First/Last buttons */
+.wf-paginationcontrols-first,
+.wf-paginationcontrols-last {
+  min-width: auto;
+}
+
+/* Ellipsis */
+.wf-paginationcontrols-ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--wf-paginationcontrols-button-min-width);
+  height: var(--wf-paginationcontrols-button-height);
+  color: var(--text-secondary, #737373);
+  font-size: 14px;
+  font-weight: 500;
+  user-select: none;
+}
+
+/* Load More button */
+.wf-paginationcontrols-loadmore-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+  height: var(--wf-paginationcontrols-button-height);
+  padding: 0 24px;
+  background: var(--accent-color, #1a1a1a);
+  color: var(--accent-text-color, #ffffff);
+  border: 1px solid var(--accent-color, #1a1a1a);
+  border-radius: var(--border-radius, 8px);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.wf-paginationcontrols-loadmore-button:hover {
+  opacity: 0.9;
+}
+
+.wf-paginationcontrols-loadmore-button:focus-visible {
+  outline: 2px solid var(--accent-color, #1a1a1a);
+  outline-offset: 2px;
+}
+
+.wf-paginationcontrols-loadmore-button:active {
+  opacity: 0.8;
+}
+
+/* Compact size variant */
+.wf-paginationcontrols-size-compact {
+  --wf-paginationcontrols-button-height: var(--wf-paginationcontrols-compact-button-height);
+  --wf-paginationcontrols-button-min-width: var(--wf-paginationcontrols-compact-button-min-width);
+  --wf-paginationcontrols-spacing: var(--wf-paginationcontrols-compact-spacing);
+}
+
+.wf-paginationcontrols-size-compact .wf-paginationcontrols-container {
+  gap: 12px;
+}
+
+.wf-paginationcontrols-size-compact .wf-paginationcontrols-header {
+  gap: 12px;
+}
+
+.wf-paginationcontrols-size-compact .wf-paginationcontrols-button {
+  padding: 0 12px;
+  font-size: 13px;
+}
+
+.wf-paginationcontrols-size-compact .wf-paginationcontrols-page {
+  padding: 0 8px;
+}
+
+.wf-paginationcontrols-size-compact .wf-paginationcontrols-info-text,
+.wf-paginationcontrols-size-compact .wf-paginationcontrols-items-text {
+  font-size: 13px;
+}
+
+.wf-paginationcontrols-size-compact .wf-paginationcontrols-ellipsis {
+  font-size: 13px;
+}
+
+.wf-paginationcontrols-size-compact .wf-paginationcontrols-loadmore-button {
+  min-width: 100px;
+  padding: 0 20px;
+  font-size: 13px;
+}
+
+/* Simple style adjustments */
+.wf-paginationcontrols-style-simple .wf-paginationcontrols-container {
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+}
+
+.wf-paginationcontrols-style-simple .wf-paginationcontrols-info,
+.wf-paginationcontrols-style-simple .wf-paginationcontrols-items-count {
+  flex: 1;
+}
+
+/* Load More style adjustments */
+.wf-paginationcontrols-style-loadMore .wf-paginationcontrols-container {
+  align-items: center;
+  gap: 12px;
+}

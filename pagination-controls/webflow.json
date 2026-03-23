@@ -1,0 +1,10 @@
+{
+  "library": {
+    "name": "PaginationControls",
+    "components": [
+      "./src/**/*.webflow.@(js|jsx|mjs|ts|tsx)"
+    ],
+    "description": "A flexible pagination component for navigating through pages of content. Displays page numbers with Previous/Next buttons, current page indicator, and total pages count. Supports three visual styles: numbered buttons with ellipsis truncation for many pages (e.g., 1 2 3 ... 18 19 20), simple prev/next arrows only, and a load-more button style. The active page is visually highlighted with accent styling. Previous and Next buttons are automatically disabled at boundaries (first/last page). Includes optional items-per-page display and a compact variant that reduces spacing and button sizes for mobile layouts. Fully responsive with touch-friendly tap targets.",
+    "id": "pagination-controls"
+  }
+}
