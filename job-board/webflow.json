@@ -1,0 +1,10 @@
+{
+  "library": {
+    "name": "JobBoard",
+    "components": [
+      "./src/**/*.webflow.@(js|jsx|mjs|ts|tsx)"
+    ],
+    "description": "A dynamic job board component that fetches and displays open positions from the Greenhouse API. Features a grid layout of job cards, each showing the job title, department, location, and an apply link. Includes interactive department and location filter dropdowns at the top, a loading spinner during data fetch, an error state for failed API calls, and an empty state when no jobs match filters. Supports pagination with a 'Load More' button for large job lists. Cards display in a multi-column grid on desktop and stack vertically on mobile devices. The component connects to any Greenhouse account via a board token prop and handles all API communication, error handling, and responsive layout transitions automatically.",
+    "id": "job-board"
+  }
+}

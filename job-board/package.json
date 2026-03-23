@@ -1,0 +1,25 @@
+{
+  "name": "job-board",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.13",
+    "@types/react-dom": "^19.1.9",
+    "@vitejs/plugin-react": "^5.0.3",
+    "@webflow/data-types": "^1.0.1",
+    "@webflow/react": "^1.0.1",
+    "@webflow/webflow-cli": "^1.8.44",
+    "typescript": "~5.8.3",
+    "vite": "^7.1.7"
+  }
+}

@@ -1,0 +1,396 @@
+/*
+ * Webflow Site Variables Used:
+ * - --background-primary: Main background color for cards and containers
+ * - --background-secondary: Hover states and filter backgrounds
+ * - --text-primary: Main text color for headings and body text
+ * - --text-secondary: Secondary text for labels and meta information
+ * - --border-color: Borders, dividers, and card outlines
+ * - --accent-color: Primary action buttons and selected states
+ * - --accent-text-color: Text color on accent backgrounds
+ * - --border-radius: Corner rounding for all elements
+ */
+
+/* Box sizing reset */
+.wf-jobboard *,
+.wf-jobboard *::before,
+.wf-jobboard *::after {
+  box-sizing: border-box;
+}
+
+/* Root element - inherit Webflow typography */
+.wf-jobboard {
+  font-family: inherit;
+  color: inherit;
+  line-height: inherit;
+  --wf-jobboard-columns: 3;
+}
+
+/* Header */
+.wf-jobboard-header {
+  margin-bottom: 32px;
+}
+
+.wf-jobboard-heading {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  color: var(--text-primary, #1a1a1a);
+}
+
+.wf-jobboard-subheading {
+  font-size: 16px;
+  margin: 0;
+  color: var(--text-secondary, #737373);
+}
+
+/* Filters */
+.wf-jobboard-filters {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.wf-jobboard-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 200px;
+}
+
+.wf-jobboard-filter-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary, #1a1a1a);
+}
+
+.wf-jobboard-filter-select {
+  padding: 10px 12px;
+  border: 1px solid var(--border-color, #e5e5e5);
+  border-radius: var(--border-radius, 8px);
+  background: var(--background-primary, #ffffff);
+  color: var(--text-primary, #1a1a1a);
+  font-size: 14px;
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.wf-jobboard-filter-select:hover {
+  background: var(--background-secondary, #f5f5f5);
+}
+
+.wf-jobboard-filter-select:focus-visible {
+  outline: 2px solid var(--accent-color, #1a1a1a);
+  outline-offset: 2px;
+}
+
+/* Results count */
+.wf-jobboard-results-count {
+  margin-bottom: 24px;
+  font-size: 14px;
+  color: var(--text-secondary, #737373);
+}
+
+/* Grid */
+.wf-jobboard-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--wf-jobboard-columns), 1fr);
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+@media (max-width: 1024px) {
+  .wf-jobboard-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .wf-jobboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Card base styles */
+.wf-jobboard-card {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  border-radius: var(--border-radius, 8px);
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+
+/* Card style: elevated */
+.wf-jobboard-card-elevated {
+  background: var(--background-primary, #ffffff);
+  border: 1px solid var(--border-color, #e5e5e5);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.wf-jobboard-card-elevated:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* Card style: outlined */
+.wf-jobboard-card-outlined {
+  background: var(--background-primary, #ffffff);
+  border: 2px solid var(--border-color, #e5e5e5);
+}
+
+.wf-jobboard-card-outlined:hover {
+  border-color: var(--accent-color, #1a1a1a);
+}
+
+/* Card style: minimal */
+.wf-jobboard-card-minimal {
+  background: var(--background-secondary, #f5f5f5);
+  border: 1px solid transparent;
+}
+
+.wf-jobboard-card-minimal:hover {
+  background: var(--background-primary, #ffffff);
+  border-color: var(--border-color, #e5e5e5);
+}
+
+/* Card title */
+.wf-jobboard-card-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 16px 0;
+  color: var(--text-primary, #1a1a1a);
+}
+
+/* Card meta */
+.wf-jobboard-card-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-grow: 1;
+}
+
+.wf-jobboard-card-meta-item {
+  display: flex;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.wf-jobboard-card-meta-label {
+  font-weight: 500;
+  color: var(--text-secondary, #737373);
+}
+
+.wf-jobboard-card-meta-value {
+  color: var(--text-primary, #1a1a1a);
+}
+
+/* Card button */
+.wf-jobboard-card-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  background: var(--accent-color, #1a1a1a);
+  color: var(--accent-text-color, #ffffff);
+  border: none;
+  border-radius: var(--border-radius, 8px);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.2s;
+  align-self: flex-start;
+}
+
+.wf-jobboard-card-button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.wf-jobboard-card-button:focus-visible {
+  outline: 2px solid var(--accent-color, #1a1a1a);
+  outline-offset: 2px;
+}
+
+.wf-jobboard-card-button:active {
+  transform: translateY(0);
+}
+
+/* Pagination */
+.wf-jobboard-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.wf-jobboard-load-more {
+  padding: 12px 24px;
+  background: var(--accent-color, #1a1a1a);
+  color: var(--accent-text-color, #ffffff);
+  border: none;
+  border-radius: var(--border-radius, 8px);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.wf-jobboard-load-more:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.wf-jobboard-load-more:focus-visible {
+  outline: 2px solid var(--accent-color, #1a1a1a);
+  outline-offset: 2px;
+}
+
+.wf-jobboard-load-more:active {
+  transform: translateY(0);
+}
+
+.wf-jobboard-pagination-button {
+  padding: 10px 20px;
+  background: var(--background-primary, #ffffff);
+  color: var(--text-primary, #1a1a1a);
+  border: 1px solid var(--border-color, #e5e5e5);
+  border-radius: var(--border-radius, 8px);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.wf-jobboard-pagination-button:hover {
+  background: var(--background-secondary, #f5f5f5);
+}
+
+.wf-jobboard-pagination-button:focus-visible {
+  outline: 2px solid var(--accent-color, #1a1a1a);
+  outline-offset: 2px;
+}
+
+.wf-jobboard-pagination-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.wf-jobboard-pagination-button:disabled:hover {
+  background: var(--background-primary, #ffffff);
+}
+
+.wf-jobboard-pagination-info {
+  font-size: 14px;
+  color: var(--text-secondary, #737373);
+}
+
+/* Loading state */
+.wf-jobboard-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 24px;
+  gap: 16px;
+}
+
+.wf-jobboard-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--border-color, #e5e5e5);
+  border-top-color: var(--accent-color, #1a1a1a);
+  border-radius: 50%;
+  animation: wf-jobboard-spin 0.8s linear infinite;
+}
+
+@keyframes wf-jobboard-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.wf-jobboard-loading-text {
+  font-size: 16px;
+  color: var(--text-secondary, #737373);
+  margin: 0;
+}
+
+/* Error state */
+.wf-jobboard-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 24px;
+  text-align: center;
+  gap: 16px;
+}
+
+.wf-jobboard-error-heading {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0;
+  color: var(--text-primary, #1a1a1a);
+}
+
+.wf-jobboard-error-message {
+  font-size: 16px;
+  margin: 0;
+  color: var(--text-secondary, #737373);
+  max-width: 500px;
+}
+
+.wf-jobboard-retry-button {
+  padding: 12px 24px;
+  background: var(--accent-color, #1a1a1a);
+  color: var(--accent-text-color, #ffffff);
+  border: none;
+  border-radius: var(--border-radius, 8px);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.2s;
+  margin-top: 8px;
+}
+
+.wf-jobboard-retry-button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.wf-jobboard-retry-button:focus-visible {
+  outline: 2px solid var(--accent-color, #1a1a1a);
+  outline-offset: 2px;
+}
+
+.wf-jobboard-retry-button:active {
+  transform: translateY(0);
+}
+
+/* Empty state */
+.wf-jobboard-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 24px;
+  text-align: center;
+  gap: 16px;
+}
+
+.wf-jobboard-empty-heading {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0;
+  color: var(--text-primary, #1a1a1a);
+}
+
+.wf-jobboard-empty-message {
+  font-size: 16px;
+  margin: 0;
+  color: var(--text-secondary, #737373);
+  max-width: 500px;
+}
