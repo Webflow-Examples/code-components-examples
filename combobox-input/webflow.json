@@ -1,0 +1,10 @@
+{
+  "library": {
+    "name": "ComboboxInput",
+    "components": [
+      "./src/**/*.webflow.@(js|jsx|mjs|ts|tsx)"
+    ],
+    "description": "A combobox/autocomplete input component that combines a text input field with a filterable dropdown list. As the user types, options are dynamically filtered to match the input text. Supports single selection with the selected value displayed in the input field. Each option can display a label and an optional description beneath it. The dropdown opens automatically on focus showing all available options, then filters as the user types. Includes full keyboard navigation with arrow keys for moving through options, Enter to select, and Escape to close the dropdown. Features a clear button to reset the selection, a loading state for async data fetching, and a customizable no-results message when filtering returns no matches. The component is fully responsive and accessible.",
+    "id": "combobox-input"
+  }
+}

@@ -1,0 +1,198 @@
+/*
+ * Webflow Site Variables Used:
+ * - --background-primary: Input and dropdown background
+ * - --background-secondary: Hover and highlighted states
+ * - --text-primary: Main text color for input and options
+ * - --text-secondary: Description text and placeholder
+ * - --border-color: Input border and dropdown dividers
+ * - --accent-color: Selected option background
+ * - --accent-text-color: Selected option text
+ * - --border-radius: Input and dropdown rounding
+ */
+
+.wf-comboboxinput *,
+.wf-comboboxinput *::before,
+.wf-comboboxinput *::after {
+  box-sizing: border-box;
+}
+
+.wf-comboboxinput {
+  font-family: inherit;
+  color: inherit;
+  line-height: inherit;
+  padding: 24px;
+  --wf-comboboxinput-height: 40px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.wf-comboboxinput-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary, #1a1a1a);
+  margin-bottom: 4px;
+}
+
+.wf-comboboxinput-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.wf-comboboxinput-input {
+  width: 100%;
+  height: var(--wf-comboboxinput-height);
+  padding: 0 40px 0 12px;
+  background: var(--background-primary, #ffffff);
+  border: 1px solid var(--border-color, #e5e5e5);
+  border-radius: var(--border-radius, 8px);
+  color: var(--text-primary, #1a1a1a);
+  font-size: 14px;
+  font-family: inherit;
+  line-height: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+
+.wf-comboboxinput-input::placeholder {
+  color: var(--text-secondary, #737373);
+  opacity: 1;
+}
+
+.wf-comboboxinput-input:hover:not(:disabled) {
+  border-color: var(--text-secondary, #737373);
+}
+
+.wf-comboboxinput-input:focus {
+  border-color: var(--accent-color, #1a1a1a);
+  box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.1);
+}
+
+.wf-comboboxinput-input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: var(--background-secondary, #f5f5f5);
+}
+
+.wf-comboboxinput-clear {
+  position: absolute;
+  right: 36px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  color: var(--text-secondary, #737373);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--border-radius, 8px);
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.wf-comboboxinput-clear:hover {
+  background: var(--background-secondary, #f5f5f5);
+  color: var(--text-primary, #1a1a1a);
+}
+
+.wf-comboboxinput-clear:focus-visible {
+  outline: 2px solid var(--accent-color, #1a1a1a);
+  outline-offset: 2px;
+}
+
+.wf-comboboxinput-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-secondary, #737373);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.wf-comboboxinput-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: var(--background-primary, #ffffff);
+  border: 1px solid var(--border-color, #e5e5e5);
+  border-radius: var(--border-radius, 8px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-height: 240px;
+  overflow-y: auto;
+  z-index: 1000;
+  padding: 4px;
+}
+
+.wf-comboboxinput-dropdown::-webkit-scrollbar {
+  width: 8px;
+}
+
+.wf-comboboxinput-dropdown::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.wf-comboboxinput-dropdown::-webkit-scrollbar-thumb {
+  background: var(--border-color, #e5e5e5);
+  border-radius: 4px;
+}
+
+.wf-comboboxinput-dropdown::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary, #737373);
+}
+
+.wf-comboboxinput-message {
+  padding: 12px;
+  color: var(--text-secondary, #737373);
+  font-size: 14px;
+  text-align: center;
+}
+
+.wf-comboboxinput-option {
+  padding: 10px 12px;
+  cursor: pointer;
+  border-radius: var(--border-radius, 8px);
+  transition: background-color 0.2s;
+}
+
+.wf-comboboxinput-option:hover {
+  background: var(--background-secondary, #f5f5f5);
+}
+
+.wf-comboboxinput-option-highlighted {
+  background: var(--background-secondary, #f5f5f5);
+}
+
+.wf-comboboxinput-option-selected {
+  background: var(--accent-color, #1a1a1a);
+}
+
+.wf-comboboxinput-option-selected .wf-comboboxinput-option-label {
+  color: var(--accent-text-color, #ffffff);
+  font-weight: 500;
+}
+
+.wf-comboboxinput-option-selected .wf-comboboxinput-option-description {
+  color: var(--accent-text-color, #ffffff);
+  opacity: 0.8;
+}
+
+.wf-comboboxinput-option-label {
+  font-size: 14px;
+  color: var(--text-primary, #1a1a1a);
+  font-weight: 400;
+  margin-bottom: 2px;
+}
+
+.wf-comboboxinput-option-description {
+  font-size: 12px;
+  color: var(--text-secondary, #737373);
+  line-height: 1.4;
+}
