@@ -1,0 +1,10 @@
+{
+  "library": {
+    "name": "DatePicker",
+    "components": [
+      "./src/**/*.webflow.@(js|jsx|mjs|ts|tsx)"
+    ],
+    "description": "A fully-featured date picker component with a calendar dropdown popup. Clicking the input field opens a calendar showing the current month in a grid layout with day names. Users can navigate between months using previous/next arrow buttons and select dates by clicking. The selected date displays in the input field in a configurable format. Supports single date selection or date range mode where users select start and end dates with visual highlighting of the range. Today's date is highlighted with a distinct visual style. Dates outside configurable min/max boundaries are disabled and grayed out. The input includes a calendar icon and a clear button to reset the selection. Fully keyboard navigable for accessibility with arrow keys for date navigation and Enter to select.",
+    "id": "date-picker"
+  }
+}
