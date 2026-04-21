@@ -1,0 +1,10 @@
+{
+  "library": {
+    "name": "ModalDialog",
+    "components": [
+      "./src/**/*.webflow.@(js|jsx|mjs|ts|tsx)"
+    ],
+    "description": "A modal dialog component that displays as a centered overlay with a semi-transparent backdrop. Features a title heading at the top, rich body content area, and a close button (X icon) positioned in the top-right corner. Opens with a smooth fade and scale animation, and closes when clicking the backdrop, pressing Escape, or clicking the close button. Focus is trapped within the modal when open, preventing interaction with underlying content. The modal is fully responsive and adapts to different screen sizes with configurable maximum width variants.",
+    "id": "modal-dialog"
+  }
+}

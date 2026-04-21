@@ -1,0 +1,225 @@
+/*
+ * Webflow Site Variables Used:
+ * - --background-primary: Modal container background
+ * - --background-secondary: Trigger button hover state
+ * - --text-primary: Modal title and body text
+ * - --text-secondary: Close button icon color
+ * - --border-color: Modal container border
+ * - --accent-color: Trigger button background
+ * - --accent-text-color: Trigger button text
+ * - --border-radius: Modal and button rounding
+ */
+
+/* Box sizing reset */
+.wf-modaldialog *,
+.wf-modaldialog *::before,
+.wf-modaldialog *::after {
+  box-sizing: border-box;
+}
+
+/* Root element - inherit Webflow typography + default padding */
+.wf-modaldialog {
+  font-family: inherit;
+  color: inherit;
+  line-height: inherit;
+  padding: 24px;
+  --wf-modaldialog-max-width: 600px;
+  --wf-modaldialog-animation-duration: 300ms;
+}
+
+/* Trigger button */
+.wf-modaldialog-trigger {
+  background: var(--accent-color, #1a1a1a);
+  color: var(--accent-text-color, #ffffff);
+  border: none;
+  padding: 12px 24px;
+  border-radius: var(--border-radius, 8px);
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.wf-modaldialog-trigger:hover {
+  background: var(--text-primary, #1a1a1a);
+  transform: translateY(-1px);
+}
+
+.wf-modaldialog-trigger:focus-visible {
+  outline: 2px solid var(--accent-color, #1a1a1a);
+  outline-offset: 2px;
+}
+
+.wf-modaldialog-trigger:active {
+  transform: translateY(0);
+}
+
+.wf-modaldialog-trigger:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Overlay backdrop */
+.wf-modaldialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 16px;
+  animation: wf-modaldialog-fade-in var(--wf-modaldialog-animation-duration) ease-out;
+}
+
+@keyframes wf-modaldialog-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Modal container */
+.wf-modaldialog-container {
+  background: var(--background-primary, #ffffff);
+  border: 1px solid var(--border-color, #e5e5e5);
+  border-radius: var(--border-radius, 8px);
+  max-width: var(--wf-modaldialog-max-width);
+  width: 100%;
+  max-height: calc(100vh - 32px);
+  overflow: auto;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  animation: wf-modaldialog-scale-in var(--wf-modaldialog-animation-duration) ease-out;
+}
+
+@keyframes wf-modaldialog-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Modal header */
+.wf-modaldialog-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 24px 24px 16px 24px;
+  border-bottom: 1px solid var(--border-color, #e5e5e5);
+}
+
+/* Modal title */
+.wf-modaldialog-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-primary, #1a1a1a);
+  line-height: 1.3;
+  flex: 1;
+}
+
+/* Close button */
+.wf-modaldialog-close {
+  background: transparent;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  border-radius: var(--border-radius, 8px);
+  color: var(--text-secondary, #737373);
+  transition: background-color 0.2s, color 0.2s;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wf-modaldialog-close:hover {
+  background: var(--background-secondary, #f5f5f5);
+  color: var(--text-primary, #1a1a1a);
+}
+
+.wf-modaldialog-close:focus-visible {
+  outline: 2px solid var(--accent-color, #1a1a1a);
+  outline-offset: 2px;
+}
+
+.wf-modaldialog-close:active {
+  transform: scale(0.95);
+}
+
+.wf-modaldialog-close:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Close button icon */
+.wf-modaldialog-close-icon {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+/* Modal body */
+.wf-modaldialog-body {
+  padding: 24px;
+  color: var(--text-primary, #1a1a1a);
+}
+
+/* Body content (rich text) */
+.wf-modaldialog-content {
+  line-height: 1.6;
+}
+
+.wf-modaldialog-content p {
+  margin: 0 0 16px 0;
+}
+
+.wf-modaldialog-content p:last-child {
+  margin-bottom: 0;
+}
+
+.wf-modaldialog-content h1,
+.wf-modaldialog-content h2,
+.wf-modaldialog-content h3,
+.wf-modaldialog-content h4,
+.wf-modaldialog-content h5,
+.wf-modaldialog-content h6 {
+  margin: 0 0 12px 0;
+  font-weight: 600;
+  color: var(--text-primary, #1a1a1a);
+}
+
+.wf-modaldialog-content ul,
+.wf-modaldialog-content ol {
+  margin: 0 0 16px 0;
+  padding-left: 24px;
+}
+
+.wf-modaldialog-content li {
+  margin-bottom: 8px;
+}
+
+.wf-modaldialog-content a {
+  color: var(--accent-color, #1a1a1a);
+  text-decoration: underline;
+}
+
+.wf-modaldialog-content a:hover {
+  text-decoration: none;
+}
+
+/* Content slot */
+.wf-modaldialog-slot {
+  width: 100%;
+}
