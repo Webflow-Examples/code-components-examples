@@ -1,0 +1,213 @@
+/*
+ * Webflow Site Variables Used:
+ * - --background-primary: Light theme background
+ * - --background-secondary: Trigger hover background
+ * - --text-primary: Light theme text
+ * - --text-secondary: Secondary text, trigger hover border
+ * - --border-color: Trigger border
+ * - --accent-color: Dark theme background, focus ring
+ * - --accent-text-color: Dark theme text
+ * - --border-radius: Corner rounding
+ */
+
+.wf-tooltiphovercard *,
+.wf-tooltiphovercard *::before,
+.wf-tooltiphovercard *::after {
+  box-sizing: border-box;
+}
+
+.wf-tooltiphovercard {
+  font-family: inherit;
+  color: inherit;
+  line-height: inherit;
+  position: relative;
+  display: inline-block;
+  --wf-tooltiphovercard-max-width: 300px;
+  --wf-tooltiphovercard-gap: 10px;
+}
+
+.wf-tooltiphovercard-trigger {
+  background: transparent;
+  border: 1px solid var(--border-color, #e5e5e5);
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: var(--border-radius, 8px);
+  color: var(--text-primary, #1a1a1a);
+  font-size: 14px;
+  font-family: inherit;
+  line-height: inherit;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.wf-tooltiphovercard-trigger:hover {
+  background: var(--background-secondary, #f5f5f5);
+  border-color: var(--text-secondary, #737373);
+}
+
+.wf-tooltiphovercard-trigger:focus-visible {
+  outline: 2px solid var(--accent-color, #1a1a1a);
+  outline-offset: 2px;
+  border-color: var(--accent-color, #1a1a1a);
+}
+
+/* Content container — positioned absolutely next to the trigger */
+.wf-tooltiphovercard-content {
+  position: absolute;
+  z-index: 9999;
+  width: max-content;
+  max-width: var(--wf-tooltiphovercard-max-width);
+  border-radius: var(--border-radius, 8px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.15s ease-out, visibility 0.15s ease-out;
+}
+
+.wf-tooltiphovercard--open .wf-tooltiphovercard-content {
+  opacity: 1;
+  visibility: visible;
+}
+
+.wf-tooltiphovercard--open .wf-tooltiphovercard-content--hoverCard {
+  pointer-events: auto;
+}
+
+/* Placement offsets */
+.wf-tooltiphovercard-content--top {
+  bottom: calc(100% + var(--wf-tooltiphovercard-gap));
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.wf-tooltiphovercard-content--bottom {
+  top: calc(100% + var(--wf-tooltiphovercard-gap));
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.wf-tooltiphovercard-content--left {
+  right: calc(100% + var(--wf-tooltiphovercard-gap));
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.wf-tooltiphovercard-content--right {
+  left: calc(100% + var(--wf-tooltiphovercard-gap));
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Themes */
+.wf-tooltiphovercard-content--dark {
+  background: var(--accent-color, #1a1a1a);
+  color: var(--accent-text-color, #ffffff);
+}
+
+.wf-tooltiphovercard-content--light {
+  background: var(--background-primary, #ffffff);
+  color: var(--text-primary, #1a1a1a);
+  border: 1px solid var(--border-color, #e5e5e5);
+}
+
+/* Tooltip mode */
+.wf-tooltiphovercard-tooltip {
+  padding: 8px 12px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Hover card mode */
+.wf-tooltiphovercard-hovercard {
+  display: flex;
+  flex-direction: column;
+  width: var(--wf-tooltiphovercard-max-width);
+}
+
+.wf-tooltiphovercard-hovercard-image-wrapper {
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--border-radius, 8px) var(--border-radius, 8px) 0 0;
+}
+
+.wf-tooltiphovercard-hovercard-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.wf-tooltiphovercard-hovercard-body {
+  padding: 16px;
+}
+
+.wf-tooltiphovercard-hovercard-title {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: inherit;
+}
+
+.wf-tooltiphovercard-hovercard-description {
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0;
+  color: inherit;
+  opacity: 0.9;
+}
+
+.wf-tooltiphovercard-hovercard-description p {
+  margin: 0 0 8px 0;
+}
+
+.wf-tooltiphovercard-hovercard-description p:last-child {
+  margin-bottom: 0;
+}
+
+.wf-tooltiphovercard-hovercard-description a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+/* Arrow pointer */
+.wf-tooltiphovercard-arrow {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: inherit;
+  border: inherit;
+  transform: rotate(45deg);
+}
+
+.wf-tooltiphovercard-content--top .wf-tooltiphovercard-arrow {
+  bottom: -6px;
+  left: 50%;
+  margin-left: -5px;
+  border-top: none;
+  border-left: none;
+}
+
+.wf-tooltiphovercard-content--bottom .wf-tooltiphovercard-arrow {
+  top: -6px;
+  left: 50%;
+  margin-left: -5px;
+  border-bottom: none;
+  border-right: none;
+}
+
+.wf-tooltiphovercard-content--left .wf-tooltiphovercard-arrow {
+  right: -6px;
+  top: 50%;
+  margin-top: -5px;
+  border-bottom: none;
+  border-left: none;
+}
+
+.wf-tooltiphovercard-content--right .wf-tooltiphovercard-arrow {
+  left: -6px;
+  top: 50%;
+  margin-top: -5px;
+  border-top: none;
+  border-right: none;
+}

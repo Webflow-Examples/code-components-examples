@@ -1,0 +1,10 @@
+{
+  "library": {
+    "name": "TooltipHoverCard",
+    "components": [
+      "./src/**/*.webflow.@(js|jsx|mjs|ts|tsx)"
+    ],
+    "description": "A versatile tooltip and hover card component that displays contextual information when hovering over or focusing on a trigger element. Supports two modes: simple plain text tooltips and rich hover cards with title, description, and optional image. Features configurable placement (top, bottom, left, right) with automatic viewport edge detection and flip behavior. Includes a visual arrow pointer that dynamically adjusts to point at the trigger element. Appears after a configurable hover delay and smoothly fades in/out with CSS transitions. Fully keyboard accessible with focus state support for screen readers and keyboard navigation.",
+    "id": "tooltip-hover-card"
+  }
+}
